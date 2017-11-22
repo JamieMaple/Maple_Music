@@ -1,0 +1,10 @@
+{
+  "rulesDirectory": "./src/",
+  "extends": "tslint:recommended",
+  "rules": {
+    "no-var-requires": false,
+    "quotemark": false,
+    "semicolon": false,
+    "no-console": false
+  }
+}

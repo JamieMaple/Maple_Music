@@ -1,0 +1,21 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "no-console": "off",
+    "prefer-const": "off",
+    "semi": "off",
+    "func-names": "off",
+    "prefer-arrow-callback": "off",
+    "arrow-parens": "off",
+    "global-require": "off",
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx"] }]
+  },
+  "env": {
+    "browser": true
+  }
+}
