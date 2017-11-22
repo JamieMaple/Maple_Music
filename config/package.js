@@ -4,8 +4,8 @@ const path = require('path')
 
 packager({
   dir: path.resolve(__dirname, '..', 'app'),
-  ignore: /^(node_modules|src|public)$/,
-  prune: true
+  prune: true,
+  name: 'MapleMusic'
   },
   (err, appPaths) => {
     if (err) throw err
