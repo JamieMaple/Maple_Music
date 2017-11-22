@@ -1,4 +1,8 @@
 /config
+/installers
+
+main.js
+config.js
 
 /node_modules
 

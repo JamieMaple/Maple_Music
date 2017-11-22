@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const FriendlyErrorPlugin = require('friendly-errors-webpack-plugin')
+const ExtraPlugin = require('extract-text-webpack-plugin')
 const common = require('./webpack.config')
 
 const { PORT } = require('./common')
@@ -16,6 +17,7 @@ module.exports = merge(common, {
     publicPath: URL
   },
   plugins: [
+    new ExtraPlugin('main.css'),
     new FriendlyErrorPlugin({
       clearConsole: true,
       compilationSuccessInfo: {
@@ -28,5 +30,26 @@ module.exports = merge(common, {
         NODE_ENV: JSON.stringify("development")
       }
     })
-  ]
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(css|scss)$/,
+        use: ExtraPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                module: true,
+                localIdentName: '[name]__[local]__[hash:base64:5]'
+              }
+            },
+            'postcss-loader'
+          ]
+        })
+      },
+    ]
+  }
 })

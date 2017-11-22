@@ -1,14 +1,16 @@
 {
-  "name": "webpack-scaffold",
+  "name": "maple-music",
   "version": "0.0.1",
   "description": "scaffold for Maple",
-  "main": "main.js",
+  "main": "app/main.js",
   "scripts": {
     "electron": "./node_modules/.bin/electron .",
     "dev": "node config/server.js",
+    "build": "cross-env process.env.NODE_ENV=development ./node_modules/.bin/webpack --hide-modules --config config/webpack.prod.js",
     "start:dev": "npm run dev",
     "start:electron": "npm run electron",
-    "start": "./node_modules/.bin/npm-run-all --parallel electron dev"
+    "start": "cross-env process.env.NODE_ENV=development ./node_modules/.bin/npm-run-all --parallel electron dev",
+    "dist": "cross-env process.env.NODE_ENV=production node config/package.js"
   },
   "repository": {
     "type": "git",
@@ -26,17 +28,17 @@
   "homepage": "https://github.com/JamieMaple/webpack-scaffold#readme",
   "devDependencies": {
     "awesome-typescript-loader": "^3.3.0",
-    "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-app": "^3.1.0",
-    "babili-webpack-plugin": "^0.1.2",
     "clean-webpack-plugin": "^0.1.17",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.7",
+    "electron": "^1.7.9",
+    "electron-packager": "^10.1.0",
     "electron-reload": "^1.2.2",
     "eslint": "^4.11.0",
     "eslint-config-airbnb": "^16.1.0",
@@ -64,6 +66,7 @@
     "tslint-loader": "^3.5.3",
     "tslint-react": "^3.2.0",
     "typescript": "^2.6.1",
+    "uglifyjs-webpack-plugin": "^1.1.0",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
     "webpack-bundle-analyzer": "^2.9.0",
@@ -76,7 +79,6 @@
     "@types/react": "^16.0.22",
     "@types/react-dom": "^16.0.3",
     "@types/react-hot-loader": "^3.0.5",
-    "electron": "^1.7.9",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-hot-loader": "^3.1.2"
