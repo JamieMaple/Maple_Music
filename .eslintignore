@@ -1,10 +1,4 @@
 /config
-/installers
-
-main.js
-config.js
+/app
 
 /node_modules
-
-/dist
-/build
