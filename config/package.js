@@ -4,6 +4,8 @@ const path = require('path')
 
 packager({
   dir: path.resolve(__dirname, '..', 'app'),
+  out: './dist',
+  all: true,
   prune: true,
   name: 'MapleMusic'
   },
