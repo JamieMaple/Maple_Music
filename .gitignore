@@ -1,4 +1,6 @@
 /.awcache
+/.vscode
+
 /node_modules
 
 /dist
