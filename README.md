@@ -7,11 +7,11 @@ use scaffold for maple's scaffold
 
 ### Done
 
-[] UI
+[ ] UI
 
-[] Data Manage: redux saga for async
+[ ] Data Manage: redux saga for async
 
-[] some details
+[ ] some details
 
 ---
 
