@@ -5,6 +5,7 @@
     "no-var-requires": false,
     "quotemark": false,
     "semicolon": false,
-    "no-console": false
+    "no-console": false,
+    "ordered-imports": false
   }
 }

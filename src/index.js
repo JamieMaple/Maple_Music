@@ -3,11 +3,7 @@ import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
 import App from './app'
-
-const foo = () => {
-  console.log('foo4')
-}
-foo()
+import './_reset.scss'
 
 function render(Component) {
   ReactDOM.render(

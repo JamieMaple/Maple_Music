@@ -1,58 +1,119 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin')
+const HappPack = require('happypack')
+const ExtractPlugin = require('extract-text-webpack-plugin')
 const path = require('path')
+
+const isDev = process.env.NODE_ENV === 'development'
+
+function resolve(...dirs) {
+  return path.resolve(__dirname, '..', dirs.join('/'))
+}
 
 module.exports = {
   output: {
-    path: path.resolve(__dirname, '..', 'app', 'build')
+    path: resolve('app', 'build'),
   },
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx','.json']
+    extensions: ['.ts', '.tsx', '.js', '.jsx','.json'],
+    alias: {
+      Components: resolve('src', 'components')
+    }
   },
   plugins: [
     new NyanProgressPlugin({
+      debounceInterval: 180,
       nyanCatSays(progress, messages) {
         if (progress === 1) {
           return "Maple! Done!!"
-        } else {
-          return "waiting..."
         }
+        return 'waiting...'
       }
     }),
+    new HappPack({
+      id: 'jsx',
+      loaders: [
+        {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true
+          }
+        },
+        'eslint-loader'
+      ]
+    }),
+    new HappPack({
+      id: 'styles',
+      loaders: isDev
+      ? [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1,
+            module: true,
+            minimize: isDev ? false : true,
+            localIdentName: isDev
+            ? '[name]__[local]__[hash:base64:5]'
+            : '[hash:base64]',
+          }
+        },
+        'postcss-loader'
+      ]
+      : [
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1,
+            module: true,
+            minimize: isDev ? false : true,
+            localIdentName: isDev
+            ? '[name]__[local]__[hash:base64:5]'
+            : '[hash:base64]',
+          }
+        },
+        'postcss-loader'
+      ]
+    }),
+    isDev
+    ? () => {}
+    : new ExtractPlugin('css/main.css')
   ],
   module: {
     rules: [
       {
         enforce: 'pre',
         test: /\.tsx?$/,
+        exclude: /node_modules/,
         use: {
           loader: 'tslint-loader',
-          options: {
-            typeCheck: true,
-            emitErrors: true
-          }
         }
       },
       {
         test: /\.tsx?$/,
-        use: 'awesome-typescript-loader'
-      },
-      {
-        enforce: 'pre',
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: 'eslint-loader'
-      },
-      {
-        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: 'awesome-typescript-loader',
           options: {
-            cacheDirectory: true
+            useCache: true,
+            usePrecompiledFiles: true
           }
         }
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: 'happypack/loader?id=jsx'
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: isDev
+        ? 'happypack/loader?id=styles'
+        : ExtractPlugin.extract({
+          fallback: 'style-loader',
+          use: 'happypack/loader?id=styles'
+        })
       },
       {
         test: /\.(jp?eg|png|gif|svg|ico)$/,
@@ -67,16 +128,15 @@ module.exports = {
         ]
       },
       {
-        test: /\.(ttf|eot|woff|woff2|otf)/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name]-[hash:base64:5].[ext]',
-              outputPath: 'fonts/'
-            }
+        test: /\.(ttf|eot|woff|woff2|otf)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name]-[hash:base64:5].[ext]',
+            outputPath: 'fonts/',
+            publicPath: ''
           }
-        ]
+        }
       }
     ]
   }

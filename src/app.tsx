@@ -1,41 +1,27 @@
 import * as React from 'react'
+import HeaderBar from './components/HeaderBar'
+import SideBar from './components/SideBar'
+import MusicController from './components/MusicController'
 
 const styles = require('./app.css')
-const logo = require('./asserts/logo.svg')
-const maple = require('./asserts/maple.png')
 
-function Header() {
+function ContentContainer({children}: any) {
   return (
-    <div className="header">
-      <img height="80" src={logo} alt="logo" />
-      <h1 className="title">Welcome to Maple's webpack cli</h1>
-    </div>
-  )
-}
-
-function Message() {
-  return (
-    <div className="message-wrapper"><p>To get started, edit src/App.js and save to hot reload.</p></div>
-  )
-}
-
-function Maple() {
-  return (
-    <div className="maple">
-      <img height="300" src={maple} alt="" />
+    <div className="content-container">
+      {children}
     </div>
   )
 }
 
 class App extends React.Component {
   public render() {
-    return (
-      <div className={styles.app}>
-        <Header />
-        <Message />
-        <Maple />
-      </div>
-    )
+    return [
+      <HeaderBar key="header" />,
+      <ContentContainer key="content">
+        <SideBar className="sidebar-control" />
+      </ContentContainer>,
+      <MusicController key="music" />,
+    ]
   }
 }
 

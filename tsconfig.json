@@ -7,7 +7,8 @@
     "sourceMap": true,
     "jsx": "react",
     "strict": true,
-    "module": "es6"
+    "module": "es6",
+    "moduleResolution": "node"
   },
   "include": [
     "./src/"

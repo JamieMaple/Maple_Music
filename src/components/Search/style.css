@@ -1,0 +1,35 @@
+:root {
+  --color: #b9b9b9;
+  --common-line-height: 2rem;
+}
+
+.search {
+  display: flex;
+  width: 16.8rem;
+  height: 2rem;
+  padding: 0 0.8rem;
+  line-height: var(--common-line-height);
+  border-radius: 3rem;
+  border: solid 1px #dcdcdc;
+  font-weight: bold;
+  :global {
+    .search-icon {
+      color: var(--color);
+      margin-right: 0.5rem;
+      text-align: center;
+      &::before {
+        display: inline-block;
+        line-height: var(--common-line-height);
+        font-weight: inherit;
+      }
+    }
+    .search-input {
+      flex: 1;
+      &::-webkit-input-placeholder {
+        font-size: 1.1rem;
+        color: var(--color);
+        font-weight: inherit;
+      }
+    }
+  }
+}

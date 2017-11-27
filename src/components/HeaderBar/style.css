@@ -1,0 +1,18 @@
+.header-bar-wrapper {
+  display: flex;
+  align-content: space-between;
+  align-items: center;
+  height: 3.5rem;
+  padding-left: 7.2rem;
+  -webkit-app-region: drag;
+  :global {
+    .left-header {
+      display: flex;
+      align-items: center;
+      -webkit-app-region: no-drag;
+    }
+    .right-header {
+      width: 17.6rem;
+    } 
+  }
+}

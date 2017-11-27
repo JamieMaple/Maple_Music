@@ -1,45 +1,21 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+:root {
+  --rem-font-size: 12px;
+  font-size: var(--rem-font-size);
 }
-.app {
-  :global {
-    .header {
-      height: 9.375rem;
-      padding: 1.25rem;
-      text-align: center;
-      background: #222;
-      img :local {
-        animation: spin infinite 20s linear
-      }
-      .title {
-        margin-top: 1.5rem; 
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #fff;
+// html dom wrapper
+:global {
+  #app {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    & .content-container {
+      flex: 1;
+      align-content: space-around;
+      align-items: normal;
+      display: flex;
+      & .sidebar-control {
+        width: 17rem;
       }
     }
-    .message-wrapper {
-      overflow: hidden;
-      p {
-      text-align: center;
-      font-size: 1.125rem;
-      font-size: large;
-    }
-    }
-    .maple {
-      margin-top: 20px;
-      text-align: center;
-    }
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg)
-  }
-  to {
-    transform: rotate(360deg)
   }
 }
