@@ -1,28 +1,17 @@
-# webpack-scaffold -- electron with express-server
+# electron Maple's Music
 
-scaffold for maple / dev
+use scaffold for maple's scaffold
 
 ### !!update
 
-for react-fiber and more support so remove react-lite
-
-### ~~`react` or `react-dom` for `react-lite`~~
-
-~~vendor size much smaller: from **115kb** to **30kb**~~
 
 ### Done
 
-- [x] `babel` compile `js` and `jsx`
+[] UI
 
-- [x] `alias` for `react` and `react-dom` just use `reaxt-lite`, **if meet some bugs can just remove the alias** use real one
+[] Data Manage: redux saga for async
 
-- [x] `postcss` and plugins, etc
-
-- [x] `css modules` for add module to `css-loader`
-
-- [x] `webpack-bundle-analyzer` for analyzing modules
-
-- [x] `esLint` for `webpack`, use `recommended`
+[] some details
 
 ---
 
