@@ -5,7 +5,7 @@ const style = require('./style.css')
 export default function Search() {
   return (
     <div className={style.search}>
-      <i className="ion-ios-search search-icon"></i>
+      <i className="ion-ios-search-strong search-icon"></i>
       <input className="search-input" type="text" placeholder="Search" />
     </div>
   )

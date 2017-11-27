@@ -11,8 +11,8 @@ if (isDev) {
 
 function createWindow() {
   win = new BrowserWindow({
-    minWidth: 800,
-    minHeight: 600,
+    minWidth: 1000,
+    minHeight: 670,
     backgroundColor: '#fff',
     titleBarStyle: 'hiddenInset',
     fullscreen: false

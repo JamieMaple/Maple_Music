@@ -1,3 +1,38 @@
+:root {
+  --sidebar-title-font: 1.3rem;
+  --sidebar-row-font: 1.1rem;
+}
+
 .sidebar-wrapper {
   background: #242929;
+  color: #fff;
+  padding: 1.2rem 0.8rem;
+  :global {
+    .sidebar-area-wrapper {
+      .title {
+        height: 2rem;
+        font-size: var(--sidebar-title-font);
+        border-bottom: solid 1px rgba(255,255,255,0.25);
+      }
+      .items-wrapper {
+        padding-left: 0.8rem;
+        & > :first-child {
+          margin-top: 1.3rem;
+        }
+        & > :nth-child(n) {
+          margin-top: 1.8rem;
+          font-size: var(--sidebar-row-font);
+          & .icon-hook {
+            display: inline-block;
+            width: 1.3rem;
+            margin-right: 0.9rem;
+            text-align: center;
+          }
+        }
+        & > :last-child {
+          margin-bottom: 2.4rem;
+        }
+      }
+    }
+  }
 }
