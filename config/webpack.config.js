@@ -76,9 +76,7 @@ module.exports = {
         'postcss-loader'
       ]
     }),
-    isDev
-    ? () => {}
-    : new ExtractPlugin('css/main.css')
+    isDev ? () => {} : new ExtractPlugin('css/main.css')
   ],
   module: {
     rules: [
