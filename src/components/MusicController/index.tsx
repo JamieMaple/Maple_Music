@@ -1,11 +1,7 @@
 import * as React from 'react'
+import { InterfaceMusicInfo } from 'commonTypes'
 
 const style = require('./style.css')
-
-interface InterfaceMusicInfo {
-  song?: string,
-  singer?: string,
-}
 
 function MusicInfo({song = '未知音乐', singer = '未知歌手'}: InterfaceMusicInfo) {
   return (

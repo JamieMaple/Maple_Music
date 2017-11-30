@@ -1,10 +1,10 @@
 :root {
-  --sidebar-title-font: 1.3rem;
-  --sidebar-row-font: 1.3rem;
+  --sidebar-title-font: 1.2rem;
+  --sidebar-row-font: 1.2rem;
 }
 
 .sidebar-wrapper {
-  background: var(--grey);
+  background: #242929;
   color: #fff;
   padding: 1.2rem 0.8rem;
   :global {

@@ -1,0 +1,16 @@
+@import './default.css';
+.banner {
+  position: relative;
+  height: inherit;
+  max-width: 50rem;
+  margin: auto;
+  overflow: hidden;
+  :global {
+    .banner-anim-elem{
+      height: inherit;
+      .banner-item-bg {
+        height: inherit;
+      }
+    }
+  }
+}

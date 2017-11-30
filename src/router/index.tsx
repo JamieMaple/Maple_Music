@@ -10,9 +10,11 @@ export default function RouteViews() {
   return (
     <Switch>
       <Route exact path="/" component={IndexPage} />
-      <Route path="/privatefm" component={PrivateFM} />
-      <Route path="/mv" component={MVPage} />
+      <Route exact path="/privatefm" component={PrivateFM} />
+      <Route exact path="/mv" component={MVPage} />
       <Route path="/songsList/:id" component={SongsList} />
+      {/* all the routes that no match will go to index page */}
+      <Route component={IndexPage} />
     </Switch>
   )
 }

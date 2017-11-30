@@ -1,14 +1,6 @@
 import * as React from 'react'
+import { InterfaceSongProps } from 'commonTypes'
 const defaultClassName = require('./style.css')
-
-interface InterfaceSong {
-  className?: string,
-  style?: object,
-  name?: string,
-  image?: string,
-  count?: number,
-  index?: number,
-}
 
 export default function Song(
   {
@@ -18,7 +10,7 @@ export default function Song(
     image = '',
     count = 9999,
     index = -1,
-  }: InterfaceSong,
+  }: InterfaceSongProps,
 ) {
   const classNames = `${defaultClassName['song-wrapper']} ${className}`.trim()
 

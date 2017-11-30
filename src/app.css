@@ -23,7 +23,7 @@
       & .views-wrapper {
         flex: 1;
         margin: 0 1.2rem;
-        padding: 1.5rem 0.6rem;
+        padding: 0 0.6rem 1.5rem 0.6rem;
         overflow-y: auto;
         &::-webkit-scrollbar { 
           display: none;

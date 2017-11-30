@@ -1,15 +1,7 @@
 import * as React from 'react'
+import { InterfaceAlbumProps } from 'commonTypes'
 
 const defaultClassName = require('./style.css')
-
-interface InterfaceAlbum {
-  className?: string,
-  style?: object,
-  image?: string,
-  name?: string,
-  singer?: string,
-  url?: string,
-}
 
 export default function Album(
   {
@@ -19,7 +11,7 @@ export default function Album(
     name = '未知歌单',
     singer = '',
     url = '',
-  }: InterfaceAlbum,
+  }: InterfaceAlbumProps,
 ) {
   const classNames = `${defaultClassName['album-wrapper']} ${className}`.trim()
 
