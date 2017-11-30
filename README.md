@@ -20,4 +20,10 @@ use scaffold for maple's scaffold
 
 1. it is no es6 support for `webpack` uglifyjs, so install `uglifyjs-webpack-plugin` install
 
+1. dont use `@` like `@font-face` or `@import` into `global:{...}`
+
+1. ts alias -> use `baseUrl` and `paths` in `tsconfig.json`
+
+1. css global shared values -> use fetures in `postcss-cssnext`
+
 ### MIT

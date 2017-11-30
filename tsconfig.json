@@ -7,8 +7,12 @@
     "sourceMap": true,
     "jsx": "react",
     "strict": true,
-    "module": "es6",
-    "moduleResolution": "node"
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["src/components/*"]
+    }
   },
   "include": [
     "./src/"
