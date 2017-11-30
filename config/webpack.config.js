@@ -18,7 +18,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx','.json'],
     alias: {
-      Components: resolve('src', 'components')
+      components: resolve('src', 'components')
     }
   },
   plugins: [
@@ -76,7 +76,7 @@ module.exports = {
         'postcss-loader'
       ]
     }),
-    isDev ? () => {} : new ExtractPlugin('css/main.css')
+    isDev ? () => {} : new ExtractPlugin('main.css')
   ],
   module: {
     rules: [
@@ -131,8 +131,7 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[name]-[hash:base64:5].[ext]',
-            outputPath: 'fonts/',
-            publicPath: ''
+            outputPath: 'fonts/'
           }
         }
       }

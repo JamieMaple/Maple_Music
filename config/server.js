@@ -13,6 +13,7 @@ const compiler = webpack(config)
 
 app.use(DevMiddleware(compiler, {
   publicPath: config.output.publicPath,
+  warn: false,
   stats: {
     colors: true,
     modules: false,
