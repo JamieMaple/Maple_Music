@@ -1,9 +1,11 @@
 :root {
-  --rem-font-size: 12px;
-  font-size: var(--rem-font-size);
-  font-family: 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  font-size: 12px;
+  @media (max-width: 755px) {
+    font-size: 10px;
+  }
+  font-family: 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-// html dom wrapper
+
 :global {
   #app {
     display: flex;
@@ -11,11 +13,25 @@
     flex-direction: column;
     & .content-container {
       flex: 1;
+      display: flex;
       align-content: space-around;
       align-items: normal;
-      display: flex;
+      background: #000;
       & .sidebar-control {
         width: 17rem;
+      }
+      & .views-wrapper {
+        flex: 1;
+        margin: 0 1.2rem;
+        padding: 1.5rem 0.6rem;
+        overflow-y: auto;
+        &::-webkit-scrollbar { 
+          display: none;
+        }
+      }
+      & > :nth-child(2) {
+        background: #101515;
+        color: #fff;
       }
     }
   }

@@ -1,3 +1,4 @@
+@import './asserts/web-icon/css/ionicons.css';
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -34,11 +35,22 @@ div, p {
 ol, ul {
 	list-style: none;
 }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 input {
   border: 0;
   padding: 0;
   outline: none;
   -webkit-appearance: none;
+}
+img {
+  border: 0;
+  border-image-width: 0;
+}
+img[src=""] {
+  opacity: 0;
 }
 blockquote, q {
 	quotes: none;

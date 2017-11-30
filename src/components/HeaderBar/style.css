@@ -16,3 +16,21 @@
     } 
   }
 }
+
+.history-wrapper {
+  display: flex;
+  align-content: space-between;
+  align-items: center;
+  width: 3.6rem;
+  height: 1.3rem;
+  margin-right: 2.1rem;
+  & :nth-child(n) {
+    flex: 1;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #b7b7b7;
+  }
+  & :first-child {
+    margin-right: 1rem;
+  }
+}

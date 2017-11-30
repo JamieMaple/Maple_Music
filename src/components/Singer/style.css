@@ -1,0 +1,24 @@
+.singer-wrapper {
+  display: flex;
+  align-items: center;
+  height: 3.4rem;
+  padding: 0 1.2rem 0 0.6rem;
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  background: #212626;
+  :global {
+    .singer-image {
+      display: block;
+      height: 2.3rem;
+      width: 2.3rem;
+      margin-right:0.8rem;
+      border-radius: 50%;
+    }
+    .singer-name {
+      flex: 1;
+    }
+    .icon-hook {
+
+    }
+  }
+}

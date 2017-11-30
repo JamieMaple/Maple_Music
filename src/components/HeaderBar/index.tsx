@@ -1,12 +1,16 @@
 import * as React from 'react'
 import Search from '../Search'
-import GoHistory from '../GoHistory'
+import GoHistory from './GoHistory'
 const style = require('./style.css')
 
-function LeftHeaderBar() {
+interface InterfaceHeader {
+  history?: object,
+}
+
+function LeftHeaderBar({history}: InterfaceHeader) {
   return (
     <div className="left-header">
-      <GoHistory />
+      <GoHistory history={history} />
       <Search />
     </div>
   )
@@ -19,10 +23,10 @@ function RightHeaderBar() {
   )
 }
 
-export default function HeaderBar() {
+export default function HeaderBar({history}: InterfaceHeader) {
   return (
     <div className={style['header-bar-wrapper']}>
-      <LeftHeaderBar />
+      <LeftHeaderBar history={history} />
       <RightHeaderBar />
     </div>
   )

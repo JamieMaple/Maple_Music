@@ -1,0 +1,59 @@
+.index-wrapper {
+  display: flex;
+  flex-direction: column;
+  :global {
+    .banner-wrapper {
+      height: 21.7rem;
+      margin-bottom: 1.4rem;
+    }
+    .popular-list-wrapper, .recommended-list-wrapper {
+      .title {
+        height: 2.6rem;
+        margin-bottom: 0.5rem;
+        font-size: 1.7rem;
+      }
+    }
+    .popular-list-wrapper {
+      display: flex;
+      min-height: 24.6rem;
+      margin-bottom: 0.9rem;
+      .popular-songs {
+        flex: 1;
+        margin-right: 1.6rem;
+        .songs-wrapper {
+          & > :nth-child(n) {
+          margin-top: 0.4rem;
+          }
+          & > :nth-child(1) {
+            margin: 0;
+          }
+        }
+      }
+      .popular-singers {
+        width: 21.9rem;
+        .singers-wrapper {
+          & > :nth-child(n) {
+            margin-top: 0.2rem;
+          }
+          & > :nth-child(1) {
+            margin: 0;
+          }
+        }
+      }
+    }
+    .recommended-list-wrapper {
+      min-height: 21rem;
+      .title {
+        margin-bottom: 1.4rem;
+      }
+      .albums-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .album-item {
+          margin: 0 1rem 1rem 0;
+        }
+      }
+    }
+  }
+}

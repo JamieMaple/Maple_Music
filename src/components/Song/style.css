@@ -1,0 +1,27 @@
+.song-wrapper {
+  display: flex;
+  align-items: center;
+  height: 3.1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 1.2rem;
+  font-weight: 100;
+  :global {
+    .song-image {
+      height: 2.1rem;
+      width: 2.1rem;
+      margin: 0 1.4rem 0 0.4rem;
+    }
+    .song-index {
+      margin-right: 2.7rem;
+    }
+    .song-add-icon {
+      margin-right: 2.5rem;
+    }
+    .song-name {
+      flex: 1;
+    }
+    .song-count {
+      
+    }
+  }
+}

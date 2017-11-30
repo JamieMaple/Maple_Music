@@ -1,44 +1,7 @@
 import * as React from 'react'
+import { SideBarArea } from './sidebarArea'
+import * as types from './types'
 const style = require('./style.css')
-
-interface InterfaceRowItem {
-  name: string,
-  icon: string,
-  url: string,
-}
-
-interface InterfaceSidebarList {
-  title: string,
-  list: InterfaceRowItem[],
-}
-
-function EachRowItem({name, icon, url}: InterfaceRowItem) {
-  return (
-    <div className="each-item">
-      <i className={`icon-hook ${icon}`}></i>
-      <a>{name}</a>
-    </div>
-  )
-}
-
-function SideBarArea({title, list}: InterfaceSidebarList) {
-  const items = list.map((item) =>
-  <EachRowItem
-    key={item.name}
-    name={item.name}
-    icon={item.icon}
-    url={item.url}
-  />)
-
-  return (
-    <div className="sidebar-area-wrapper">
-      <h3 className="title">{title}</h3>
-      <div className="items-wrapper">
-        {items}
-      </div>
-    </div>
-  )
-}
 
 export default class SideBar extends React.Component {
   private static defaultProps = {
@@ -57,17 +20,17 @@ export default class SideBar extends React.Component {
           {
             name: '发现',
             icon: 'ion-ios-musical-notes',
-            url: '',
+            url: '/',
           },
           {
             name: '私人FM',
             icon: 'ion-radio-waves',
-            url: '',
+            url: '/privatefm',
           },
           {
             name: 'mv',
             icon: 'ion-ios-videocam',
-            url: '',
+            url: '/mv',
           },
         ],
       },
@@ -77,17 +40,17 @@ export default class SideBar extends React.Component {
           {
             name: 'Songs',
             icon: 'ion-ios-musical-note',
-            url: '',
+            url: '/',
           },
           {
             name: 'Albums',
             icon: 'ion-ios-albums-outline',
-            url: '',
+            url: '/',
           },
           {
             name: 'Artist',
             icon: 'ion-ios-people',
-            url: '',
+            url: '/',
           },
         ],
       },
