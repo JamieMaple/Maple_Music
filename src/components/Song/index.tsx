@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { InterfaceSongProps } from 'commonTypes'
 const defaultClassName = require('./style.css')
+const defaultSong = require('./default-song.svg')
 
 export default function Song(
   {
     className = '',
     style = {},
     name = '未知歌曲',
-    image = '',
+    image = defaultSong,
     count = 9999,
     index = -1,
   }: InterfaceSongProps,

@@ -21,10 +21,11 @@
       .music-photo {
         height: var(--main-height);
         width: var(--main-height);
+        background-color: rgba(255, 255, 255, 0.1);
       }
       .music-info {
         flex: 1;
-        margin-left: 0.5rem;
+        margin-left: 1rem;
         white-space: nowrap;
         overflow: hidden;
         & > :first-child {

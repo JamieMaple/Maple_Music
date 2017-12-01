@@ -43,7 +43,8 @@
       }
     }
     .recommended-list-wrapper {
-      min-height: 21rem;
+      max-height: 43.5rem;
+      overflow: hidden;
       .title {
         margin-bottom: 1.4rem;
       }

@@ -1,0 +1,13 @@
+.song-list-wrapper {
+  :global {
+    .albums-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      & > :nth-child(n) {
+        width: 15rem;
+        margin-bottom: 3rem;
+      }
+    }
+  }
+}

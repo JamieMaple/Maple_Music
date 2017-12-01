@@ -2,8 +2,12 @@ import * as React from 'react'
 import { InterfaceMusicInfo } from 'commonTypes'
 
 const style = require('./style.css')
+const defaultSong = require('./default-song.svg')
 
-function MusicInfo({song = '未知音乐', singer = '未知歌手'}: InterfaceMusicInfo) {
+function MusicInfo({
+  song = '未知音乐',
+  singer = '未知歌手',
+}: InterfaceMusicInfo) {
   return (
     <div className="music-info">
       <h1 className="song">{song}</h1>
@@ -12,8 +16,10 @@ function MusicInfo({song = '未知音乐', singer = '未知歌手'}: InterfaceMu
   )
 }
 
-function MusicPhoto() {
-  return <img className="music-photo" src="" alt=""/>
+function MusicPhoto({
+  image = defaultSong,
+}: any) {
+  return <img className="music-photo" src={image} alt=""/>
 }
 
 function PlayBar() {

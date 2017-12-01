@@ -2,10 +2,10 @@ import * as React from 'react'
 import TitleBar from 'components/TitleBar'
 import Album from 'components/Album'
 
-import { InterfaceCommonElementProps } from 'commonTypes'
+import { InterfaceCommonElementProps, InterfaceAlbum } from 'commonTypes'
 
 interface InterfacePropsTypes extends InterfaceCommonElementProps {
-  recommendedData?: object[],
+  recommendedData?: InterfaceAlbum[],
 }
 
 function AlbumsContainer({
@@ -14,7 +14,14 @@ function AlbumsContainer({
   style = {},
 }: InterfacePropsTypes) {
   const classNames = `${className}`.trim()
-  const AlbumItems = recommendedData.map((item, index) => <Album className="album-item" key={`album-${index}`} />)
+  const AlbumItems = recommendedData.map((item, index) =>
+    <Album
+      className="album-item"
+      key={`album-${index}`}
+      name={item.name}
+      image={item.image}
+      url={item.url}
+    />)
 
   return (
     <ul className={classNames} style={style}>
@@ -28,7 +35,7 @@ export default function RecommendedAlbumList({
 }: InterfacePropsTypes) {
   const classNames = `recomened-list-hook ${className}`.trim()
 
-  const data = new Array(10).fill({})
+  const data = new Array(12).fill({})
 
   return (
     <div className={classNames}>

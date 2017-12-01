@@ -1,13 +1,15 @@
 import * as React from 'react'
 import { InterfaceSingerProps} from 'commonTypes'
 
+const defaultSinger = require('./default-singer.svg')
+
 const defaultClassName = require('./style.css')
 
 export default function Singer(
   {
     className = '',
     style = {},
-    image = '',
+    image = defaultSinger,
     name = '未知歌手',
     url = '',
   }: InterfaceSingerProps,
