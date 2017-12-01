@@ -3,15 +3,16 @@
     "target": "es2015",
     "outDir": "./dist/",
     "pretty": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "sourceMap": true,
     "jsx": "react",
     "strict": true,
-    "module": "commonjs",
+    "module": "es6",
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "components/*": ["src/components/*"]
+      "components/*": ["src/components/*"],
+      "commonTypes": ["src/commonTypes"]
     }
   },
   "include": [
