@@ -5,29 +5,13 @@ import { InterfaceNavigatorProps } from 'commonTypes'
 import Header from 'components/Navigator'
 import RecommendView from './recommend-content'
 import SongListView from './songlist-content'
-
-function NewestList() {
-  return (
-    <div>
-      newest list
-    </div>
-  )
-}
-
-function RankView() {
-  return (
-    <div>
-      RankView
-    </div>
-  )
-}
+import NewestListView from './newestlist-content'
 
 export default function IndexPage() {
   const dataItems: InterfaceNavigatorProps[] = [
     { text: '推荐', url: '/', component: RecommendView },
     { text: '歌单', url: '/list', component: SongListView },
-    { text: '最新', url: '/newest', component: NewestList },
-    { text: '排行榜', url: '/rank', component: RankView },
+    { text: '最新', url: '/newest', component: NewestListView },
   ]
   const routes = dataItems.map(route =>
     <Route exact key={route.url} path={route.url} component={route.component} />)

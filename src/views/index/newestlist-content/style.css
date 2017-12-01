@@ -1,0 +1,20 @@
+.newest-list-wrapper {
+  :global {
+    .filter-type {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 1rem;
+    }
+    .newest-song-list {
+
+    }
+    .newest-album-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      & > :nth-child(n) {
+        margin: 0 3rem 2rem 0;
+      }
+    }
+  }
+}

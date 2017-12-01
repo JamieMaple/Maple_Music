@@ -1,23 +1,31 @@
 .filter {
   display: flex;
+  align-items: center;
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   border-bottom: 1px solid rgba(255, 255, 255, .25);
   :global {
     .filter-title {
-      font-weight: bold;
       margin-right: 1rem;
       &::before {
         margin-right: 0.4rem;
       }
     }
     .filter-tag {
-      margin-right: 1rem;
+      box-sizing: border-box;
+      padding: 0.6rem 0.8rem;
+      margin-right: 0.3rem;
+      border-radius: 0.2rem;
+      transition: background 0.3s ease, color 0.3s ease;
       &::before {
         margin-right: 0.2rem;
       }
+      &:hover {
+        color: var(--red);
+      }
       &.active {
+        background: var(--light);
         color: var(--red);
       }
     }

@@ -8,9 +8,9 @@
     .item-link {
       display: block;
       padding: 0.4rem 0.8rem;
+      border-radius: 0.2rem;
       &.active {
-        border-radius: 0.2rem;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: var(--light);
       }
     }
   }

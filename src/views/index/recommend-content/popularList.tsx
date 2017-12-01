@@ -18,6 +18,10 @@ function PopularSongs({songs = []}: InterfaceData) {
       <ul className="songs-wrapper">
         {songsItems}
       </ul>
+      <div className="more">
+        <span>5 more</span>
+        <span className="icon-hook ion-chevron-down"></span>
+      </div>
     </div>
   )
 }

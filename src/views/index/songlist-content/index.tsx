@@ -22,7 +22,7 @@ export default function SongListView() {
 
   return (
     <div className={wrapper}>
-      <Filter className="filter" tags={tags} />
+      <Filter className="filter" filters={tags} filterTitle="标签:" icon="ion-ios-pricetag-outline" />
       <ul className="albums-wrapper">
         {Albums}
       </ul>
