@@ -52,10 +52,6 @@ export default class Filter extends React.Component {
     })
   }
 
-  public componentDidUpdate() {
-    console.log('component did update')
-  }
-
   public render() {
     const { className, style, filters = [], filterTitle = '选取:', icon } = this.props
     const { choosen } = this.state

@@ -1,8 +1,9 @@
 {
   "presets": [
     [
-      "env", 
+      "env",
       {
+        "node": true,
         "targets": {
           "electron": "1.7"
         },

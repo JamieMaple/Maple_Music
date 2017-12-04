@@ -11,6 +11,11 @@ function resolve(...dirs) {
 }
 
 module.exports = {
+  node: {
+    net: "empty",
+    tls: "empty",
+    fs: "empty"
+  },
   output: {
     path: resolve('app', 'build'),
   },
@@ -18,7 +23,8 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx','.json'],
     alias: {
-      components: resolve('src', 'components')
+      components: resolve('src', 'components'),
+      API: resolve('src', 'API')
     }
   },
   plugins: [

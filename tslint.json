@@ -10,6 +10,8 @@
     "no-unused-variable": true,
     "no-string-literal": false,
     "ordered-imports": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "max-classes-per-file": false,
+    "max-line-length": false
   }
 }

@@ -12,7 +12,8 @@
     "baseUrl": ".",
     "paths": {
       "components/*": ["src/components/*"],
-      "commonTypes": ["src/commonTypes"]
+      "commonTypes": ["src/commonTypes"],
+      "API": ["src/API"]
     }
   },
   "include": [

@@ -16,6 +16,8 @@
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx"] }]
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true,
+    "es6": true
   }
 }

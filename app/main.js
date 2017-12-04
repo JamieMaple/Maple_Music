@@ -11,16 +11,21 @@ if (isDev) {
 
 function createWindow() {
   win = new BrowserWindow({
+    width: 1000,
     minWidth: 1000,
-    minHeight: 670,
+    height: 630,
+    minHeight: 630,
     backgroundColor: '#fff',
     titleBarStyle: 'hiddenInset',
-    fullscreen: false
+    fullscreen: false,
+    webPreferences: {
+      webSecurity: false,
+    }
   })
   win.loadURL(url.format({
     pathname: pathname,
     protocol: 'file:',
-    slashes: true
+    slashes: true,
   }))
 
   isDev && win.webContents.openDevTools()
