@@ -26,4 +26,8 @@ use scaffold for maple's scaffold
 
 1. css global shared values -> use fetures in `postcss-cssnext`
 
+###  Updates
+
+1. new updates in 12/5 on windows book
+
 ### MIT
