@@ -8,7 +8,7 @@ export default function Song(
     className = '',
     style = {},
     name = '未知歌曲',
-    image = defaultSong,
+    picUrl = defaultSong,
     count = 9999,
     index = -1,
   }: InterfaceSongProps,
@@ -17,7 +17,7 @@ export default function Song(
 
   return (
     <div className={classNames} style={style}>
-      <img className="song-image" src={image} alt=""/>
+      <img className="song-image" src={picUrl} alt=""/>
       <span className="song-index">{index}</span>
       <span className="song-add-icon ion-android-add"></span>
       <span className="song-name">{name}</span>

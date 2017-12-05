@@ -9,17 +9,15 @@
     "strict": true,
     "module": "es6",
     "moduleResolution": "node",
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "components/*": ["src/components/*"],
-      "commonTypes": ["src/commonTypes"],
-      "API": ["src/API"]
+      "components/*": ["components/*"],
+      "actions/*": ["store/actions/*"],
+      "commonTypes": ["commonTypes"],
+      "API": ["API"]
     }
   },
   "include": [
-    "./src/"
-  ],
-  "exclude": [
-    "./main.js"
+    "./src/**/*"
   ]
 }

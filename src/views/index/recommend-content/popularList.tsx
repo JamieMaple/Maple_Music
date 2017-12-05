@@ -2,15 +2,16 @@ import * as React from 'react'
 import TitleBar from 'components/TitleBar'
 import Song from 'components/Song'
 import Singer from 'components/Singer'
+import { InterfaceSong, InterfaceSinger } from 'commonTypes'
 
 interface InterfaceData {
-  songs?: object[],
-  singers?: object[],
+  songs?: InterfaceSong[],
+  singers?: InterfaceSinger[],
 }
 
 function PopularSongs({songs = []}: InterfaceData) {
-  const songsItems = songs.map((song, index ) =>
-    <Song className="song" index={index + 1} key={`song-${index}`} />)
+  const songsItems = songs.slice(0, 5).map((song, index ) =>
+    <Song className="song" name={song.name} index={index + 1} key={`song-${index}`} />)
 
   return (
     <div className="popular-songs">
@@ -27,7 +28,7 @@ function PopularSongs({songs = []}: InterfaceData) {
 }
 
 function PopularSingers({singers = []}: InterfaceData) {
-  const singersItems = singers.map((singer, index) =>
+  const singersItems = singers.slice(0, 6).map((singer, index) =>
     <Singer className="singer" key={`singer-${index}`} />)
 
   return (
@@ -43,12 +44,13 @@ function PopularSingers({singers = []}: InterfaceData) {
 export default class PopularList extends React.Component {
   public props: {
     className?: string,
+    singers?: any[],
+    songs?: any[],
   }
 
   public render() {
     const classNames = `popular-list-hook ${this.props.className}`.trim()
-    const singers = new Array(6).fill(6)
-    const songs = new Array(5).fill(0)
+    const { songs, singers } = this.props
 
     return (
       <div className={classNames}>

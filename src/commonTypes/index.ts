@@ -23,7 +23,7 @@ export interface InterfaceSinger {
 
 export interface InterfaceSong {
   name?: string,
-  image?: string,
+  picUrl?: string,
   count?: number,
   index?: number,
 }
@@ -35,7 +35,7 @@ export interface InterfaceNavigatorProps {
 }
 
 export interface InterfaceBannerItem {
-  image: string,
+  pic: string,
   url: string,
 }
 
@@ -51,3 +51,25 @@ export interface InterfaceTitleBar extends InterfaceCommonElementProps {
 }
 
 export interface InterfaceBannerItemProps extends InterfaceBannerItem, InterfaceCommonElementProps {}
+
+// data api for config
+
+export interface InterfaceFetchDataConfig {
+  method: string,
+  params?: any,
+  data?: any,
+}
+
+// actions
+
+export interface InterfacePayload {
+  banners?: any[],
+  songs?: any[],
+  singers?: any[],
+  albums?: any[],
+}
+
+export interface InterfaceAction {
+  type: string,
+  payload: InterfacePayload,
+}

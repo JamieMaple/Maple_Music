@@ -8,6 +8,7 @@
     "semicolon": false,
     "no-console": false,
     "no-unused-variable": true,
+    "no-empty": false,
     "no-string-literal": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,

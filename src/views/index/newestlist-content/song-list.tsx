@@ -13,7 +13,7 @@ export default function NewestSongList({
 }: InterfaceSongsProps) {
   const classNames = `song-list-hook ${className}`.trim()
   const songItems = songs.map((song, index) =>
-    <Song key={`song-${index}`} index={index + 1} name={song.name} image={song.image} />)
+    <Song key={`song-${index}`} index={index + 1} name={song.name} picUrl={song.picUrl} />)
 
   return (
     <div className={classNames}>

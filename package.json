@@ -84,6 +84,7 @@
     "@types/react": "^16.0.22",
     "@types/react-dom": "^16.0.3",
     "@types/react-hot-loader": "^3.0.5",
+    "@types/react-redux": "^5.0.14",
     "@types/react-router-dom": "^4.2.3",
     "axios": "^0.17.1",
     "electron": "^1.7.9",

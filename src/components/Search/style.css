@@ -12,6 +12,7 @@
   border-radius: 3rem;
   border: solid 1px #dcdcdc;
   font-weight: bold;
+  overflow: hidden;
   :global {
     .search-icon {
       color: var(--color);

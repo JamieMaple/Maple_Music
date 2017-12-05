@@ -23,38 +23,25 @@ export default function Banner({
   duration = 600,
 }: InterfaceProps) {
   const classNames = `${wrapper} banner-hook ${className}`.trim()
-  // test, if add data than remove
-  const cloneData: any = [
-    { image: '', url: '' },
-    { image: '', url: '' },
-    { image: '', url: '' },
-    { image: '', url: '' },
-    { image: '', url: '' },
-    { image: '', url: '' },
-  ]
-
-  {/* remove background color if add data */}
-  const bannerItems = cloneData.map((item, index) =>
+  const bannerItems = data.map((item, index) =>
     <Element key={`elem-${index}`}>
       <BgElement
         key="bg"
         className="banner-item-bg"
         style={{
-          backgroundImage: `url(${item.url})`,
-          backgroundColor: index % 2 ? 'white' : 'lightgrey',
+          backgroundImage: `url(${item.pic})`,
+          backgroundSize: '100% 100%',
         }} />
     </Element>)
 
   return (
-    <div>
-      <BannerAnim
-        className={classNames}
-        autoPlay={autoPlay}
-        autoPlaySpeed={autoPlaySpeed}
-        duration={duration}
-      >
-        {bannerItems}
-      </BannerAnim>
-    </div>
+    <BannerAnim
+      autoPlay={autoPlay}
+      autoPlaySpeed={autoPlaySpeed}
+      duration={duration}
+      className={classNames}
+    >
+      {bannerItems}
+    </BannerAnim>
   )
 }

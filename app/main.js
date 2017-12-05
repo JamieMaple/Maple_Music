@@ -18,6 +18,7 @@ function createWindow() {
     backgroundColor: '#fff',
     titleBarStyle: 'hiddenInset',
     fullscreen: false,
+    frame: false,
     webPreferences: {
       webSecurity: false,
     }
@@ -38,8 +39,10 @@ function createWindow() {
 app.on('ready', () => {
   createWindow()
   if (isDev) {
-    BrowserWindow.addDevToolsExtension('/Users/jamie/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.5.2_0')
+    if (process.platform === 'darwin') {
+      BrowserWindow.addDevToolsExtension('/Users/jamie/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.5.2_0')
     BrowserWindow.addDevToolsExtension('/Users/jamie/Library/Application Support/Google/Chrome/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.15.1_0')
+    }
   }
 })
 

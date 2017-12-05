@@ -1,8 +1,9 @@
 @import './default.css';
 .banner {
   position: relative;
-  height: inherit;
+  width: 50%;
   max-width: 50rem;
+  min-width: 50rem;
   margin: auto;
   overflow: hidden;
   :global {

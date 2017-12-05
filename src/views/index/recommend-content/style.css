@@ -4,7 +4,7 @@
   :global {
     .banner-wrapper {
       position: relative;
-      height: 21.7rem;
+      height: 21rem;
       margin-bottom: 1.4rem;
     }
     .popular-list-wrapper, .recommended-list-wrapper {
@@ -63,7 +63,10 @@
         justify-content: space-between;
         flex-wrap: wrap;
         .album-item {
-          margin: 0 2rem 2rem 0;
+          margin: 0 3rem 2rem 0;
+          @media (width >= 100rem) {
+            margin-right: 10rem;
+          }
         }
       }
     }

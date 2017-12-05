@@ -24,7 +24,8 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx','.json'],
     alias: {
       components: resolve('src', 'components'),
-      API: resolve('src', 'API')
+      API: resolve('src', 'API'),
+      actions: resolve('src', 'store', 'actions'),
     }
   },
   plugins: [
