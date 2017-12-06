@@ -1,15 +1,12 @@
 import * as React from 'react'
 import { SideBarArea } from './sidebarArea'
-import * as types from './types'
-const style = require('./style.css')
+import { InterfaceCommonElementProps } from 'commonTypes'
+const wrapper = require('./style.css')['sidebar-wrapper']
 
-export default class SideBar extends React.Component {
+export default class SideBar extends React.Component<InterfaceCommonElementProps, any> {
   private static defaultProps = {
     className: '',
-  }
-
-  public props: {
-    className?: string,
+    style: {},
   }
 
   public state = {
@@ -58,13 +55,13 @@ export default class SideBar extends React.Component {
   }
 
   public render() {
-    const { className } = this.props
+    const { className, style } = this.props
     const listItems = this.state.presets.map(
       (item) =>
       <SideBarArea key={item.title} title={item.title} list={item.list} />)
 
     return (
-      <div className={`${style['sidebar-wrapper']} ${className}`}>
+      <div className={`${wrapper} ${className}`} style={style}>
         {listItems}
       </div>
     )

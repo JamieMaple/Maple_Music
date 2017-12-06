@@ -29,9 +29,7 @@ function FilterTag({
   )
 }
 
-export default class Filter extends React.Component {
-  public props: InterfaceFilter
-
+export default class Filter extends React.Component<InterfaceFilter, any> {
   public state = {
     choosen: 0,
   }

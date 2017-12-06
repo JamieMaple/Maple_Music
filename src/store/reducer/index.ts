@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions'
 import { InterfaceAction } from 'commonTypes'
+import initState from './initState'
 import {
   FETCH_BANNER_SUCCESS,
   FETCH_SONGS_SUCCESS,
@@ -7,43 +8,30 @@ import {
   FETCH_ALBUMS_SUCCESS,
 } from '../actions/types'
 
-/* [{}, {}] */
-const banners = []
-/* {  }*/
-const listerning = {}
-/* {  } */
-const search = {}
-/* {  } */
-const songs = []
-/* {  } */
-const albums = []
-/* {  } */
-const singers = []
-
-const initState = {
-  banners,
-  listerning,
-  search,
-  songs,
-  albums,
-  singers,
-}
-
 export default handleActions({
   [FETCH_BANNER_SUCCESS]: (state, action: InterfaceAction) => ({
     ...state,
-    banners: action.payload.banners,
+    banners: action.payload.data,
   }),
   [FETCH_SONGS_SUCCESS]: (state, action: InterfaceAction) => ({
     ...state,
-    songs: action.payload.songs,
+    songs: {
+      ...state.songs,
+      ...action.payload.data,
+    },
   }),
   [FETCH_SINGERS_SUCCESS]: (state, action: InterfaceAction) => ({
     ...state,
-    singers: action.payload.singers,
+    singers: {
+      ...state.singers,
+      ...action.payload.data,
+    },
   }),
   [FETCH_ALBUMS_SUCCESS]: (state, action: InterfaceAction) => ({
     ...state,
-    albums: action.payload.albums,
+    albums: {
+      ...state.albums,
+      ...action.payload.data,
+    },
   }),
 }, initState)

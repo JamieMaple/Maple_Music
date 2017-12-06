@@ -30,13 +30,18 @@
           }
         }
         .more {
-          width: 6.5rem;
           margin-top: 1rem;
           padding: 0.5rem;
           font-size: 1rem;
           cursor: pointer;
-          .icon-hook {
-            padding-left: 0.8rem;
+          & :nth-child(n) {
+            margin-right: 0.8rem;
+          }
+          & :last-child {
+            margin-right: 0;
+          }
+          &.no-more {
+            color: grey;
           }
         }
       }

@@ -1,3 +1,32 @@
+/*
+** @@ global state tree structure names
+** @@ ... some sub singers
+** @@ with key for view page
+*/
+export interface InterfaceStateTree {
+  search?: any,
+  listening?: any,
+  albums?: any,
+  singers?: any,
+  songs?: any,
+}
+
+export const stateTreeTypes: InterfaceStateTree = {
+  search: {},
+  listening: {},
+  albums: {
+    recommend: 'recommend',
+    playList: 'playList',
+    newest: 'newest',
+  },
+  singers: {
+    recommend: 'recommend',
+  },
+  songs: {
+    recommend: 'recommend',
+  },
+}
+
 export interface InterfaceCommonElementProps {
   className?: string,
   style?: object,
@@ -16,7 +45,7 @@ export interface InterfaceMusicInfo {
 }
 
 export interface InterfaceSinger {
-  image?: string,
+  picUrl?: string,
   name?: string,
   url?: string,
 }
@@ -56,7 +85,8 @@ export interface InterfaceBannerItemProps extends InterfaceBannerItem, Interface
 // data api for config
 
 export interface InterfaceFetchDataConfig {
-  method: string,
+  method?: string,
+  url?: string,
   params?: any,
   data?: any,
 }
@@ -64,10 +94,13 @@ export interface InterfaceFetchDataConfig {
 // actions
 
 export interface InterfacePayload {
+  config?: any,
+  dataType: string,
   banners?: any[],
-  songs?: any[],
-  singers?: any[],
-  albums?: any[],
+  songs?: object,
+  singers?: object,
+  albums?: object,
+  data?: object,
 }
 
 export interface InterfaceAction {

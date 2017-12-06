@@ -11,7 +11,7 @@ const appWrapper = (function getContainer() {
   return wrapper
 })()
 
-export default class PortalContainer extends React.Component {
+export default class PortalContainer extends React.Component<any, any> {
   private el = document.createElement('div')
 
   public componentDidMount() {

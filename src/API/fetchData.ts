@@ -1,4 +1,17 @@
 import axios from 'axios'
 import { InterfaceFetchDataConfig } from 'commonTypes'
 
-export const fetchData = (config: InterfaceFetchDataConfig) => axios.request(config).then(res => res.data)
+export const fetchData = ({
+  method = 'GET',
+  url = '',
+  params = {},
+  data = {},
+}: InterfaceFetchDataConfig) =>
+  axios
+    .request({
+      method,
+      url,
+      params,
+      data,
+    })
+    .then(res => res.data)

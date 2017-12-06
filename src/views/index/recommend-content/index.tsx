@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-
 import {
   bannerUrl,
   recommendSongsUrl,
@@ -13,29 +12,20 @@ import {
   fetchSingers,
   fetchAlbums,
 } from 'actions/creators'
-
 import Banner from 'components/Banner'
 import PopularList from './popularList'
 import RecommendedAlbumsList from './recommendAlbumsList'
+import { stateTreeTypes } from 'commonTypes'
 
 const style = require('./style.css')
 
-interface InterfaceProps {
-  banners: any[],
-  songs: any[],
-  singers: any[],
-  albums: any[]
-}
-
-class RecommendView extends React.Component<InterfaceProps, any> {
-  public static defaultProps = {
-    banners: [],
-    songs: [],
-    singers: [],
-    albums: [],
+class RecommendView extends React.Component<any, any> {
+  public props: {
+    banners: any[],
+    songs: any[],
+    singers: any[],
+    albums: any[],
   }
-
-  public props: InterfaceProps
 
   public render() {
     const { singers, songs, albums, banners } = this.props
@@ -50,39 +40,35 @@ class RecommendView extends React.Component<InterfaceProps, any> {
   }
 }
 
-const mapState = (state): InterfaceProps => {
+const mapState = (state) => {
   return {
     banners: state.banners,
-    songs: state.songs,
-    singers: state.singers,
-    albums: state.albums,
+    songs: state.songs[stateTreeTypes.songs.recommend],
+    singers: state.singers[stateTreeTypes.singers.recommend],
+    albums: state.albums[stateTreeTypes.albums.recommend],
   }
 }
 
 const mapDispatch = (dispatch) => {
-  /* init fetch */
+  /* init render */
   dispatch(fetchBanner({
-    method: 'GET',
     url: bannerUrl,
   }))
   dispatch(fetchSongs({
-    method: 'GET',
     url: recommendSongsUrl,
-  }))
+  }, stateTreeTypes.songs.recommend))
   dispatch(fetchSingers({
-    method: 'GET',
     url: recommendSingersUrl,
     params: {
       limit: 20,
       offset: 0,
     },
-  }))
+  }, stateTreeTypes.singers.recommend))
   dispatch(fetchAlbums({
-    method: 'GET',
     url: recommendAlbumsUrl,
-  }))
+  }, stateTreeTypes.albums.recommend))
 
-  return {}
+  return {dispatch}
 }
 
 export default connect(mapState, mapDispatch)(RecommendView)

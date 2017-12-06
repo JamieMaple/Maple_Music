@@ -13,7 +13,6 @@ function AlbumsContainer({
   className = '',
   style = {},
 }: InterfacePropsTypes) {
-  console.log()
   const classNames = `${className}`.trim()
   const AlbumItems = albums.map((item, index) =>
     <Album

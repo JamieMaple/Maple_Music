@@ -9,7 +9,7 @@ export default function Singer(
   {
     className = '',
     style = {},
-    image = defaultSinger,
+    picUrl = defaultSinger,
     name = '未知歌手',
     url = '',
   }: InterfaceSingerProps,
@@ -18,7 +18,7 @@ export default function Singer(
 
   return (
     <div className={classNames} style={style}>
-      <img className="singer-image" src={image} alt=""/>
+      <img className="singer-image" src={picUrl} alt=""/>
       <h3 className="singer-name">{name}</h3>
       <span className="icon-hook ion-ios-arrow-forward"></span>
     </div>

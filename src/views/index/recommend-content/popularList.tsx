@@ -2,27 +2,30 @@ import * as React from 'react'
 import TitleBar from 'components/TitleBar'
 import Song from 'components/Song'
 import Singer from 'components/Singer'
-import { InterfaceSong, InterfaceSinger } from 'commonTypes'
+import { InterfaceSong, InterfaceSinger, InterfaceCommonElementProps } from 'commonTypes'
 
-interface InterfaceData {
+interface InterfaceData extends InterfaceCommonElementProps {
   songs?: InterfaceSong[],
   singers?: InterfaceSinger[],
 }
 
 const sliceArr = (arr: any[], limit: number) => arr.slice(0, limit)
 
-class PopularSongs extends React.Component {
-  public props: InterfaceData
-
+class PopularSongs extends React.Component<InterfaceData, any> {
   public state = {
     limit: 5,
+    steps: 5,
+  }
+
+  public handleMore(upToLimit) {
+    this.setState(prev => ({limit: prev.limit + prev.steps}))
   }
 
   public render() {
     const { songs = [] } = this.props
-    const { limit } = this.state
+    const { limit, steps } = this.state
     const songsItems = sliceArr(songs, limit).map((song, index ) =>
-    <Song className="song" index={index + 1} name={song.name} popularity={song.song.popularity} key={`song-${index}`} />)
+    <Song className="song" index={index + 1} name={song.name} popularity={song.song.playedNum} key={`song-${index}`} />)
 
     return (
       <div className="popular-songs">
@@ -30,18 +33,23 @@ class PopularSongs extends React.Component {
         <ul className="songs-wrapper">
           {songsItems}
         </ul>
-        <div className="more">
-          <span>{songs.length >= limit ? songs.length - limit : 0 } more</span>
-          <span className="icon-hook ion-chevron-down"></span>
-        </div>
+        {
+          songs.length > limit
+          ? <div onClick={this.handleMore.bind(this)} className="more">
+              <span>{songs.length > limit ? steps : 0 } more</span>
+              <span className="icon-hook ion-chevron-down"></span>
+            </div>
+          : <div className="more no-more">
+              <span className="icon-hook ion-android-close"></span>
+              <span>没有更多了</span>
+            </div>
+        }
       </div>
     )
   }
 }
 
-class PopularSingers extends React.Component {
-  public props: InterfaceData
-
+class PopularSingers extends React.Component<InterfaceData, any> {
   public state = {
     limit: 6,
   }
@@ -50,7 +58,7 @@ class PopularSingers extends React.Component {
     const { singers = [] } = this.props
     const { limit } = this.state
     const singersItems = sliceArr(singers, limit).map((singer, index) =>
-    <Singer className="singer" key={`singer-${index}`} />)
+    <Singer className="singer" name={singer.name} picUrl={singer.picUrl} key={`singer-${index}`} />)
 
     return (
       <div className="popular-singers">
@@ -63,13 +71,7 @@ class PopularSingers extends React.Component {
   }
 }
 
-export default class PopularList extends React.Component {
-  public props: {
-    className?: string,
-    singers?: any[],
-    songs?: any[],
-  }
-
+export default class PopularList extends React.Component<InterfaceData, any> {
   public render() {
     const classNames = `popular-list-hook ${this.props.className}`.trim()
     const { songs, singers } = this.props

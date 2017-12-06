@@ -1,11 +1,18 @@
 import * as React from 'react'
-import { InterfaceAlbumProps, InterfaceCommonElementProps } from 'commonTypes'
+import { connect } from 'react-redux'
+import {
+  InterfaceAlbumProps,
+  InterfaceCommonElementProps,
+  stateTreeTypes,
+} from 'commonTypes'
+import { fetchAlbums } from 'actions/creators'
+import { playListUrl } from 'API'
 import Album from 'components/Album'
 import Filter from 'components/Filter'
 
 const wrapper = require('./style.css')['song-list-wrapper']
 
-export default function SongListView() {
+function SongListView() {
   const albumsData: InterfaceAlbumProps[] = new Array(30).fill(0)
   const tags = new Array(4).fill('标签')
   tags.unshift('全部')
@@ -29,3 +36,20 @@ export default function SongListView() {
     </div>
   )
 }
+
+const mapState = (state) => {
+  return {}
+}
+const mapDispatch = (dispatch) => {
+  /* init state */
+  dispatch(fetchAlbums({
+    method: 'GET',
+    url: playListUrl,
+    params: {
+      limit: 20,
+    },
+  }, stateTreeTypes.albums.playList))
+  return {dispatch}
+}
+
+export default connect(mapState, mapDispatch)(SongListView)

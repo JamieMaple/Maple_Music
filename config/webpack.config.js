@@ -26,6 +26,7 @@ module.exports = {
       components: resolve('src', 'components'),
       API: resolve('src', 'API'),
       actions: resolve('src', 'store', 'actions'),
+      commonTypes: resolve('src', 'commonTypes'),
     }
   },
   plugins: [

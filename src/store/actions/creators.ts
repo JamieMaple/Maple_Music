@@ -11,7 +11,9 @@ import {
   FETCH_ERROR,
 } from './types'
 
-const commonFetch = (config) => ({config})
+const commonFetch  = (config, dataType) => ({config, dataType})
+const commonCommit = (data) => ({data})
+const commonError  = () => {}
 
 export const {
   fetchError,
@@ -25,12 +27,12 @@ export const {
   fetchAlbumsSuccess,
 } = createActions({
   [FETCH_BANNER]: commonFetch,
-  [FETCH_BANNER_SUCCESS]: (banners) => ({banners}),
+  [FETCH_BANNER_SUCCESS]: commonCommit,
   [FETCH_SONGS]: commonFetch,
-  [FETCH_SONGS_SUCCESS]: (songs) => ({songs}),
+  [FETCH_SONGS_SUCCESS]: commonCommit,
   [FETCH_SINGERS]: commonFetch,
-  [FETCH_SINGERS_SUCCESS]: (singers) => ({singers}),
+  [FETCH_SINGERS_SUCCESS]: commonCommit,
   [FETCH_ALBUMS]: commonFetch,
-  [FETCH_ALBUMS_SUCCESS]: (albums) => ({albums}),
-  [FETCH_ERROR]: () => {},
+  [FETCH_ALBUMS_SUCCESS]: commonCommit,
+  [FETCH_ERROR]: commonError,
 })

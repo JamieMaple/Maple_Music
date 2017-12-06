@@ -1,9 +1,19 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import * as types from './types'
 import TitleBar from 'components/TitleBar'
 
-export function EachRowItem({name, icon, url}: types.InterfaceRowItem) {
+interface InterfaceRowItem {
+  name: string,
+  icon: string,
+  url: string,
+}
+
+interface InterfaceSidebarList {
+  title: string,
+  list: InterfaceRowItem[],
+}
+
+export function EachRowItem({name, icon, url}: InterfaceRowItem) {
   return (
     <div className="each-item">
       <i className={`icon-hook ${icon}`}></i>
@@ -12,7 +22,7 @@ export function EachRowItem({name, icon, url}: types.InterfaceRowItem) {
   )
 }
 
-export function SideBarArea({title, list}: types.InterfaceSidebarList) {
+export function SideBarArea({title, list}: InterfaceSidebarList) {
   const items = list.map((item) =>
   <EachRowItem
     key={item.name}

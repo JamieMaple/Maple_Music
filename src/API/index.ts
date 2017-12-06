@@ -16,3 +16,6 @@ export const recommendProgramUrl = baseUrl + '/program/recommend'
 // 需登录 -- 推荐每日歌单、每日歌曲
 export const protectedRecommendAlbumsUrl = baseUrl + '/recommend/resource'
 export const protectedRecommendSongsUrl = baseUrl + '/recommend/songs'
+
+// 网友精选
+export const playListUrl = baseUrl + '/top/playlist'

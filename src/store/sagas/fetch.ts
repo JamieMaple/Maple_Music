@@ -1,6 +1,19 @@
 import { put, call } from 'redux-saga/effects'
 import { fetchData } from 'API'
-import { fetchBannerSuccess, fetchSongsSuccess, fetchError, fetchAlbumsSuccess, fetchSingersSuccess } from '../actions/creators'
+import { InterfaceAction } from 'commonTypes'
+import {
+  fetchBannerSuccess,
+  fetchSongsSuccess,
+  fetchError,
+  fetchAlbumsSuccess,
+  fetchSingersSuccess,
+} from 'actions/creators'
+import {
+  FETCH_BANNER,
+  FETCH_SONGS,
+  FETCH_ALBUMS,
+  FETCH_SINGERS,
+} from 'actions/types'
 
 interface InterfaceDataProps {
   banners?: any[],
@@ -8,38 +21,31 @@ interface InterfaceDataProps {
   artists?: any[],
 }
 
-export function* fetchBannersWorker(action) {
+export function* fetchWorkers(action: InterfaceAction) {
   try {
-    const data: InterfaceDataProps = yield call(fetchData, action.payload.config)
-    yield put(fetchBannerSuccess(data.banners))
-  } catch (e) {
-    yield put(fetchError(e))
-  }
-}
-
-export function* fetchSongsWorker(action) {
-  try {
-    const data: InterfaceDataProps = yield call(fetchData, action.payload.config)
-    yield put(fetchSongsSuccess(data.result))
-  } catch (e) {
-    yield put(fetchError(e))
-  }
-}
-
-export function* fetchSingersWorker(action) {
-  try {
-    const data: InterfaceDataProps = yield call(fetchData, action.payload.config)
-    yield put(fetchSingersSuccess(data.artists))
-  } catch (e) {
-    yield put(fetchError(e))
-  }
-}
-
-export function* fetchAlbumsWorker(action) {
-  try {
-    const data: InterfaceDataProps = yield call(fetchData, action.payload.config)
-    yield put(fetchAlbumsSuccess(data.result))
-  } catch (e) {
-    yield put(fetchError(e))
+    const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
+    let data: any = null
+    switch (action.type) {
+      case FETCH_BANNER:
+        data = dataTmpl.banners
+        yield put(fetchBannerSuccess(data))
+        return
+      case FETCH_ALBUMS:
+        data = {[action.payload.dataType]: dataTmpl.result}
+        yield put(fetchAlbumsSuccess(data))
+        return
+      case FETCH_SONGS:
+        data = {[action.payload.dataType]: dataTmpl.result}
+        yield put(fetchSongsSuccess(data))
+        return
+      case FETCH_SINGERS:
+        data = {[action.payload.dataType]: dataTmpl.artists}
+        yield put(fetchSingersSuccess(data))
+        return
+      default:
+        throw Error('Fetch error: No match type!')
+    }
+  } catch (error) {
+    yield put(fetchError(error))
   }
 }

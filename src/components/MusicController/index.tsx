@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { InterfaceMusicInfo } from 'commonTypes'
+import { InterfaceMusicInfo, InterfaceCommonElementProps } from 'commonTypes'
 import Portal from 'components/Portal'
 import SongInfoView from 'components/SongInfo'
 
@@ -35,13 +35,9 @@ function PlayBar() {
   )
 }
 
-export default class MusicController extends React.Component {
+export default class MusicController extends React.Component<InterfaceCommonElementProps, any> {
   private static defaultProps = {
     className: '',
-  }
-
-  public props: {
-    className?: string,
   }
 
   public state = {
