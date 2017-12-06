@@ -41,7 +41,10 @@ app.on('ready', () => {
   if (isDev) {
     if (process.platform === 'darwin') {
       BrowserWindow.addDevToolsExtension('/Users/jamie/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.5.2_0')
-    BrowserWindow.addDevToolsExtension('/Users/jamie/Library/Application Support/Google/Chrome/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.15.1_0')
+      BrowserWindow.addDevToolsExtension('/Users/jamie/Library/Application Support/Google/Chrome/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.15.1_0')
+    } else if (process.platform === 'win32') {
+      // BrowserWindow.addDevToolsExtension('')
+      BrowserWindow.addDevToolsExtension('C:/Users/maple/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.15.1_0')
     }
   }
 })

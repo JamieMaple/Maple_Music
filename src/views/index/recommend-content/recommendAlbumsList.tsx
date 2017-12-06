@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TitleBar from 'components/TitleBar'
-import Album from 'components/Album'
+import Album from 'components/AlbumContainer'
 
 import { InterfaceCommonElementProps, InterfaceAlbum } from 'commonTypes'
 

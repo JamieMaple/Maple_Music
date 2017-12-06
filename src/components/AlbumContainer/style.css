@@ -1,0 +1,19 @@
+.album-container {
+  @media (width < 600px) {
+    width: 50%;
+  }
+  @media (width >= 600px) {
+    width: 33%;
+  }
+  @media (width >= 1200px) {
+    width: 25%;
+  }
+  @media (width >= 1400px) {
+    width: 20%;
+  }
+  :global {
+    .album {
+      margin: 0 auto;
+    }
+  }
+}

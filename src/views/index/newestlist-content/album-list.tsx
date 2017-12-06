@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { InterfaceCommonElementProps, InterfaceAlbum } from 'commonTypes'
-import Album from 'components/Album'
+import Album from 'components/AlbumContainer'
 
 interface InterfaceAlbumsProps extends InterfaceCommonElementProps {
   albums?: InterfaceAlbum[]

@@ -11,7 +11,7 @@ import {
   FETCH_ERROR,
 } from './types'
 
-const commonFetch  = (config, dataType) => ({config, dataType})
+const commonFetch  = (config, dataType, ...args) => ({config, dataType, others: args})
 const commonCommit = (data) => ({data})
 const commonError  = () => {}
 

@@ -65,13 +65,9 @@
       }
       .albums-container {
         display: flex;
-        justify-content: space-between;
         flex-wrap: wrap;
         .album-item {
-          margin: 0 3rem 2rem 0;
-          @media (width >= 100rem) {
-            margin-right: 10rem;
-          }
+          margin-bottom: 2.5rem;
         }
       }
     }

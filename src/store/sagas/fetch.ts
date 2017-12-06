@@ -1,4 +1,4 @@
-import { put, call } from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 import { fetchData } from 'API'
 import { InterfaceAction } from 'commonTypes'
 import {
@@ -19,28 +19,29 @@ interface InterfaceDataProps {
   banners?: any[],
   result?: any[],
   artists?: any[],
+  playlists?: any[],
 }
 
 export function* fetchWorkers(action: InterfaceAction) {
   try {
     const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
-    let data: any = null
+    const data: any = dataTmpl.banners || dataTmpl.result || dataTmpl.artists || dataTmpl.playlists || []
+    const dataObj: object = {[action.payload.dataType]: data}
+    const test = yield select()
+    console.log(test)
+
     switch (action.type) {
       case FETCH_BANNER:
-        data = dataTmpl.banners
         yield put(fetchBannerSuccess(data))
         return
       case FETCH_ALBUMS:
-        data = {[action.payload.dataType]: dataTmpl.result}
-        yield put(fetchAlbumsSuccess(data))
+        yield put(fetchAlbumsSuccess(dataObj))
         return
       case FETCH_SONGS:
-        data = {[action.payload.dataType]: dataTmpl.result}
-        yield put(fetchSongsSuccess(data))
+        yield put(fetchSongsSuccess(dataObj))
         return
       case FETCH_SINGERS:
-        data = {[action.payload.dataType]: dataTmpl.artists}
-        yield put(fetchSingersSuccess(data))
+        yield put(fetchSingersSuccess(dataObj))
         return
       default:
         throw Error('Fetch error: No match type!')

@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest} from 'redux-saga/effects'
+import { takeEvery, takeLatest, select} from 'redux-saga/effects'
 import { FETCH_BANNER, FETCH_SONGS, FETCH_ALBUMS, FETCH_SINGERS, FETCH_ERROR } from '../actions/types'
 import errorWorker from './error'
 import { fetchWorkers } from './fetch'

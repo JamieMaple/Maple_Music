@@ -34,8 +34,10 @@ export interface InterfaceCommonElementProps {
 
 export interface InterfaceAlbum {
   picUrl?: string,
+  coverImgUrl?: string,
   name?: string,
   singer?: string,
+  creator?: any,
   url?: string,
 }
 

@@ -32,7 +32,7 @@ class RecommendView extends React.Component<any, any> {
 
     return (
       <div className={style['recommend-view-wrapper']}>
-        <Banner className="banner-wrapper" autoPlaySpeed={5000} data={banners} />
+        <Banner className="banner-wrapper" autoPlaySpeed={2000} data={banners} />
         <PopularList className="popular-list-wrapper" singers={singers} songs={songs} />
         <RecommendedAlbumsList className="recommended-list-wrapper" albums={albums} />
       </div>
@@ -60,7 +60,7 @@ const mapDispatch = (dispatch) => {
   dispatch(fetchSingers({
     url: recommendSingersUrl,
     params: {
-      limit: 20,
+      limit: 30,
       offset: 0,
     },
   }, stateTreeTypes.singers.recommend))
