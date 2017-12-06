@@ -27,19 +27,27 @@ interface InterfaceProps {
   albums: any[]
 }
 
-function RecommendView({
-  banners = [],
-  songs = [],
-  singers = [],
-  albums = [],
-}: InterfaceProps) {
-  return (
-    <div className={style['recommend-view-wrapper']}>
-      <Banner className="banner-wrapper" data={banners} />
-      <PopularList className="popular-list-wrapper" singers={singers} songs={songs} />
-      <RecommendedAlbumsList className="recommended-list-wrapper" albums={albums} />
-    </div>
-  )
+class RecommendView extends React.Component<InterfaceProps, any> {
+  public static defaultProps = {
+    banners: [],
+    songs: [],
+    singers: [],
+    albums: [],
+  }
+
+  public props: InterfaceProps
+
+  public render() {
+    const { singers, songs, albums, banners } = this.props
+
+    return (
+      <div className={style['recommend-view-wrapper']}>
+        <Banner className="banner-wrapper" autoPlaySpeed={5000} data={banners} />
+        <PopularList className="popular-list-wrapper" singers={singers} songs={songs} />
+        <RecommendedAlbumsList className="recommended-list-wrapper" albums={albums} />
+      </div>
+    )
+  }
 }
 
 const mapState = (state): InterfaceProps => {
@@ -74,9 +82,7 @@ const mapDispatch = (dispatch) => {
     url: recommendAlbumsUrl,
   }))
 
-  return {
-
-  }
+  return {}
 }
 
 export default connect(mapState, mapDispatch)(RecommendView)

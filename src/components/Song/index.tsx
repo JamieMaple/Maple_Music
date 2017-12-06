@@ -9,7 +9,7 @@ export default function Song(
     style = {},
     name = '未知歌曲',
     picUrl = defaultSong,
-    count = 9999,
+    popularity = 0,
     index = -1,
   }: InterfaceSongProps,
 ) {
@@ -21,7 +21,7 @@ export default function Song(
       <span className="song-index">{index}</span>
       <span className="song-add-icon ion-android-add"></span>
       <span className="song-name">{name}</span>
-      <span className="song-count">{count}</span>
+      <span className="song-count">{popularity}</span>
     </div>
   )
 }

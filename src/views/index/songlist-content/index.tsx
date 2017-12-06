@@ -15,7 +15,7 @@ export default function SongListView() {
       key={`album-${index}`}
       className="song-list-item"
       name={album.name}
-      image={album.image}
+      picUrl={album.picUrl}
       url={album.url}
       singer={album.singer}
     />)

@@ -13,13 +13,14 @@ function AlbumsContainer({
   className = '',
   style = {},
 }: InterfacePropsTypes) {
+  console.log()
   const classNames = `${className}`.trim()
   const AlbumItems = albums.map((item, index) =>
     <Album
       className="album-item"
       key={`album-${index}`}
       name={item.name}
-      image={item.image}
+      picUrl={item.picUrl}
       url={item.url}
     />)
 
@@ -36,12 +37,10 @@ export default function RecommendedAlbumList({
 }: InterfacePropsTypes) {
   const classNames = `recomened-list-hook ${className}`.trim()
 
-  const data = new Array(12).fill({})
-
   return (
     <div className={classNames}>
       <TitleBar className="title" text="推荐歌单" />
-      <AlbumsContainer className="albums-container" albums={data} />
+      <AlbumsContainer className="albums-container" albums={albums} />
     </div>
   )
 }

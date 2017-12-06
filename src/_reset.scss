@@ -29,6 +29,7 @@ footer, header, hgroup, main, menu, nav, section {
 body {
   line-height: 1;
   user-select: none;
+  -webkit-user-drag: none;
 }
 div, p {
   box-sizing: border-box;
@@ -63,6 +64,10 @@ blockquote, q {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+a, img {
+  -webkit-user-drag: none;
 }
 
 ::-webkit-scrollbar {

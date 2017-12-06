@@ -4,7 +4,7 @@ export interface InterfaceCommonElementProps {
 }
 
 export interface InterfaceAlbum {
-  image?: string,
+  picUrl?: string,
   name?: string,
   singer?: string,
   url?: string,
@@ -24,8 +24,9 @@ export interface InterfaceSinger {
 export interface InterfaceSong {
   name?: string,
   picUrl?: string,
-  count?: number,
+  popularity?: number,
   index?: number,
+  song?: any,
 }
 
 export interface InterfaceNavigatorProps {

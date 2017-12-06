@@ -13,7 +13,7 @@ export default function NewestAlbumList({
 }: InterfaceAlbumsProps) {
   const classNames = `album-list-hook ${className}`.trim()
   const albumItems = albums.map((album, index) =>
-    <Album key={`album-${index}`} image={album.image} url={album.url} name={album.url} singer={album.singer} />)
+    <Album key={`album-${index}`} picUrl={album.picUrl} url={album.url} name={album.url} singer={album.singer} />)
 
   return (
     <div className={classNames}>
