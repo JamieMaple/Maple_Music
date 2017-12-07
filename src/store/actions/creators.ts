@@ -9,6 +9,8 @@ import {
   FETCH_ALBUMS,
   FETCH_ALBUMS_SUCCESS,
   FETCH_ERROR,
+  FETCH_LISTS,
+  FETCH_LISTS_SUCCESS,
 } from './types'
 
 const commonFetch  = (config, dataType, ...args) => ({config, dataType, others: args})
@@ -25,6 +27,8 @@ export const {
   fetchSingersSuccess,
   fetchAlbums,
   fetchAlbumsSuccess,
+  fetchLists,
+  fetchListsSuccess,
 } = createActions({
   [FETCH_BANNER]: commonFetch,
   [FETCH_BANNER_SUCCESS]: commonCommit,
@@ -34,5 +38,7 @@ export const {
   [FETCH_SINGERS_SUCCESS]: commonCommit,
   [FETCH_ALBUMS]: commonFetch,
   [FETCH_ALBUMS_SUCCESS]: commonCommit,
+  [FETCH_LISTS]: commonFetch,
+  [FETCH_LISTS_SUCCESS]: commonCommit,
   [FETCH_ERROR]: commonError,
 })

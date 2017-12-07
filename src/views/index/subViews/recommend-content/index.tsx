@@ -4,37 +4,30 @@ import {
   bannerUrl,
   recommendSongsUrl,
   recommendSingersUrl,
-  recommendAlbumsUrl,
+  recommendListsUrl,
 } from 'API'
 import {
   fetchBanner,
   fetchSongs,
   fetchSingers,
-  fetchAlbums,
+  fetchLists,
 } from 'actions/creators'
 import Banner from 'components/Banner'
 import PopularList from './popularList'
-import RecommendedAlbumsList from './recommendAlbumsList'
+import RecommendPlayList from './recommendPlayList'
 import { stateTreeTypes } from 'commonTypes'
 
 const style = require('./style.css')
 
 class RecommendView extends React.Component<any, any> {
-  public props: {
-    banners: any[],
-    songs: any[],
-    singers: any[],
-    albums: any[],
-  }
-
   public render() {
-    const { singers, songs, albums, banners } = this.props
+    const { singers, songs, lists, banners } = this.props
 
     return (
       <div className={style['recommend-view-wrapper']}>
         <Banner className="banner-wrapper" autoPlaySpeed={2000} data={banners} />
         <PopularList className="popular-list-wrapper" singers={singers} songs={songs} />
-        <RecommendedAlbumsList className="recommended-list-wrapper" albums={albums} />
+        <RecommendPlayList className="recommended-list-wrapper" lists={lists} />
       </div>
     )
   }
@@ -45,7 +38,7 @@ const mapState = (state) => {
     banners: state.banners,
     songs: state.songs[stateTreeTypes.songs.recommend],
     singers: state.singers[stateTreeTypes.singers.recommend],
-    albums: state.albums[stateTreeTypes.albums.recommend],
+    lists: state.lists[stateTreeTypes.lists.recommend],
   }
 }
 
@@ -64,9 +57,9 @@ const mapDispatch = (dispatch) => {
       offset: 0,
     },
   }, stateTreeTypes.singers.recommend))
-  dispatch(fetchAlbums({
-    url: recommendAlbumsUrl,
-  }, stateTreeTypes.albums.recommend))
+  dispatch(fetchLists({
+    url: recommendListsUrl,
+  }, stateTreeTypes.lists.recommend))
 
   return {dispatch}
 }

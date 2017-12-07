@@ -1,12 +1,12 @@
 import * as React from 'react'
 import BannerAnim, { Element } from 'rc-banner-anim'
 import TweenOne from 'rc-tween-one'
-import { InterfaceBannerItem, InterfaceCommonElementProps } from 'commonTypes'
+import { IBannerItem, ICommonElementProps } from 'commonTypes'
 
 const wrapper = require('./style.css').banner
 
-interface InterfaceProps extends InterfaceCommonElementProps {
-  data?: InterfaceBannerItem[],
+interface InterfaceProps extends ICommonElementProps {
+  data?: IBannerItem[],
   autoPlay?: boolean,
   autoPlaySpeed?: number,
   duration?: number,

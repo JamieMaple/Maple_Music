@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { InterfaceMusicInfo, InterfaceCommonElementProps } from 'commonTypes'
+import { IMusicInfo, ICommonElementProps } from 'commonTypes'
 import Portal from 'components/Portal'
 import SongInfoView from 'components/SongInfo'
 
@@ -9,7 +9,7 @@ const defaultSong = require('./default-song.svg')
 function MusicInfo({
   song = '未知音乐',
   singer = '未知歌手',
-}: InterfaceMusicInfo) {
+}: IMusicInfo) {
   return (
     <div className="music-info">
       <h1 className="song">{song}</h1>
@@ -35,7 +35,7 @@ function PlayBar() {
   )
 }
 
-export default class MusicController extends React.Component<InterfaceCommonElementProps, any> {
+export default class MusicController extends React.Component<ICommonElementProps, any> {
   private static defaultProps = {
     className: '',
   }

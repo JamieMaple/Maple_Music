@@ -1,15 +1,16 @@
 import * as React from 'react'
-import { InterfaceTitleBar } from 'commonTypes'
+import { ITitleBar } from 'commonTypes'
 
 const defaultClassName = require('./style.css')
 
 export default function TitleBar({
   text,
   className = '',
-  style = {}}: InterfaceTitleBar,
-) {
+  style = {},
+  Children,
+}: ITitleBar) {
   const classNames = `${defaultClassName.default} ${className}`.trim()
   return (
-    <h1 className={classNames} style={style}>{text}</h1>
+    <h1 className={classNames} style={style}>{text}{Children}</h1>
   )
 }

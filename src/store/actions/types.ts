@@ -14,5 +14,9 @@ export const FETCH_SINGERS_SUCCESS  = 'FETCH_SINGERS_SUCCESS'
 export const FETCH_ALBUMS           = 'FETCH_ALBUMS'
 export const FETCH_ALBUMS_SUCCESS   = 'FETCH_ALBUMS_SUCCESS'
 
+// lists
+export const FETCH_LISTS            = 'FETCH_LISTS'
+export const FETCH_LISTS_SUCCESS    = 'FETCH_LISTS_SUCCESS'
+
 // error fetch
 export const FETCH_ERROR            = 'FETCH_ERROR'

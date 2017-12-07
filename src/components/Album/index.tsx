@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { InterfaceAlbumProps } from 'commonTypes'
+import { Link } from 'react-router-dom'
+import { IAlbumProps } from 'commonTypes'
 
 const defaultClassName = require('./style.css')
 const defaultAlbum = require('./defaultAlbum.svg')
@@ -11,18 +12,28 @@ export default function Album(
     picUrl = defaultAlbum,
     name = '未知歌单',
     singer = '',
-    url = '',
-  }: InterfaceAlbumProps,
+    url = '/',
+    playNum,
+  }: IAlbumProps,
 ) {
   const classNames = `${defaultClassName['album-wrapper']} ${className}`.trim()
 
   return (
     <div className={classNames} style={style}>
-      <img className="album-image" src={picUrl} alt=""/>
-      <div className="album-info">
-        <h1 className="album-name">{name}</h1>
-        {singer !== '' ? <h2 className="album-singer">{singer}</h2> : null}
-      </div>
+      <Link to={url}>
+        <img className="album-image" src={picUrl} alt=""/>
+        <div className="album-info">
+          <h1 className="album-name">{name}</h1>
+          {singer !== '' ? <h2 className="ion-android-person album-singer">{singer}</h2> : null}
+        </div>
+        {
+          playNum
+          ? <p className="ion-headphone album-play-num">
+            {playNum.toString().length > 8 ? '99999999+' : playNum}
+          </p>
+          : null
+        }
+      </Link>
     </div>
   )
 }

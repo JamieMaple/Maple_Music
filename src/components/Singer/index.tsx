@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { InterfaceSingerProps} from 'commonTypes'
+import { ISingerProps} from 'commonTypes'
 
 const defaultSinger = require('./default-singer.svg')
 
@@ -12,7 +12,7 @@ export default function Singer(
     picUrl = defaultSinger,
     name = '未知歌手',
     url = '',
-  }: InterfaceSingerProps,
+  }: ISingerProps,
 ) {
   const classNames = `${defaultClassName['singer-wrapper']} ${className}`.trim()
 

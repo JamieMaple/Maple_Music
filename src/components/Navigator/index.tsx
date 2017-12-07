@@ -1,17 +1,17 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { InterfaceNavigatorProps, InterfaceCommonElementProps } from 'commonTypes'
+import { INavigatorProps, ICommonElementProps } from 'commonTypes'
 
 const style = require('./style.css')
 
-interface InterfaceProps extends InterfaceCommonElementProps {
-  dataItems?: InterfaceNavigatorProps[],
+interface InterfaceProps extends ICommonElementProps {
+  dataItems?: INavigatorProps[],
 }
 
 function HeaderItem({
   text,
   url,
-}: InterfaceNavigatorProps) {
+}: INavigatorProps) {
   return (
     <li className="header-item">
       <NavLink className="item-link" exact to={url}>{text}</NavLink>

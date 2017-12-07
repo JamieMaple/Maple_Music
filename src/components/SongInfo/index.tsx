@@ -1,10 +1,10 @@
 import * as React from 'react'
 import DefaultSvg from './defaultSvg'
-import { InterfaceCommonElementProps } from 'commonTypes'
+import { ICommonElementProps } from 'commonTypes'
 
 const wrapper = require('./style.css')['song-info-wrapper']
 
-interface InterfaceProps extends InterfaceCommonElementProps {
+interface InterfaceProps extends ICommonElementProps {
   handleClick: any,
 }
 

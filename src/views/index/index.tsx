@@ -1,17 +1,18 @@
 import * as React from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
-import { InterfaceNavigatorProps } from 'commonTypes'
+import { INavigatorProps } from 'commonTypes'
 
 import Header from 'components/Navigator'
-import RecommendView from './recommend-content'
-import SongListView from './songlist-content'
-import NewestListView from './newestlist-content'
+import RecommendView from './subViews/recommend-content'
+import SongListView from './subViews/songlist-content'
+import NewestListView from './subViews/newestlist-content'
 
 export default function IndexPage() {
-  const dataItems: InterfaceNavigatorProps[] = [
+  const baseUrl = '/index'
+  const dataItems: INavigatorProps[] = [
     { text: '推荐', url: '/', component: RecommendView },
-    { text: '歌单', url: '/list', component: SongListView },
-    { text: '最新', url: '/newest', component: NewestListView },
+    { text: '歌单', url: baseUrl + '/list', component: SongListView },
+    { text: '最新', url: baseUrl + '/newest', component: NewestListView },
   ]
   const routes = dataItems.map(route =>
     <Route exact key={route.url} path={route.url} component={route.component} />)

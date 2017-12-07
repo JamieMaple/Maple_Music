@@ -1,74 +1,73 @@
 import * as React from 'react'
-import { InterfaceCommonElementProps } from 'commonTypes'
+import { ICommonElementProps } from 'commonTypes'
 
 const wrapper = require('./style.css')['filter']
 
-interface InterfaceFilter extends InterfaceCommonElementProps {
-  filters?: string[],
-  filterTitle?: string,
-  icon?: string,
+/*
+** Structure of filters prop
+** @param {filters} render filters' name etc
+** {
+**   [
+**      title: string,
+**      icon: string,
+**      children: string[],
+**    ],
+** }
+*/
+
+interface IFilterProps extends ICommonElementProps {
+  filters?: IFilter[],
   handleEachClick?: any,
 }
 
-interface InterfaceTag extends InterfaceCommonElementProps {
-  filter: string,
+interface IFilter {
+  title: string,
   icon?: string,
-  handleChoosen?: any,
+  children: string[],
 }
 
-function FilterTag({
-  className = '',
-  style = {},
-  filter = '',
-  handleChoosen = () => 0,
-  icon = '',
-}: InterfaceTag) {
-  const classNames = `filter-tag ${icon} ${className}`
-  return (
-    <li className={classNames}><a onClick={handleChoosen} href="javascript:;">{filter}</a></li>
-  )
-}
-
-export default class Filter extends React.Component<InterfaceFilter, any> {
+export default class Filter extends React.Component<IFilterProps, any> {
   public state = {
-    choosen: 0,
+    filterRowIndex: 0,
+    filterColIndex: 0,
   }
 
-  public switchTag(index) {
-    const { handleEachClick } = this.props
+  public switchTag(row, col) {
+    const { handleEachClick, filters = [] } = this.props
     this.setState((preState: any) => {
-      if (preState.choosen !== index) {
+      if (preState.filterRowIndex !== row || preState.filterColIndex !== col) {
         if (handleEachClick !== undefined) {
           try {
-            handleEachClick(index)
+            handleEachClick(filters[row].children[col])
           } catch (e) {
             throw TypeError('handleEachClick must be function')
           }
         }
-        return {choosen: index}
+        return {filterRowIndex: row, filterColIndex: col}
       }
     })
   }
 
   public render() {
-    const { className, style, filters = [], filterTitle = '选取:', icon } = this.props
-    const { choosen } = this.state
-
+    const { className, style, filters = [] } = this.props
+    const { filterRowIndex, filterColIndex } = this.state
     const classNames = `${wrapper} ${className}`.trim()
-    const filtersLi = filters.map((filter, index) =>
-    <FilterTag
-      key={`filter-${index}`}
-      className={index === choosen ? 'active' : ''}
-      handleChoosen={this.switchTag.bind(this, index)}
-      filter={filter}
-      icon={icon}
-    />)
+    const filterItems = filters.map((subFilter, rowIndex) =>
+      <li key={`filter-${rowIndex}`} className="filter-item">
+        <h3 className={`${subFilter.icon || 'ion-ios-pricetags-outline'} filter-item-title`}>{subFilter.title || '未知:'}</h3>
+        <ul className="filter-item-children">
+        {
+          subFilter.children.map((child, colIndex) =>
+          <li
+            key={`subFilter-${colIndex}`}
+            className={`filter-tag ${filterRowIndex === rowIndex && filterColIndex === colIndex ? 'active' : ''}`.trim()}
+          ><a onClick={this.switchTag.bind(this, rowIndex, colIndex)} href="javascript:;">{child}</a></li>)
+        }
+        </ul>
+      </li>)
 
     return (
-      <ul className={classNames} style={style}>
-        <li className="filter-title">{filterTitle}</li>
-        {filtersLi}
-      </ul>
+      <ul className={classNames} style={style}>{filterItems}</ul>
     )
   }
 }

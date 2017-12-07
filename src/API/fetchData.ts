@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { InterfaceFetchDataConfig } from 'commonTypes'
+import { IFetchDataConfig } from 'commonTypes'
 
 export const fetchData = ({
   method = 'GET',
   url = '',
   params = {},
   data = {},
-}: InterfaceFetchDataConfig) =>
+}: IFetchDataConfig) =>
   axios
     .request({
       method,

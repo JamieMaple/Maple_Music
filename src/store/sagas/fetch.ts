@@ -1,18 +1,20 @@
 import { put, call, select } from 'redux-saga/effects'
 import { fetchData } from 'API'
-import { InterfaceAction } from 'commonTypes'
+import { IAction } from 'commonTypes'
 import {
   fetchBannerSuccess,
   fetchSongsSuccess,
   fetchError,
   fetchAlbumsSuccess,
   fetchSingersSuccess,
+  fetchListsSuccess,
 } from 'actions/creators'
 import {
   FETCH_BANNER,
   FETCH_SONGS,
   FETCH_ALBUMS,
   FETCH_SINGERS,
+  FETCH_LISTS,
 } from 'actions/types'
 
 interface InterfaceDataProps {
@@ -20,15 +22,17 @@ interface InterfaceDataProps {
   result?: any[],
   artists?: any[],
   playlists?: any[],
+  albums?: any[],
 }
 
-export function* fetchWorkers(action: InterfaceAction) {
+export function* fetchWorkers(action: IAction) {
   try {
     const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
-    const data: any = dataTmpl.banners || dataTmpl.result || dataTmpl.artists || dataTmpl.playlists || []
+    const data: any = dataTmpl.banners
+      || dataTmpl.result || dataTmpl.playlists || dataTmpl.albums
+      || dataTmpl.artists
+      || []
     const dataObj: object = {[action.payload.dataType]: data}
-    const test = yield select()
-    console.log(test)
 
     switch (action.type) {
       case FETCH_BANNER:
@@ -36,6 +40,9 @@ export function* fetchWorkers(action: InterfaceAction) {
         return
       case FETCH_ALBUMS:
         yield put(fetchAlbumsSuccess(dataObj))
+        return
+      case FETCH_LISTS:
+        yield put(fetchListsSuccess(dataObj))
         return
       case FETCH_SONGS:
         yield put(fetchSongsSuccess(dataObj))

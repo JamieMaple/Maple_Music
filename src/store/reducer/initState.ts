@@ -1,4 +1,4 @@
-import { InterfaceStateTree, stateTreeTypes } from '../../commonTypes'
+import { IStateTree, stateTreeTypes } from '../../commonTypes'
 function getSubStateObjectFromTypes(subStateTypes: object): object {
   const subStateObj = {}
   for (const key in subStateTypes) {
@@ -10,8 +10,8 @@ function getSubStateObjectFromTypes(subStateTypes: object): object {
   return subStateObj
 }
 
-const { listening, search, songs, albums, singers } = (() => {
-  const tempObject: InterfaceStateTree = {}
+const { listening, search, songs, albums, singers, lists } = (() => {
+  const tempObject: IStateTree = {}
   for (const key in stateTreeTypes) {
     if (stateTreeTypes.hasOwnProperty(key)) {
       if (stateTreeTypes[key] != null && typeof stateTreeTypes[key] === "object") {
@@ -28,5 +28,6 @@ export default {
   search,
   songs,
   albums,
+  lists,
   singers,
 }

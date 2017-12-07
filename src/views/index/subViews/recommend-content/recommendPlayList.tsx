@@ -1,45 +1,45 @@
 import * as React from 'react'
 import TitleBar from 'components/TitleBar'
-import Album from 'components/AlbumContainer'
+import List from 'components/AlbumContainer'
 
-import { InterfaceCommonElementProps, InterfaceAlbum } from 'commonTypes'
+import { ICommonElementProps } from 'commonTypes'
 
-interface InterfacePropsTypes extends InterfaceCommonElementProps {
-  albums?: InterfaceAlbum[],
+interface InterfacePropsTypes extends ICommonElementProps {
+  lists?: any[],
 }
 
-function AlbumsContainer({
-  albums = [],
+function PlayListsContainer({
+  lists = [],
   className = '',
   style = {},
 }: InterfacePropsTypes) {
   const classNames = `${className}`.trim()
-  const AlbumItems = albums.map((item, index) =>
-    <Album
+  const ListsItems = lists.map((item, index) =>
+    <List
       className="album-item"
       key={`album-${index}`}
       name={item.name}
       picUrl={item.picUrl}
-      url={item.url}
+      url={`/playList/${item.id}`}
     />)
 
   return (
     <ul className={classNames} style={style}>
-      {AlbumItems}
+      {ListsItems}
     </ul>
   )
 }
 
-export default function RecommendedAlbumList({
+export default function RecommendedPlayList({
   className = '',
-  albums = [],
+  lists = [],
 }: InterfacePropsTypes) {
   const classNames = `recomened-list-hook ${className}`.trim()
 
   return (
     <div className={classNames}>
       <TitleBar className="title" text="推荐歌单" />
-      <AlbumsContainer className="albums-container" albums={albums} />
+      <PlayListsContainer className="albums-container" lists={lists} />
     </div>
   )
 }

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { SideBarArea } from './sidebarArea'
-import { InterfaceCommonElementProps } from 'commonTypes'
+import { ICommonElementProps } from 'commonTypes'
 const wrapper = require('./style.css')['sidebar-wrapper']
 
-export default class SideBar extends React.Component<InterfaceCommonElementProps, any> {
+export default class SideBar extends React.Component<ICommonElementProps, any> {
   private static defaultProps = {
     className: '',
     style: {},

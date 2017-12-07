@@ -22,11 +22,10 @@
     .song-name {
       flex: 1;
     }
-    .icon-hook {
-      margin-right: 0.5rem;
-    }
-    .song-count {
-      
+    .hot-num {
+      .icon-hook {
+        margin-right: 0.5rem;
+      }
     }
   }
 }

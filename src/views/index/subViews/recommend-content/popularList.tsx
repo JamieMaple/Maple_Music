@@ -2,11 +2,11 @@ import * as React from 'react'
 import TitleBar from 'components/TitleBar'
 import Song from 'components/Song'
 import Singer from 'components/Singer'
-import { InterfaceSong, InterfaceSinger, InterfaceCommonElementProps } from 'commonTypes'
+import { ICommonElementProps } from 'commonTypes'
 
-interface InterfaceData extends InterfaceCommonElementProps {
-  songs?: InterfaceSong[],
-  singers?: InterfaceSinger[],
+interface InterfaceData extends ICommonElementProps {
+  songs?: any[],
+  singers?: any[],
 }
 
 const sliceArr = (arr: any[], limit: number) => arr.slice(0, limit)
@@ -25,7 +25,7 @@ class PopularSongs extends React.Component<InterfaceData, any> {
     const { songs = [] } = this.props
     const { limit, steps } = this.state
     const songsItems = sliceArr(songs, limit).map((song, index ) =>
-    <Song className="song" index={index + 1} name={song.name} popularity={song.song.playedNum} key={`song-${index}`} />)
+    <Song className="song" index={index + 1} name={song.name} key={`song-${index}`} />)
 
     return (
       <div className="popular-songs">

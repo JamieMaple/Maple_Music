@@ -3,56 +3,92 @@
 ** @@ ... some sub singers
 ** @@ with key for view page
 */
-export interface InterfaceStateTree {
+export interface IStateTree {
   search?: any,
   listening?: any,
+  lists?: any,
   albums?: any,
   singers?: any,
   songs?: any,
 }
 
-export const stateTreeTypes: InterfaceStateTree = {
+export const stateTreeTypes: IStateTree = {
   search: {},
   listening: {},
   albums: {
+    newest: 'newest',
+  },
+  lists: {
     recommend: 'recommend',
     playList: 'playList',
-    newest: 'newest',
   },
   singers: {
     recommend: 'recommend',
   },
   songs: {
     recommend: 'recommend',
+    newest: 'newest',
   },
 }
 
-export interface InterfaceCommonElementProps {
-  className?: string,
-  style?: object,
+export interface IHistory {
+  action: string,
+  length: number,
+  go: (n: number) => {},
+  goForward: () => {},
+  goBack: () => {},
 }
 
-export interface InterfaceAlbum {
+export interface IMatch {
+  isExtract: boolean,
+  params: any,
+  path: string,
+  url: string,
+}
+
+export interface ILocation {
+  hash: string,
+  pathName: string,
+  search: string,
+}
+
+export interface IRouteProps {
+  histroy: IHistory,
+  location: ILocation,
+  match: IMatch,
+}
+
+export interface ICommonElementProps {
+  className?: string,
+  style?: object,
+  Children?: JSX.Element[],
+}
+
+export interface IAlbum {
   picUrl?: string,
   coverImgUrl?: string,
   name?: string,
   singer?: string,
   creator?: any,
   url?: string,
+  playNum?: number,
+  listIntro?: string,
+  albumIntro?: string,
+  tags?: string[],
 }
 
-export interface InterfaceMusicInfo {
+export interface IMusicInfo {
   song?: string,
   singer?: string,
 }
 
-export interface InterfaceSinger {
+export interface ISinger {
   picUrl?: string,
   name?: string,
   url?: string,
 }
 
-export interface InterfaceSong {
+export interface ISong {
   name?: string,
   picUrl?: string,
   popularity?: number,
@@ -60,33 +96,33 @@ export interface InterfaceSong {
   song?: any,
 }
 
-export interface InterfaceNavigatorProps {
+export interface INavigatorProps {
   text: string,
   url: string,
   component?: any,
 }
 
-export interface InterfaceBannerItem {
+export interface IBannerItem {
   pic: string,
   url: string,
 }
 
 // some useful api with react common element props like `className`, `style`
-export interface InterfaceAlbumProps extends InterfaceAlbum, InterfaceCommonElementProps {}
+export interface IAlbumProps extends IAlbum, ICommonElementProps {}
 
-export interface InterfaceSingerProps extends InterfaceSinger, InterfaceCommonElementProps {}
+export interface ISingerProps extends ISinger, ICommonElementProps {}
 
-export interface InterfaceSongProps extends InterfaceSong, InterfaceCommonElementProps {}
+export interface ISongProps extends ISong, ICommonElementProps {}
 
-export interface InterfaceTitleBar extends InterfaceCommonElementProps {
+export interface ITitleBar extends ICommonElementProps {
   text: string,
 }
 
-export interface InterfaceBannerItemProps extends InterfaceBannerItem, InterfaceCommonElementProps {}
+export interface IBannerItemProps extends IBannerItem, ICommonElementProps {}
 
 // data api for config
 
-export interface InterfaceFetchDataConfig {
+export interface IFetchDataConfig {
   method?: string,
   url?: string,
   params?: any,
@@ -95,7 +131,7 @@ export interface InterfaceFetchDataConfig {
 
 // actions
 
-export interface InterfacePayload {
+export interface IPayload {
   config?: any,
   dataType: string,
   banners?: any[],
@@ -105,7 +141,7 @@ export interface InterfacePayload {
   data?: object,
 }
 
-export interface InterfaceAction {
+export interface IAction {
   type: string,
-  payload: InterfacePayload,
+  payload: IPayload,
 }

@@ -1,0 +1,10 @@
+.list-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 4rem;
+  :global {
+    .top-info-wrapper {
+      height: 30rem;
+    }
+  }
+}

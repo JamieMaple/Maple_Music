@@ -1,36 +1,46 @@
+:root {
+  --top-margin: 0.6rem;
+}
 .filter {
-  display: flex;
-  align-items: center;
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
   border-bottom: 1px solid rgba(255, 255, 255, .25);
+  & > :nth-child(n) {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+  & > :last-child {
+    margin-bottom: 0;
+  }
   :global {
-    .filter-title {
-      margin-right: 1rem;
+    .filter-item-title {
+      margin: var(--top-margin) 0.5rem 0 0;
       &::before {
-        margin-right: 0.4rem;
+        margin: 0 0.3rem;
       }
     }
-    .filter-tag {
-      box-sizing: border-box;
-      padding: 0.6rem 0.8rem;
-      margin-right: 0.3rem;
-      border-radius: 0.2rem;
-      transition: background 0.3s ease, color 0.3s ease;
-      &::before {
-        margin-right: 0.2rem;
+    .filter-item-children {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 32rem;
+      .filter-tag {
+        box-sizing: border-box;
+        padding: var(--top-margin) 0.8rem;
+        margin: 0 0.3rem 0.3rem 0;
+        border-radius: 0.2rem;
+        transition: background 0.3s ease, color 0.3s ease;
+        &:hover {
+          color: var(--red);
+        }
+        &.active {
+          background: var(--light);
+          color: var(--red);
+        }
       }
-      &:hover {
-        color: var(--red);
+      & :last-child {
+        margin-right: 0;
       }
-      &.active {
-        background: var(--light);
-        color: var(--red);
-      }
-    }
-    & :last-child {
-      margin-right: 0;
     }
   }
 }

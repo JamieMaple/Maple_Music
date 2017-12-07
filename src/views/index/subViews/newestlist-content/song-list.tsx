@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { InterfaceCommonElementProps, InterfaceSong } from 'commonTypes'
+import { ICommonElementProps, ISong } from 'commonTypes'
 import Song from 'components/Song'
 
-interface InterfaceSongsProps extends InterfaceCommonElementProps {
-  songs?: InterfaceSong[]
+interface InterfaceSongsProps extends ICommonElementProps {
+  songs?: any[]
 }
 
 export default function NewestSongList({
