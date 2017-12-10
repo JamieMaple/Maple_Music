@@ -9,7 +9,7 @@ interface ITags extends ICommonElementProps {
 }
 
 function Tag({
-  text = '标签',
+  text = '',
   handleClick = () => {},
   className = '',
 }) {

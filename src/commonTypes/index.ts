@@ -4,6 +4,7 @@
 ** @@ with key for view page
 */
 export interface IStateTree {
+  banners?: any[],
   search?: any,
   listening?: any,
   lists?: any,
@@ -13,23 +14,24 @@ export interface IStateTree {
   songs?: any,
 }
 
-export const stateTreeTypes: IStateTree = {
+export const stateTree: IStateTree = {
   search: {},
   listening: {},
+  banners: [],
   albums: {
-    newest: 'newest',
+    newest: [],
   },
   lists: {
-    recommend: 'recommend',
-    playList: 'playList',
+    recommend: [],
+    playList: [],
   },
-  details: 'details',
+  details: {},
   singers: {
-    recommend: 'recommend',
+    recommend: [],
   },
   songs: {
-    recommend: 'recommend',
-    newest: 'newest',
+    recommend: [],
+    newest: [],
   },
 }
 
@@ -63,7 +65,7 @@ export interface IRouteProps {
 export interface ICommonElementProps {
   className?: string,
   style?: object,
-  Children?: JSX.Element[],
+  children?: any,
 }
 
 export interface IAlbum {
@@ -72,6 +74,7 @@ export interface IAlbum {
   name?: string,
   singer?: string,
   creator?: any,
+  publishDate?: any,
   url?: string,
   playNum?: number,
   listIntro?: string,
@@ -93,6 +96,9 @@ export interface ISinger {
 
 export interface ISong {
   name?: string,
+  singer?: string,
+  time?: string,
+  album?: string,
   picUrl?: string,
   popularity?: number,
   index?: number,

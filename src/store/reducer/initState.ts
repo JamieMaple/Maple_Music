@@ -1,16 +1,16 @@
-import { stateTreeTypes } from '../../commonTypes'
+import { stateTree } from '../../commonTypes'
 
 // TODO
 // loading localStorage
 
-const initState = ((statetree) => {
+const initState = (statetree => {
   const newState = {}
   for (const key in statetree) {
     if (statetree.hasOwnProperty(key)) {
-      newState[key] = {}
+      newState[key] = statetree[key]
     }
   }
   return newState
-})(stateTreeTypes)
+})(stateTree)
 
 export default initState

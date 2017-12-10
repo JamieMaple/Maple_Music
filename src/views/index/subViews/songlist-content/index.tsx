@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import {
   ICommonElementProps,
-  stateTreeTypes,
+  IStateTree,
 } from 'commonTypes'
 import { fetch } from 'actions'
 import { playListUrl } from 'API'
@@ -64,9 +64,11 @@ class SongListView extends React.Component<any, any> {
   }
 }
 
+const dataType = 'playList'
+
 const mapState = (state) => {
   return {
-    lists: state.lists[stateTreeTypes.lists.playList],
+    lists: state.lists[dataType],
   }
 }
 const mapDispatch = (dispatch) => {
@@ -82,7 +84,7 @@ const mapDispatch = (dispatch) => {
           limit,
           cat: tag,
         },
-      }, stateTreeTypes.lists.playList))
+      }, dataType))
     },
   }
 }

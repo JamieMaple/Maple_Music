@@ -24,6 +24,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx','.json'],
     alias: {
       components: resolve('src', 'components'),
+      utils: resolve('src', 'utils'),
       API: resolve('src', 'API'),
       actions: resolve('src', 'store', 'actions'),
       commonTypes: resolve('src', 'commonTypes'),

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { stateTreeTypes } from 'commonTypes'
+import { IStateTree } from 'commonTypes'
 import { newestAlbumsUrl, newestSongsUrl } from 'API'
 import { fetch } from 'actions'
 import Filter from 'components/Filter'
@@ -49,13 +49,12 @@ class NewestListView extends React.Component<any, any> {
   }
 }
 
-const newestSongsDataType = stateTreeTypes.songs.newest
-const newestAlbumsDataType = stateTreeTypes.albums.newest
+const dataType = 'newest'
 
-const mapState = (state) => {
+const mapState = (state: IStateTree) => {
   return {
-    songs: state.songs[newestSongsDataType],
-    albums: state.albums[newestAlbumsDataType],
+    songs: state.songs[dataType],
+    albums: state.albums[dataType],
   }
 }
 
@@ -65,7 +64,7 @@ const mapDispatch = (dispatch) => {
       const fetchConfig = { method: 'GET' }
       switch (typeIndex) {
         case songFlag:
-          dispatch(fetch.songs.pending({...fetchConfig, url: newestSongsUrl}, newestSongsDataType))
+          dispatch(fetch.songs.pending({...fetchConfig, url: newestSongsUrl}, dataType))
           break
         case albumFlag:
           dispatch(fetch.albums.pending({...fetchConfig, url: newestAlbumsUrl,
@@ -73,7 +72,7 @@ const mapDispatch = (dispatch) => {
               limit: 30,
               offset: 0,
             },
-          }, newestAlbumsDataType))
+          }, dataType))
           break
         default:
           break

@@ -2,7 +2,7 @@
   --main-length: 13rem;
 }
 
-.album-wrapper {
+.albumWrapper {
   position: relative;
   width: var(--main-length);
   background: var(--grey);

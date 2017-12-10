@@ -19,8 +19,23 @@
     .song-add-icon {
       margin-right: 2.5rem;
     }
+    .song-name, .song-singer, .song-album {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     .song-name {
       flex: 1;
+    }
+    .song-time {
+      width: 8rem;
+    }
+    .song-singer {
+      width: 10rem;
+      margin-right: 2rem;
+    }
+    .song-album {
+      width: 12rem;
     }
     .hot-num {
       .icon-hook {

@@ -8,6 +8,9 @@ export default function Song(
     className = '',
     style = {},
     name = '未知歌曲',
+    time,
+    singer,
+    album,
     picUrl,
     popularity = 0,
     index = -1,
@@ -21,6 +24,9 @@ export default function Song(
       <span className="song-index">{index}</span>
       <span className="song-add-icon ion-android-add"></span>
       <span className="song-name">{name}</span>
+      {time ? <span className="song-time">{time}</span> : null}
+      {singer ? <span className="song-singer">{singer}</span> : null}
+      {album ? <span className="song-album">{album}</span> : null}
       {
         popularity
         ? <div className="hot-num">

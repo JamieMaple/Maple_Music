@@ -10,13 +10,13 @@ import { fetch } from 'actions'
 import Banner from 'components/Banner'
 import PopularList from './popularList'
 import RecommendPlayList from './recommendPlayList'
-import { stateTreeTypes } from 'commonTypes'
+import { IStateTree } from 'commonTypes'
 
 const style = require('./style.css')
 
 class RecommendView extends React.Component<any, any> {
   public render() {
-    const { singers, songs, lists, banners } = this.props
+    const { singers = [], songs = [], lists = [], banners = [] } = this.props
 
     return (
       <div className={style['recommend-view-wrapper']}>
@@ -28,12 +28,14 @@ class RecommendView extends React.Component<any, any> {
   }
 }
 
-const mapState = (state) => {
+const dataType = 'recommend'
+
+const mapState = (state: IStateTree) => {
   return {
     banners: state.banners,
-    songs: state.songs[stateTreeTypes.songs.recommend],
-    singers: state.singers[stateTreeTypes.singers.recommend],
-    lists: state.lists[stateTreeTypes.lists.recommend],
+    songs: state.songs[dataType],
+    singers: state.singers[dataType],
+    lists: state.lists[dataType],
   }
 }
 
@@ -44,17 +46,17 @@ const mapDispatch = (dispatch) => {
   }))
   dispatch(fetch.songs.pending({
     url: recommendSongsUrl,
-  }, stateTreeTypes.songs.recommend))
+  }, dataType))
   dispatch(fetch.singers.pending({
     url: recommendSingersUrl,
     params: {
       limit: 30,
       offset: 0,
     },
-  }, stateTreeTypes.singers.recommend))
+  }, dataType))
   dispatch(fetch.lists.pending({
     url: recommendListsUrl,
-  }, stateTreeTypes.lists.recommend))
+  }, dataType))
 
   return {dispatch}
 }

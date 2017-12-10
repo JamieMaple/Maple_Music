@@ -1,7 +1,11 @@
 import { put, call, select } from 'redux-saga/effects'
 import { fetchData } from 'API'
-import { IAction } from 'commonTypes'
+import { IStateTree, IAction } from 'commonTypes'
 import { fetch, getTypeName } from 'actions'
+
+const selectors = {
+  getDetails: (state: IStateTree) => state.details,
+}
 
 interface InterfaceDataProps {
   banners?: any,
@@ -48,12 +52,17 @@ export function* fetchWorkers(action: IAction) {
 
 export function* fetchDetailWorker(action: IAction) {
   try {
-    const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
-    const data = {[`id=${action.payload.config.params.id}`]: {
-      playlist: dataTmpl.playlist,
-      privileges: dataTmpl.privileges,
-    }}
-    yield put(fetch.details.success(data))
+    const selectId = `id=${action.payload.config.params.id}`
+    const details = yield select(selectors.getDetails)
+
+    if (!details.hasOwnProperty(selectId)) {
+      const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
+      const data = {[selectId]: {
+        playlist: dataTmpl.playlist,
+        privileges: dataTmpl.privileges,
+      }}
+      yield put(fetch.details.success(data))
+    }
   } catch (error) {
     yield put(fetch.error(error))
   }

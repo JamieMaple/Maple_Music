@@ -27,3 +27,8 @@ export const playListDetailUrl = baseUrl + '/playlist/detail'
 // 最新歌单或单曲
 export const newestSongsUrl = baseUrl + '/personalized/newsong'
 export const newestAlbumsUrl = baseUrl + '/top/album'
+
+// 评论
+export const songCommentsUrl = baseUrl + '/comment/music'
+export const listCommentsUrl = baseUrl + '/comment/playlist'
+export const albumCommentsUrl = baseUrl + '/comment/album'

@@ -7,10 +7,10 @@ export default function TitleBar({
   text,
   className = '',
   style = {},
-  Children,
+  children = [],
 }: ITitleBar) {
   const classNames = `${defaultClassName.default} ${className}`.trim()
   return (
-    <h1 className={classNames} style={style}>{text}{Children}</h1>
+    <h1 className={classNames} style={style}>{text}{children}</h1>
   )
 }
