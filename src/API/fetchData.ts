@@ -3,15 +3,17 @@ import { IFetchDataConfig } from 'commonTypes'
 
 export const fetchData = ({
   method = 'GET',
-  url = '',
+  url,
   params = {},
   data = {},
-}: IFetchDataConfig) =>
-  axios
-    .request({
+}: IFetchDataConfig) => {
+  if (!url) {
+    throw Error('No url for fetch data!')
+  }
+  return axios.request({
       method,
       url,
       params,
       data,
-    })
-    .then(res => res.data)
+    }).then(res => res.data)
+}

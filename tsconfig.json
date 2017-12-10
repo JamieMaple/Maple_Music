@@ -12,7 +12,7 @@
     "baseUrl": "src",
     "paths": {
       "components/*": ["components/*"],
-      "actions/*": ["store/actions/*"],
+      "actions": ["store/actions"],
       "commonTypes": ["commonTypes"],
       "API": ["API"]
     }

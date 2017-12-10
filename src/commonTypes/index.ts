@@ -8,6 +8,7 @@ export interface IStateTree {
   listening?: any,
   lists?: any,
   albums?: any,
+  details?: any,
   singers?: any,
   songs?: any,
 }
@@ -22,6 +23,7 @@ export const stateTreeTypes: IStateTree = {
     recommend: 'recommend',
     playList: 'playList',
   },
+  details: 'details',
   singers: {
     recommend: 'recommend',
   },
@@ -75,6 +77,7 @@ export interface IAlbum {
   listIntro?: string,
   albumIntro?: string,
   tags?: string[],
+  intro?: string,
 }
 
 export interface IMusicInfo {

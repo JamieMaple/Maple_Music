@@ -1,28 +1,16 @@
 import { put, call, select } from 'redux-saga/effects'
 import { fetchData } from 'API'
 import { IAction } from 'commonTypes'
-import {
-  fetchBannerSuccess,
-  fetchSongsSuccess,
-  fetchError,
-  fetchAlbumsSuccess,
-  fetchSingersSuccess,
-  fetchListsSuccess,
-} from 'actions/creators'
-import {
-  FETCH_BANNER,
-  FETCH_SONGS,
-  FETCH_ALBUMS,
-  FETCH_SINGERS,
-  FETCH_LISTS,
-} from 'actions/types'
+import { fetch, getTypeName } from 'actions'
 
 interface InterfaceDataProps {
-  banners?: any[],
-  result?: any[],
-  artists?: any[],
-  playlists?: any[],
-  albums?: any[],
+  banners?: any,
+  result?: any,
+  artists?: any,
+  playlists?: any,
+  albums?: any,
+  playlist?: any,
+  privileges: any,
 }
 
 export function* fetchWorkers(action: IAction) {
@@ -35,25 +23,38 @@ export function* fetchWorkers(action: IAction) {
     const dataObj: object = {[action.payload.dataType]: data}
 
     switch (action.type) {
-      case FETCH_BANNER:
-        yield put(fetchBannerSuccess(data))
+      case getTypeName(fetch.banners.pending):
+        yield put(fetch.banners.success(data))
         return
-      case FETCH_ALBUMS:
-        yield put(fetchAlbumsSuccess(dataObj))
+      case getTypeName(fetch.albums.pending):
+        yield put(fetch.albums.success(dataObj))
         return
-      case FETCH_LISTS:
-        yield put(fetchListsSuccess(dataObj))
+      case getTypeName(fetch.lists.pending):
+        yield put(fetch.lists.success(dataObj))
         return
-      case FETCH_SONGS:
-        yield put(fetchSongsSuccess(dataObj))
+      case getTypeName(fetch.songs.pending):
+        yield put(fetch.songs.success(dataObj))
         return
-      case FETCH_SINGERS:
-        yield put(fetchSingersSuccess(dataObj))
+      case getTypeName(fetch.singers.pending):
+        yield put(fetch.singers.success(dataObj))
         return
       default:
         throw Error('Fetch error: No match type!')
     }
   } catch (error) {
-    yield put(fetchError(error))
+    yield put(fetch.error(error))
+  }
+}
+
+export function* fetchDetailWorker(action: IAction) {
+  try {
+    const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
+    const data = {[`id=${action.payload.config.params.id}`]: {
+      playlist: dataTmpl.playlist,
+      privileges: dataTmpl.privileges,
+    }}
+    yield put(fetch.details.success(data))
+  } catch (error) {
+    yield put(fetch.error(error))
   }
 }

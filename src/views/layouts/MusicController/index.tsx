@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { IMusicInfo, ICommonElementProps } from 'commonTypes'
 import Portal from 'components/Portal'
-import SongInfoView from 'components/SongInfo'
+import SongInfoView from '../../SongInfo'
 
 const style = require('./style.css')
 const defaultSong = require('./default-song.svg')

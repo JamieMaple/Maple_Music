@@ -6,12 +6,7 @@ import {
   recommendSingersUrl,
   recommendListsUrl,
 } from 'API'
-import {
-  fetchBanner,
-  fetchSongs,
-  fetchSingers,
-  fetchLists,
-} from 'actions/creators'
+import { fetch } from 'actions'
 import Banner from 'components/Banner'
 import PopularList from './popularList'
 import RecommendPlayList from './recommendPlayList'
@@ -44,20 +39,20 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   /* init render */
-  dispatch(fetchBanner({
+  dispatch(fetch.banners.pending({
     url: bannerUrl,
   }))
-  dispatch(fetchSongs({
+  dispatch(fetch.songs.pending({
     url: recommendSongsUrl,
   }, stateTreeTypes.songs.recommend))
-  dispatch(fetchSingers({
+  dispatch(fetch.singers.pending({
     url: recommendSingersUrl,
     params: {
       limit: 30,
       offset: 0,
     },
   }, stateTreeTypes.singers.recommend))
-  dispatch(fetchLists({
+  dispatch(fetch.lists.pending({
     url: recommendListsUrl,
   }, stateTreeTypes.lists.recommend))
 

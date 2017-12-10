@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Search from '../Search'
+import Search from 'components/Search'
 import GoHistory from './GoHistory'
 const style = require('./style.css')
 

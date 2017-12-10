@@ -1,8 +1,8 @@
 import * as React from 'react'
-import HeaderBar from 'components/HeaderBar'
-import SideBar from 'components/SideBar'
+import HeaderBar from './views/layouts/HeaderBar'
+import SideBar from './views/layouts/SideBar'
 import RouteViews from './router'
-import MusicController from 'components/MusicController'
+import MusicController from './views/layouts/MusicController'
 
 const styles = require('./app.css')
 

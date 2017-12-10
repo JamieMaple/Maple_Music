@@ -1,0 +1,11 @@
+.tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 2rem;
+  :global {
+    .tag-item{
+      margin-left: 0.7rem;
+    }
+  }
+}

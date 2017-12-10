@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { stateTreeTypes } from 'commonTypes'
 import { newestAlbumsUrl, newestSongsUrl } from 'API'
-import { fetchAlbums, fetchSongs } from 'actions/creators'
+import { fetch } from 'actions'
 import Filter from 'components/Filter'
 import NewestSongList from './song-list'
 import NewestAlbumList from './album-list'
@@ -40,9 +40,9 @@ class NewestListView extends React.Component<any, any> {
           handleEachClick={this.switchFilter.bind(this)}
           filters={types}
         />
-        {index === Types[songFlag]
-        ? <NewestSongList className="newest-song-list" songs={songs} />
-        : <NewestAlbumList className="newest-album-list" albums={albums} />
+        {
+          index === Types[songFlag] ?
+          <NewestSongList className="newest-song-list" songs={songs} /> : <NewestAlbumList className="newest-album-list" albums={albums} />
         }
       </div>
     )
@@ -62,21 +62,13 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleFilterSelect(typeIndex) {
-      const fetchConfig = {
-        method: 'GET',
-      }
-
+      const fetchConfig = { method: 'GET' }
       switch (typeIndex) {
         case songFlag:
-          dispatch(fetchSongs({
-            ...fetchConfig,
-            url: newestSongsUrl,
-          }, newestSongsDataType))
+          dispatch(fetch.songs.pending({...fetchConfig, url: newestSongsUrl}, newestSongsDataType))
           break
         case albumFlag:
-          dispatch(fetchAlbums({
-            ...fetchConfig,
-            url: newestAlbumsUrl,
+          dispatch(fetch.albums.pending({...fetchConfig, url: newestAlbumsUrl,
             params: {
               limit: 30,
               offset: 0,

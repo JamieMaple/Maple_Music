@@ -1,13 +1,14 @@
 import { takeEvery, takeLatest, select} from 'redux-saga/effects'
-import { FETCH_BANNER, FETCH_SONGS, FETCH_ALBUMS, FETCH_SINGERS, FETCH_ERROR, FETCH_LISTS } from '../actions/types'
+import { fetch } from 'actions'
 import errorWorker from './error'
-import { fetchWorkers } from './fetch'
+import { fetchWorkers, fetchDetailWorker } from './fetch'
 
 export default function* rootSaga() {
-  yield takeEvery(FETCH_BANNER, fetchWorkers)
-  yield takeEvery(FETCH_SONGS, fetchWorkers)
-  yield takeEvery(FETCH_SINGERS, fetchWorkers)
-  yield takeEvery(FETCH_ALBUMS, fetchWorkers)
-  yield takeEvery(FETCH_LISTS, fetchWorkers)
-  yield takeEvery(FETCH_ERROR, errorWorker)
+  yield takeEvery(fetch.banners.pending, fetchWorkers)
+  yield takeEvery(fetch.songs.pending, fetchWorkers)
+  yield takeEvery(fetch.singers.pending, fetchWorkers)
+  yield takeEvery(fetch.albums.pending, fetchWorkers)
+  yield takeEvery(fetch.lists.pending, fetchWorkers)
+  yield takeEvery(fetch.details.pending, fetchDetailWorker)
+  yield takeEvery(fetch.error, errorWorker)
 }

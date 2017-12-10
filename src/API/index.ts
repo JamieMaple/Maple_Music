@@ -20,6 +20,10 @@ export const protectedRecommendSongsUrl = baseUrl + '/recommend/songs'
 // 歌单
 export const playListUrl = baseUrl + '/top/playlist'
 
+// 详情
+export const playListDetailUrl = baseUrl + '/playlist/detail'
+// export const playAlbumDetailUrl = baseUrl +
+
 // 最新歌单或单曲
 export const newestSongsUrl = baseUrl + '/personalized/newsong'
 export const newestAlbumsUrl = baseUrl + '/top/album'

@@ -4,7 +4,7 @@ import {
   ICommonElementProps,
   stateTreeTypes,
 } from 'commonTypes'
-import { fetchLists } from 'actions/creators'
+import { fetch } from 'actions'
 import { playListUrl } from 'API'
 import List from 'components/AlbumContainer'
 import Filter from 'components/Filter'
@@ -76,7 +76,7 @@ const mapDispatch = (dispatch) => {
   }
   return {
     handleFilterSelect(limit = 30, tag) {
-      dispatch(fetchLists({
+      dispatch(fetch.lists.pending({
         ...fetchConfig,
         params: {
           limit,
