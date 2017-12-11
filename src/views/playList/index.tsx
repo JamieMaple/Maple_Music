@@ -1,70 +1,110 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-
 import { IRouteProps, IStateTree } from 'commonTypes'
 import { fetch } from 'actions'
-import { playListDetailUrl } from 'API'
-
-import TopInfo from './subComponents/topInfo'
-import MiddleList from './subComponents/middleList'
-import DownCommentList from './subComponents/downCommentList'
+import { playListDetailUrl, albumDetailUrl, albumCommentsUrl, listCommentsUrl } from 'API'
+import { stateIdPrifex } from 'utils/stateFormat'
+import TopComponent from './subComponents/TopComponent'
+import MiddleComponent from './subComponents/MiddleComponent'
+import DownComponent from './subComponents/DownComponent'
 
 interface IProps extends IRouteProps {
   details?: any,
+  comments?: any,
   dispatch?: any,
+  fetchList?: any,
+  fetchComments?: any,
 }
 
 const wrapper = require('./style.css')['list-wrapper']
 
-const dataType = 'details'
 const routeRegs = {
   playlist: /^\/playList\/[0-9]{7,10}$/,
-  albumlist: /^\/album\/[0-9]{7,10}$/,
+  albumlist: /^\/album\/[0-9]{4,10}$/,
 }
 
 class SongsList extends React.Component<IProps, any> {
-  public componentDidMount() {
-    const { params, url } = this.props.match
+  public dataType = {
+    album: 'album',
+    playList: 'playList',
+  }
+
+  public isPlayList() {
+    const { match: { url } } = this.props
     if (routeRegs.playlist.test(url)) {
-      this.props.dispatch(fetch.details.pending({
-        method: 'GET',
-        url: playListDetailUrl,
-        params,
-      }, dataType))
-    } else if (routeRegs.albumlist.test(url)) {
-      console.log('album')
+      return true
+    } else {
+      return false
+    }
+  }
+
+  public componentDidMount() {
+    const { fetchList, fetchComments } = this.props
+    if (this.isPlayList()) {
+      const type = this.dataType.playList
+      fetchList(playListDetailUrl, type)
+      fetchComments(listCommentsUrl, type)
+    } else {
+      const type = this.dataType.album
+      fetchList(albumDetailUrl, type)
+      fetchComments(albumCommentsUrl, type)
     }
   }
 
   public render() {
-    const { details = {} } = this.props
-    const { playlist = {}, privileges = {} } = details
+    const { details = {}, comments = {all: [], top: [], hot: []} } = this.props
+    const { info = {}, songs = [] } = details
 
     return (
       <div className={wrapper}>
-        <TopInfo
+        <TopComponent
           className="top-info-wrapper"
-          picUrl={playlist.coverImgUrl}
-          name={playlist.name}
-          publishDate={playlist.createTime}
-          tags={playlist.tags}
-          intro={playlist.description}
-          creator={playlist.creator}
+          picUrl={info.coverImgUrl || info.picUrl}
+          name={info.name}
+          publishDate={info.createTime || info.publishTime}
+          tags={info.tags}
+          intro={info.description}
+          creator={info.creator}
+          artist={info.artist}
         />
-        <MiddleList className="middle-list-wrapper" songs={playlist.tracks} playCount={playlist.playCount} />
-        <DownCommentList className="down-comment-list-warpper" />
+        <MiddleComponent className="middle-list-wrapper" songs={info.tracks || songs} playCount={info.playCount} />
+        <DownComponent className="down-comment-list-warpper" comments={comments} />
       </div>
     )
   }
 }
 
-const mapState = (state, ownProps: IProps): any => {
-  const { id } = ownProps.match.params
-  const stateType = dataType
+const mapState = (state: IStateTree, ownProps: IProps): any => {
+  const { params: {id: formatId}, url } = ownProps.match
+  const { details: { playList: detailsPlayList, album: detailsAlbum },
+    comments: { playList: commentsPlayList, album: comemntsAlbum } } = state
+  const id = stateIdPrifex(formatId)
 
-  return {
-     details: state[stateType][`id=${id}`],
+  if (routeRegs.playlist.test(url)) {
+    return {
+      details: detailsPlayList[id],
+      comments: commentsPlayList[id],
+    }
+  } else if (routeRegs.albumlist.test(url)) {
+    return {
+      details: detailsAlbum[id],
+      comments: comemntsAlbum[id],
+    }
   }
 }
 
-export default connect(mapState)(SongsList)
+const mapDispatch = (dispatch, ownProps: IProps) => {
+  const { id } = ownProps.match.params
+  const commonConfig = { method: 'GET', params: { id } }
+
+  return{
+    fetchList(url, type) {
+      dispatch(fetch.details.pending({ ...commonConfig, url }, type))
+    },
+    fetchComments(url, type) {
+      dispatch(fetch.comments.pending({...commonConfig, url}, type))
+    },
+  }
+}
+
+export default connect(mapState, mapDispatch)(SongsList)

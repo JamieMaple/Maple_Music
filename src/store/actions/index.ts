@@ -2,7 +2,7 @@ import { createActions } from 'redux-actions'
 
 const commonFetch  = (config, dataType, ...args) => ({config, dataType, others: args})
 const commonCommit = (data) => ({data})
-const commonFetchName = ['BANNERS', 'SONGS', 'ALBUMS', 'SINGERS', 'LISTS', 'DETAILS']
+const commonFetchName = ['BANNERS', 'SONGS', 'ALBUMS', 'SINGERS', 'LISTS', 'DETAILS', 'COMMENTS']
 const commonFetchObject = {}
 
 commonFetchName.forEach(item => {
@@ -23,6 +23,7 @@ interface IFetch {
   albums: IFetchStatus,
   lists: IFetchStatus,
   details: IFetchStatus,
+  comments: IFetchStatus,
   error: any,
 }
 

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { IAlbumProps } from 'commonTypes'
+import { IAlbumProps, IPlayListProps } from 'commonTypes'
 import { albumWrapper } from './style.css'
 
 const defaultAlbum = require('./defaultAlbum.svg')
@@ -14,7 +14,7 @@ export default function Album(
     singer = '',
     url = '/',
     playNum,
-  }: IAlbumProps,
+  }: IAlbumProps & IPlayListProps,
 ) {
   const classNames = `${albumWrapper} ${className}`.trim()
 

@@ -2,21 +2,36 @@ import * as React from 'react'
 import Tags from 'components/Tags'
 import TitleBar from 'components/TitleBar'
 import { formatDateNum } from 'utils/format'
-import { ICommonElementProps, IAlbumProps } from 'commonTypes'
+import { IAlbumProps, IPlayListProps } from 'commonTypes'
 
 const defaultAvatar = require('./defaultAvatar.svg')
+const wrapper = require('./style.css')['top-wrapper']
 
 export default function TopInfo({
-  className = '',
   style = {},
+  className = '',
   name = '未知歌单 | 专辑',
   publishDate,
   tags = [],
   intro = '',
   picUrl = '',
-  creator = {},
-}: IAlbumProps) {
-  const  classNames = `${className}`.trim()
+  creator,
+  artist,
+  artists,
+}: IAlbumProps & IPlayListProps) {
+  const classNames = `${className} ${wrapper}`.trim()
+
+  const listMaker = {name: '未知创建者', image: defaultAvatar}
+
+  if (artist) {
+    listMaker.name = artist.name
+    listMaker.image = artist.picUrl
+  } else if (artists) {
+    listMaker.name = artists.map(item => item.name).join('、')
+  } else if (creator) {
+    listMaker.name = creator.nickname
+    listMaker.image = creator.avatarUrl
+  }
 
   return (
     <div className={classNames}>
@@ -26,8 +41,8 @@ export default function TopInfo({
       <div className="info">
         <TitleBar className="info-title" text={name} />
         <div className="creation">
-          <img className="avatar" src={creator.avatarUrl || defaultAvatar} alt=""/>
-          <a className="creator">{creator.nickname || '未知创建者'}</a>
+          <img className="avatar" src={listMaker.image} alt=""/>
+          <a className="creator">{listMaker.name}</a>
           <div className="publish-date">{publishDate && formatDateNum(publishDate)} 创建</div>
         </div>
         <Tags tags={tags} />

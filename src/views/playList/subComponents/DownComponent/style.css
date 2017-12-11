@@ -1,0 +1,29 @@
+.down-wrapper {
+  :global {
+    .title {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      .count-num {
+        margin-left: 0.7rem;
+        font-size: 0.9rem;
+      }
+    }
+    .comments-wrapper {
+      padding: 0 1rem;
+      .hot-comments, .top-comments {
+        margin-bottom: 1.5rem;
+      }
+      .comments-title {
+        margin-bottom: 1rem;
+      }
+      .comments-list {
+        & :nth-child(n) {
+          margin-bottom: 1.5rem;
+        }
+        & :last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

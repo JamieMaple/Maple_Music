@@ -11,10 +11,11 @@ interface InterfaceProps extends ICommonElementProps {
 function HeaderItem({
   text,
   url,
-}: INavigatorProps) {
+  exactUrl = '/',
+}) {
   return (
     <li className="header-item">
-      <NavLink className="item-link" exact to={url}>{text}</NavLink>
+      <NavLink className="item-link" exact={url === exactUrl} to={url}>{text}</NavLink>
     </li>
   )
 }
@@ -25,7 +26,7 @@ export default function Header({
 }: InterfaceProps) {
   const classNames = `${style['header-wrapper']} ${className}`.trim()
   const dataItemsRoutes = dataItems.map(route =>
-    <HeaderItem key={route.url} text={route.text} url={route.url} />)
+    <HeaderItem key={route.url} text={route.text} exactUrl={dataItems[0].url} url={route.url} />)
 
   return (
     <ul className={classNames}>

@@ -1,0 +1,29 @@
+.middle-wrapper {
+  :global {
+    & .title {
+      position: relative;
+      margin-bottom: 0.5rem;
+      & .list-num {
+        margin-left: 0.7rem;
+        font-size: 0.9rem;
+      }
+      & .play-count {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 1rem;
+        & .count-num {
+          color: var(--red);
+        }
+      }
+    }
+    & .songs-wrapper {
+      & > :nth-child(n) {
+        margin-bottom: 0.3rem;
+      }
+      & > :last-child {
+        margin: 0;
+      }
+    }
+  }
+}

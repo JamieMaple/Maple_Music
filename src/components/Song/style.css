@@ -15,9 +15,10 @@
     .song-index {
       width: 3rem;
       margin-right: 0.3rem;
+      text-align: center;
     }
     .song-add-icon {
-      margin-right: 2.5rem;
+      margin-right: 1rem;
     }
     .song-name, .song-singer, .song-album {
       white-space: nowrap;
@@ -28,7 +29,7 @@
       flex: 1;
     }
     .song-time {
-      width: 8rem;
+      width: 5rem;
     }
     .song-singer {
       width: 10rem;

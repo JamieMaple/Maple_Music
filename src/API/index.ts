@@ -22,7 +22,7 @@ export const playListUrl = baseUrl + '/top/playlist'
 
 // 详情
 export const playListDetailUrl = baseUrl + '/playlist/detail'
-// export const playAlbumDetailUrl = baseUrl +
+export const albumDetailUrl = baseUrl + '/album'
 
 // 最新歌单或单曲
 export const newestSongsUrl = baseUrl + '/personalized/newsong'

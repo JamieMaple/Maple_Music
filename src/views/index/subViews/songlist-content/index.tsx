@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import {
-  ICommonElementProps,
+  IRouteProps,
   IStateTree,
 } from 'commonTypes'
 import { fetch } from 'actions'
@@ -11,36 +11,38 @@ import Filter from 'components/Filter'
 
 const wrapper = require('./style.css')['song-list-wrapper']
 
-interface InterfacePlayListProps {
+interface InterfacePlayListProps extends IRouteProps {
   lists: any[],
   dispatch: any,
   handleFilterSelect: (limit: number, tag: string) => {},
 }
 
-class SongListView extends React.Component<any, any> {
-  public props: InterfacePlayListProps
-
+class SongListView extends React.Component<InterfacePlayListProps, any> {
   public state = {
     tags: [
       {title: '语言：', children: ['全部', '华语', '欧美', '日语', '韩语', '小语种']},
       {title: '风格：', icon: 'ion-ios-flower', children: ['古风', '轻音乐', '古典', '乡村', '摇滚', '流行', '爵士', '朋克', '蓝调', '金属', '英伦']},
+      {title: '场景：', icon: 'ion-ios-time', children: ['夜晚', '学习', '工作', '下午茶', '旅行', '酒吧', '运动', '散步']},
+      {title: '情感：', icon: 'ion-sad-outline', children: ['怀旧', '清新', '浪漫', '思念', '治愈', '孤独', '放松', '安静']},
     ],
     limit: 30,
     offset: 0,
   }
 
   public componentDidMount() {
-    const { tags, limit } = this.state
-    this.props.handleFilterSelect(limit, tags[0][0])
+    const { limit, tags } = this.state
+    this.props.handleFilterSelect(limit, tags[0].children[0])
   }
 
   public switchFilter(tag) {
     const { limit } = this.state
-    this.props.handleFilterSelect(limit, tag)
+    const { handleFilterSelect } = this.props
+
+    handleFilterSelect(limit, tag)
   }
 
   public render() {
-    const { lists = [] } = this.props
+    const { lists = [], match: { url } } = this.props
     const { tags = [], limit } = this.state
     const listItems = lists.map((list, index) =>
       <List
@@ -55,7 +57,7 @@ class SongListView extends React.Component<any, any> {
 
     return (
       <div className={wrapper}>
-        <Filter className="filters-cotainer" handleEachClick={this.switchFilter.bind(this)} filters={tags} />
+        <Filter className="filters-cotainer" handleEachClick={this.switchFilter.bind(this)} baseUrl={url} filters={tags} />
         <ul className="albums-wrapper">
           {listItems}
         </ul>
@@ -71,7 +73,7 @@ const mapState = (state) => {
     lists: state.lists[dataType],
   }
 }
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps: IRouteProps) => {
   const fetchConfig = {
     method: 'GET',
     url: playListUrl,

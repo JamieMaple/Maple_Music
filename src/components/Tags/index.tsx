@@ -25,7 +25,9 @@ export default function Tags({
   handleClick = () => {},
 }: ITags) {
   const classnames = `${className} ${wrapper}`.trim()
-  const tagItems = tags.map((tag, index) => <Tag key={`tag-${index}`} className="tag-item" text={tag} handleClick={handleClick} />)
+  const tagItems = tags.length > 0
+  ? tags.map((tag, index) => <Tag key={`tag-${index}`} className="tag-item" text={tag} handleClick={handleClick} />)
+  : <div>暂无标签</div>
 
   return (
     <ul className={classnames} style={style}>

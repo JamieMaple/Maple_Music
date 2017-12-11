@@ -1,11 +1,9 @@
 import { put, call, select } from 'redux-saga/effects'
 import { fetchData } from 'API'
-import { IStateTree, IAction } from 'commonTypes'
+import { IDetails, IAction, IComments } from 'commonTypes'
 import { fetch, getTypeName } from 'actions'
-
-const selectors = {
-  getDetails: (state: IStateTree) => state.details,
-}
+import { stateIdPrifex } from 'utils/stateFormat'
+import { selectors } from './selectors'
 
 interface InterfaceDataProps {
   banners?: any,
@@ -13,8 +11,13 @@ interface InterfaceDataProps {
   artists?: any,
   playlists?: any,
   albums?: any,
+  album?: any,
+  songs?: any,
   playlist?: any,
   privileges: any,
+  comments?: any,
+  hotComments?: any,
+  topComments?: any,
 }
 
 export function* fetchWorkers(action: IAction) {
@@ -52,16 +55,56 @@ export function* fetchWorkers(action: IAction) {
 
 export function* fetchDetailWorker(action: IAction) {
   try {
-    const selectId = `id=${action.payload.config.params.id}`
-    const details = yield select(selectors.getDetails)
+    const selectId = stateIdPrifex(action.payload.config.params.id)
+    const details: IDetails = yield select(selectors.getDetails)
+    const { dataType } = action.payload
 
-    if (!details.hasOwnProperty(selectId)) {
-      const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
-      const data = {[selectId]: {
-        playlist: dataTmpl.playlist,
-        privileges: dataTmpl.privileges,
-      }}
-      yield put(fetch.details.success(data))
+    if (details[dataType]) {
+      if (!details[dataType][selectId]) {
+        const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
+        const data = {
+          [dataType]: {
+            ...details[dataType],
+            [selectId]: {
+              info: dataTmpl.album  || dataTmpl.playlist,
+              songs: dataTmpl.songs || dataTmpl.privileges,
+            },
+          },
+        }
+        yield put(fetch.details.success({...details, ...data}))
+      }
+    } else {
+      throw Error('Error: no such dataType ' + dataType + '.')
+    }
+  } catch (error) {
+    yield put(fetch.error(error))
+  }
+}
+
+export function* fetchCommentsWorker(action) {
+  try {
+    const selectId = stateIdPrifex(action.payload.config.params.id)
+    const comments: IComments = yield select(selectors.getComments)
+    const { dataType } = action.payload
+
+    if (comments[dataType]) {
+      if (!comments[dataType][selectId]) {
+        const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
+        const data = {
+          ...comments,
+          [dataType]: {
+            ...comments[dataType],
+            [selectId]: {
+              all: dataTmpl.comments,
+              top: dataTmpl.topComments,
+              hot: dataTmpl.hotComments,
+            },
+          },
+        }
+        yield put(fetch.comments.success(data))
+      }
+    } else {
+      throw Error('Error: no such dataType ' + dataType + '.')
     }
   } catch (error) {
     yield put(fetch.error(error))

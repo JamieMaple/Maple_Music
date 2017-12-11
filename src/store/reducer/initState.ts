@@ -1,16 +1,32 @@
-import { stateTree } from '../../commonTypes'
+import { IStateTree } from '../../commonTypes'
 
 // TODO
 // loading localStorage
 
-const initState = (statetree => {
-  const newState = {}
-  for (const key in statetree) {
-    if (statetree.hasOwnProperty(key)) {
-      newState[key] = statetree[key]
-    }
-  }
-  return newState
-})(stateTree)
-
-export default initState
+export const initState: IStateTree = {
+  search: {},
+  listening: {},
+  banners: [],
+  albums: {
+    newest: [],
+  },
+  lists: {
+    recommend: [],
+    playList: [],
+  },
+  details: {
+    album: [],
+    playList: [],
+  },
+  comments: {
+    album: [],
+    playList: [],
+  },
+  singers: {
+    recommend: [],
+  },
+  songs: {
+    recommend: [],
+    newest: [],
+  },
+}

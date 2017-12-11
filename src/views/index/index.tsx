@@ -14,14 +14,14 @@ export default function IndexPage() {
     { text: '歌单', url: baseUrl + '/list', component: SongListView },
     { text: '最新', url: baseUrl + '/newest', component: NewestListView },
   ]
-  const routes = dataItems.map(route =>
-    <Route exact key={route.url} path={route.url} component={route.component} />)
 
   return (
     <div className="view-wrapper">
       <Header className="header-wrapper" dataItems={dataItems} />
       <Switch>
-        {routes}
+        <Route exact path='/' component={RecommendView} />
+        <Route path={`${baseUrl}/list`} component={SongListView} />
+        <Route path={`${baseUrl}/newest`} component={NewestListView} />
       </Switch>
     </div>
   )

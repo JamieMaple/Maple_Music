@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { ICommonElementProps } from 'commonTypes'
+import { Link } from 'react-router-dom'
 
 const wrapper = require('./style.css')['filter']
 
@@ -16,6 +17,7 @@ const wrapper = require('./style.css')['filter']
 */
 
 interface IFilterProps extends ICommonElementProps {
+  baseUrl: string,
   filters?: IFilter[],
   handleEachClick?: any,
 }
@@ -49,7 +51,7 @@ export default class Filter extends React.Component<IFilterProps, any> {
   }
 
   public render() {
-    const { className, style, filters = [] } = this.props
+    const { className, style, filters = [], baseUrl } = this.props
     const { filterRowIndex, filterColIndex } = this.state
     const classNames = `${wrapper} ${className}`.trim()
     const filterItems = filters.map((subFilter, rowIndex) =>
@@ -61,7 +63,7 @@ export default class Filter extends React.Component<IFilterProps, any> {
           <li
             key={`subFilter-${colIndex}`}
             className={`filter-tag ${filterRowIndex === rowIndex && filterColIndex === colIndex ? 'active' : ''}`.trim()}
-          ><a onClick={this.switchTag.bind(this, rowIndex, colIndex)} href="javascript:;">{child}</a></li>)
+          ><Link onClick={this.switchTag.bind(this, rowIndex, colIndex)} to={`${baseUrl}/${child}`}>{child}</Link></li>)
         }
         </ul>
       </li>)

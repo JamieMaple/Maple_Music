@@ -1,38 +1,28 @@
 /*
 ** @@ global state tree structure names
-** @@ ... some sub singers
+** @@ ... some sub singers etc
 ** @@ with key for view page
 */
-export interface IStateTree {
-  banners?: any[],
-  search?: any,
-  listening?: any,
-  lists?: any,
-  albums?: any,
-  details?: any,
-  singers?: any,
-  songs?: any,
+export interface IDetails {
+  album?: any,
+  playList?: any,
 }
 
-export const stateTree: IStateTree = {
-  search: {},
-  listening: {},
-  banners: [],
-  albums: {
-    newest: [],
-  },
-  lists: {
-    recommend: [],
-    playList: [],
-  },
-  details: {},
-  singers: {
-    recommend: [],
-  },
-  songs: {
-    recommend: [],
-    newest: [],
-  },
+export interface IComments {
+  album?: any,
+  playList?: any,
+}
+
+export interface IStateTree {
+  banners: any[],
+  search: any,
+  listening: any,
+  lists: any,
+  albums: any,
+  details: IDetails,
+  singers: any,
+  songs: any,
+  comments: IComments,
 }
 
 export interface IHistory {
@@ -41,6 +31,8 @@ export interface IHistory {
   go: (n: number) => {},
   goForward: () => {},
   goBack: () => {},
+  push: any,
+  pop: () => {},
 }
 
 export interface IMatch {
@@ -57,7 +49,7 @@ export interface ILocation {
 }
 
 export interface IRouteProps {
-  histroy: IHistory,
+  history: IHistory,
   location: ILocation,
   match: IMatch,
 }
@@ -70,17 +62,26 @@ export interface ICommonElementProps {
 
 export interface IAlbum {
   picUrl?: string,
-  coverImgUrl?: string,
   name?: string,
   singer?: string,
-  creator?: any,
+  artist?: any,
+  artists?: any,
   publishDate?: any,
-  url?: string,
   playNum?: number,
-  listIntro?: string,
-  albumIntro?: string,
   tags?: string[],
   intro?: string,
+  url?: string,
+}
+
+export interface IPlayList {
+  name?: string,
+  coverImgUrl?: string,
+  creator?: any,
+  publishDate?: any,
+  tags?: string[],
+  playNum?: number,
+  intro?: string,
+  url?: string,
 }
 
 export interface IMusicInfo {
@@ -116,8 +117,23 @@ export interface IBannerItem {
   url: string,
 }
 
+export interface ICommentsList {
+  all: any[],
+  hot: any[],
+  top: any[],
+}
+
+export interface IComment {
+  content: string,
+  user: any,
+  time: number,
+  likeCount?: number,
+}
+
 // some useful api with react common element props like `className`, `style`
 export interface IAlbumProps extends IAlbum, ICommonElementProps {}
+
+export interface IPlayListProps extends IPlayList, ICommonElementProps {}
 
 export interface ISingerProps extends ISinger, ICommonElementProps {}
 

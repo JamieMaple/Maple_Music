@@ -20,7 +20,7 @@ export default function Song(
 
   return (
     <div className={classNames} style={style}>
-      <img className="song-image" src={picUrl || defaultSong} alt=""/>
+      {/* <img className="song-image" src={picUrl || defaultSong} alt=""/> */}
       <span className="song-index">{index}</span>
       <span className="song-add-icon ion-android-add"></span>
       <span className="song-name">{name}</span>

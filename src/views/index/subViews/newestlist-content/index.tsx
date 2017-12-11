@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { IStateTree } from 'commonTypes'
+import { IStateTree, IRouteProps } from 'commonTypes'
 import { newestAlbumsUrl, newestSongsUrl } from 'API'
 import { fetch } from 'actions'
 import Filter from 'components/Filter'
@@ -14,7 +14,13 @@ const albumFlag = '专辑'
 
 enum Types {'单曲' = 0, '专辑'}
 
-class NewestListView extends React.Component<any, any> {
+interface IProps extends IRouteProps {
+  songs: any[],
+  albums: any[],
+  handleFilterSelect: (type: string) => {},
+}
+
+class NewestListView extends React.Component<IProps, any> {
   public state = {
     types: [{title: '类型：', children: [Types[0], Types[1]]}],
     index: 0,
@@ -31,12 +37,13 @@ class NewestListView extends React.Component<any, any> {
 
   public render() {
     const { types, index } = this.state
-    const { songs = [], albums = [] } = this.props
+    const { songs = [], albums = [], match: { url } } = this.props
 
     return (
       <div className={wrapper}>
         <Filter
           className="filter-type"
+          baseUrl={url}
           handleEachClick={this.switchFilter.bind(this)}
           filters={types}
         />
