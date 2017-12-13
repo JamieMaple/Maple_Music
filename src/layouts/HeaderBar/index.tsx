@@ -4,7 +4,8 @@ import GoHistory from './GoHistory'
 const style = require('./style.css')
 
 interface InterfaceHeader {
-  history?: object,
+  history?: any,
+  location?: any,
 }
 
 function LeftHeaderBar({history}: InterfaceHeader) {
@@ -23,7 +24,7 @@ function RightHeaderBar() {
   )
 }
 
-export default function HeaderBar({history}: InterfaceHeader) {
+export default function HeaderBar({history, location}: InterfaceHeader) {
   return (
     <div className={style['header-bar-wrapper']}>
       <LeftHeaderBar history={history} />

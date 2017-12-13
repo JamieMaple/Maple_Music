@@ -67,14 +67,14 @@ class SongsList extends React.Component<IProps, any> {
           creator={info.creator}
           artist={info.artist}
         />
-        <MiddleComponent className="middle-list-wrapper" songs={info.tracks || songs} playCount={info.playCount} />
+        <MiddleComponent className="middle-list-wrapper" songs={info.tracks || songs} isPlayList={this.isPlayList()} playCount={info.playCount} />
         <DownComponent className="down-comment-list-warpper" comments={comments} />
       </div>
     )
   }
 }
 
-const mapState = (state: IStateTree, ownProps: IProps): any => {
+const mapState = (state: IStateTree & any, ownProps: IProps): any => {
   const { params: {id: formatId}, url } = ownProps.match
   const { details: { playList: detailsPlayList, album: detailsAlbum },
     comments: { playList: commentsPlayList, album: comemntsAlbum } } = state

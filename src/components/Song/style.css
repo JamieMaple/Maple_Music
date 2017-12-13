@@ -28,15 +28,16 @@
     .song-name {
       flex: 1;
     }
-    .song-time {
-      width: 5rem;
-    }
     .song-singer {
       width: 10rem;
       margin-right: 2rem;
     }
     .song-album {
       width: 12rem;
+      margin-right: 2rem;
+    }
+    .song-time {
+      width: 5rem;
     }
     .hot-num {
       .icon-hook {

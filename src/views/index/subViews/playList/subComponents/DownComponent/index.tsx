@@ -17,6 +17,7 @@ function CommentsList({comments = []}: any) {
 }
 
 function NewComments({comments = [], className = ''}: any) {
+  const sortedComments = comments && comments.sort((pre, cur) => cur.time - pre.time)
   return (
     <div className={className}>
       <h3 className="comments-title">最新评论</h3>
@@ -58,7 +59,7 @@ export default function DownCommentList({
       <div className="comments-wrapper">
         {comments.hot.length ? <HotComments className="hot-comments" comments={comments.hot} /> : null}
         {comments.top.length ? <TopComments className="top-comments" comments={comments.top} /> : null}
-        <NewComments className="new-comments" comments={comments.all} />
+        {comments.all.length ? <NewComments className="new-comments" comments={comments.all} /> : <p>暂无</p>}
       </div>
     </div>
   )

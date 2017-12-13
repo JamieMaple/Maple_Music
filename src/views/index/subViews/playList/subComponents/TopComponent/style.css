@@ -4,8 +4,8 @@
 }
 
 .top-wrapper {
-      min-height: 25rem;
       display: flex;
+      min-height: 20rem;
       :global {
         .info-image-wrapper {
           width: var(--image-hight);
@@ -41,17 +41,20 @@
               color: lightgray;
             }
           }
-        }
-        .intro {
-          & .intro-title {
-            font-size: 1.1rem;
-            margin-bottom: 0.6rem;
-          }
-          & .intro-passage {
-            max-width: 60rem;
-            & .intro-row {
-              text-indent: 1rem;
-              line-height: 2rem;
+          .intro {
+            &.limit {
+              height: 10rem;
+            }
+            & .intro-title {
+              font-size: 1.1rem;
+              margin-bottom: 0.6rem;
+            }
+            & .intro-passage {
+              max-width: 60rem;
+              & .intro-row {
+                text-indent: 1rem;
+                line-height: 2rem;
+              }
             }
           }
         }

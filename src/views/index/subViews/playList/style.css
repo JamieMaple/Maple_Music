@@ -4,8 +4,6 @@
 }
 
 .list-wrapper {
-  display: flex;
-  flex-direction: column;
   padding-top: 4rem;
   & > :nth-child(n) {
     margin-bottom: 1.5rem;

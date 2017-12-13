@@ -1,9 +1,9 @@
-import { put, call, select } from 'redux-saga/effects'
-import { fetchData } from 'API'
+import { put, all, call, select } from 'redux-saga/effects'
+import { fetchData, musicDetailUrl, musicFileUrl } from 'API'
 import { IDetails, IAction, IComments } from 'commonTypes'
 import { fetch, getTypeName } from 'actions'
 import { stateIdPrifex } from 'utils/stateFormat'
-import { selectors } from './selectors'
+import { selectors } from '../selectors'
 
 interface InterfaceDataProps {
   banners?: any,
@@ -20,7 +20,7 @@ interface InterfaceDataProps {
   topComments?: any,
 }
 
-export function* fetchWorkers(action: IAction) {
+export function* fetchIndexViewWorkers(action: IAction) {
   try {
     const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
     const data: any = dataTmpl.banners
@@ -81,7 +81,7 @@ export function* fetchDetailWorker(action: IAction) {
   }
 }
 
-export function* fetchCommentsWorker(action) {
+export function* fetchCommentWorker(action: IAction) {
   try {
     const selectId = stateIdPrifex(action.payload.config.params.id)
     const comments: IComments = yield select(selectors.getComments)
@@ -108,5 +108,29 @@ export function* fetchCommentsWorker(action) {
     }
   } catch (error) {
     yield put(fetch.error(error))
+  }
+}
+
+export function* fetchListeningWorker({payload: { config: { id } }}: IAction) {
+  const config = { method: 'GET' }
+  const selectId = stateIdPrifex(id)
+  const listening = yield select(selectors.getListening)
+
+  if (!listening[selectId]) {
+    const [dataTmpl, urlTmpl] = yield all([
+      call(fetchData, {...config, params: {ids: id}, url: musicDetailUrl}),
+      call(fetchData, {...config, params: {id}, url: musicFileUrl}),
+    ])
+    const playing = {
+      ...dataTmpl.songs[0], privileges: dataTmpl.privileges[0],
+      file: urlTmpl.data[0],
+    }
+
+    yield put(fetch.listening.success({
+      [selectId]: playing,
+      playing,
+    }))
+  } else {
+    yield put(fetch.listening.success({playing: listening[selectId]}))
   }
 }

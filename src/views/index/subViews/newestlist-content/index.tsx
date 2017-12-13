@@ -9,10 +9,7 @@ import NewestAlbumList from './album-list'
 
 const wrapper = require('./style.css')['newest-list-wrapper']
 
-const songFlag = '单曲'
-const albumFlag = '专辑'
-
-enum Types {'单曲' = 0, '专辑'}
+const tags = [{title: '类型：', children: ['单曲', '专辑']}]
 
 interface IProps extends IRouteProps {
   songs: any[],
@@ -21,22 +18,22 @@ interface IProps extends IRouteProps {
 }
 
 class NewestListView extends React.Component<IProps, any> {
-  public state = {
-    types: [{title: '类型：', children: [Types[0], Types[1]]}],
-    index: 0,
+  public isIndexList() {
+    const { match: { url }, location: { pathname } } = this.props
+
+    return url === pathname
   }
 
   public switchFilter(type) {
-    this.setState(() => ({index: Types[type]}))
     this.props.handleFilterSelect(type)
   }
 
   public componentDidMount() {
-    this.props.handleFilterSelect(Types[this.state.index])
+    const defaultTag = this.isIndexList() ? tags[0].children[0] : tags[0].children[1]
+    this.props.handleFilterSelect(defaultTag)
   }
 
   public render() {
-    const { types, index } = this.state
     const { songs = [], albums = [], match: { url } } = this.props
 
     return (
@@ -45,11 +42,12 @@ class NewestListView extends React.Component<IProps, any> {
           className="filter-type"
           baseUrl={url}
           handleEachClick={this.switchFilter.bind(this)}
-          filters={types}
+          filters={tags}
         />
         {
-          index === Types[songFlag] ?
-          <NewestSongList className="newest-song-list" songs={songs} /> : <NewestAlbumList className="newest-album-list" albums={albums} />
+          this.isIndexList()
+          ? <NewestSongList className="newest-song-list" songs={songs} />
+          : <NewestAlbumList className="newest-album-list" albums={albums} />
         }
       </div>
     )
@@ -70,10 +68,10 @@ const mapDispatch = (dispatch) => {
     handleFilterSelect(typeIndex) {
       const fetchConfig = { method: 'GET' }
       switch (typeIndex) {
-        case songFlag:
+        case '单曲':
           dispatch(fetch.songs.pending({...fetchConfig, url: newestSongsUrl}, dataType))
           break
-        case albumFlag:
+        case '专辑':
           dispatch(fetch.albums.pending({...fetchConfig, url: newestAlbumsUrl,
             params: {
               limit: 30,

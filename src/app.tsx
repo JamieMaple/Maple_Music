@@ -1,30 +1,10 @@
 import * as React from 'react'
-import HeaderBar from './views/layouts/HeaderBar'
-import SideBar from './views/layouts/SideBar'
+import HeaderBar from './layouts/HeaderBar'
+import SideBar from './layouts/SideBar'
 import RouteViews from './router'
-import MusicController from './views/layouts/MusicController'
+import MusicController from './layouts/MusicController'
 
 const styles = require('./app.css')
-
-interface InterfaceChildren {
-  children: JSX.Element[] | JSX.Element
-}
-
-function ContentContainer({children}: InterfaceChildren) {
-  return (
-    <div className="content-container">
-      {children}
-    </div>
-  )
-}
-
-function RouteViewsWrapper({children}: InterfaceChildren) {
-  return (
-    <div className="views-wrapper">
-      {children}
-    </div>
-  )
-}
 
 class App extends React.Component {
   public props: {
@@ -32,17 +12,20 @@ class App extends React.Component {
     location?: object,
   }
 
+  public componentDidCatch(error, info) {
+    console.log(error)
+    console.log(info)
+  }
+
   public render() {
-    const { history } = this.props
+    const { history, location } = this.props
 
     return [
-      <HeaderBar history={history} key="header" />,
-      <ContentContainer key="content">
+      <HeaderBar history={history} location={location} key="header" />,
+      <div key="content" id="main-container" className="content-container">
         <SideBar className="sidebar-control" />
-        <RouteViewsWrapper>
-          <RouteViews />
-        </RouteViewsWrapper>
-      </ContentContainer>,
+        <RouteViews />
+      </div>,
       <MusicController key="music" />,
     ]
   }

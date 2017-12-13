@@ -1,32 +1,38 @@
-import { IStateTree } from '../../commonTypes'
-
 // TODO
 // loading localStorage
 
-export const initState: IStateTree = {
+const albumsAndPlayList = {
+  album: {},
+  playList: {},
+}
+
+export default {
   search: {},
-  listening: {},
+  listening: {
+      // cache ['id_2041421']: { musicUrl, ...info }
+      mode: '',
+      isPlaying: false,
+      playing: {},
+      // percentage
+      currentTime: 0,
+      duration: 0,
+      buffered: 0,
+  },
   banners: [],
   albums: {
-    newest: [],
+    // newest: [],
   },
   lists: {
-    recommend: [],
-    playList: [],
+    // recommend: [],
+    // playList: [],
   },
-  details: {
-    album: [],
-    playList: [],
-  },
-  comments: {
-    album: [],
-    playList: [],
-  },
+  details: albumsAndPlayList,
+  comments: albumsAndPlayList,
   singers: {
-    recommend: [],
+    // recommend: [],
   },
   songs: {
-    recommend: [],
-    newest: [],
+    // recommend: [],
+    // newest: [],
   },
 }

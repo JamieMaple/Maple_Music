@@ -71,7 +71,10 @@ export function formatComplexDate(date: number = 0, split: string = '-'): string
 export function formatMusicTime(time: number, split: string = ':'): string {
   const base = 60 * 1000
   const min = Math.floor(time / base)
-  const sec = addZeroPrefix(Math.floor((time / base - min) * 60))
+  const sec = Math.round((time / base - min) * 60)
 
-  return [min, sec].join(split)
+  const minTmpl = addZeroPrefix(min)
+  const secTmpl = addZeroPrefix(sec)
+
+  return [minTmpl, secTmpl].join(split)
 }

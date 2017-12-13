@@ -1,17 +1,5 @@
 import { createActions } from 'redux-actions'
 
-const commonFetch  = (config, dataType, ...args) => ({config, dataType, others: args})
-const commonCommit = (data) => ({data})
-const commonFetchName = ['BANNERS', 'SONGS', 'ALBUMS', 'SINGERS', 'LISTS', 'DETAILS', 'COMMENTS']
-const commonFetchObject = {}
-
-commonFetchName.forEach(item => {
-  commonFetchObject[item] = {
-    PENDING: commonFetch,
-    SUCCESS: commonCommit,
-  }
-})
-
 interface IFetchStatus {
   pending: any,
   success: any,
@@ -24,15 +12,44 @@ interface IFetch {
   lists: IFetchStatus,
   details: IFetchStatus,
   comments: IFetchStatus,
+  listening: IFetchStatus,
   error: any,
 }
 
-let fetch: IFetch
+const commonFetch  = (config, dataType, ...args) => ({config, dataType, others: args})
+const commonCommit = (data) => ({data})
+const fetchName = [
+  'BANNERS',
+  'LISTENING',
+  'SONGS',
+  'ALBUMS',
+  'SINGERS',
+  'LISTS',
+  'DETAILS',
+  'COMMENTS',
+]
+const fetchObject = {}
 
-({ fetch } = createActions({
+fetchName.forEach(item => {
+  fetchObject[item] = {
+    PENDING: commonFetch,
+    SUCCESS: commonCommit,
+  }
+})
+
+let fetch: IFetch
+let listen: { toggle, play, buffered, current }
+
+({ fetch, listen } = createActions({
   FETCH: {
-    ...commonFetchObject,
+    ...fetchObject,
     ERROR: () => {},
+  },
+  LISTEN: {
+    TOGGLE: () => {},
+    PLAY: () => {},
+    BUFFERED: commonCommit,
+    CURRENT: commonCommit,
   },
 }, { namespace: '_' }))
 
@@ -43,4 +60,4 @@ function getTypeName(func) {
   return func.toString()
 }
 
-export { fetch, getTypeName }
+export { fetch, listen, getTypeName }

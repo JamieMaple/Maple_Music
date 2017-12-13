@@ -25,7 +25,7 @@ class PopularSongs extends React.Component<InterfaceData, any> {
     const { songs = [] } = this.props
     const { limit, steps } = this.state
     const songsItems = sliceArr(songs, limit).map((song, index ) =>
-    <Song className="song" index={index + 1} name={song.name} key={`song-${index}`} />)
+    <Song className="song" index={index + 1} id={song.id} name={song.name} time={song.song.duration} key={`song-${index}`} />)
 
     return (
       <div className="popular-songs">

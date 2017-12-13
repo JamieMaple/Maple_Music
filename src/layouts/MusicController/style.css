@@ -1,0 +1,107 @@
+:root {
+  --background-color: #222326;
+  --main-font-color: #fff;
+  --img-width: 5.2rem;
+  --bar-parent-height: 2.8rem;
+  --both-side-width: 17rem;
+  --audio-bar-height: 2px;
+}
+.music-controller-wrapper {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  position: relative;
+  height: var(--img-width);
+  z-index: 100;
+  background: var(--background-color);
+  color: var(--main-font-color);
+  // overflow: hidden;
+  :global {
+    .music-photo {
+      height: var(--img-width);
+      width: var(--img-width);
+      z-index: 10;
+      background-color: gray;
+    }
+    .music-info {
+      width: calc(var(--both-side-width) - var(--img-width));
+      margin-left: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      & > :first-child {
+        margin-bottom: 0.5rem;
+      }
+      & :nth-child(n) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .song {
+        font-size: 1.1rem;
+        color: #666565;
+      }
+      .singer {
+        font-size: 0.9rem;
+        color: #a2a1a0;
+      }
+    }
+    .music-bar-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center; 
+      padding-right: var(--both-side-width);
+      & :nth-child(n) {
+        font-size: 1.3rem;
+      }
+      .play-button {
+        width: var(--bar-parent-height);
+        height: var(--bar-parent-height);
+        margin: 0 1.6rem;
+        border-radius: 50%;
+        text-align: center;
+        background: var(--red);
+        &::before {
+          line-height: var(--bar-parent-height);
+          font-size: 1.6rem;
+          color: #fff;
+        }
+        // 原字体有问题。。。明显不对齐，强迫症犯了
+        &.play {
+          padding-left: 2px;
+        }
+      }
+    }
+    .audio-hook {
+      position: absolute;
+      box-sizing: border-box;
+      top: 0;
+      left: var(--img-width);
+      right: 0;
+      cursor: pointer;
+      transition: all 0.1s linear;
+      & .progress {
+        position: relative;
+        border-top: var(--audio-bar-height) solid var(--red);
+        & .progress-button {
+          display: block;
+          position: absolute;
+          top: -0.6rem;
+          right: -0.6rem;
+          height: 1rem;
+          width: 1rem;
+          border-radius: 50%;
+          background: #fff;
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+        &:hover {
+          transform: scaleY(1.1);
+          box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.21);
+          & .progress-button {
+            opacity: 1
+          }
+        }
+      }
+    }
+  }
+}

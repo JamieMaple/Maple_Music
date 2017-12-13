@@ -2,8 +2,7 @@
 .banner {
   position: relative;
   width: 50%;
-  max-width: 50rem;
-  min-width: 50rem;
+  min-width: 45rem;
   margin: auto;
   overflow: hidden;
   :global {

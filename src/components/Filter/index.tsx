@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { ICommonElementProps } from 'commonTypes'
-import { Link } from 'react-router-dom'
+import { ICommonElementProps, ILocation, IMatch } from 'commonTypes'
+import { NavLink } from 'react-router-dom'
 
 const wrapper = require('./style.css')['filter']
 
@@ -29,41 +29,31 @@ interface IFilter {
 }
 
 export default class Filter extends React.Component<IFilterProps, any> {
-  public state = {
-    filterRowIndex: 0,
-    filterColIndex: 0,
-  }
-
-  public switchTag(row, col) {
-    const { handleEachClick, filters = [] } = this.props
-    this.setState((preState: any) => {
-      if (preState.filterRowIndex !== row || preState.filterColIndex !== col) {
-        if (handleEachClick !== undefined) {
-          try {
-            handleEachClick(filters[row].children[col])
-          } catch (e) {
-            throw TypeError('handleEachClick must be function')
-          }
-        }
-        return {filterRowIndex: row, filterColIndex: col}
-      }
-    })
+  public ifIndex(row: number, col: number): boolean {
+    return row === 0 && col === 0
   }
 
   public render() {
-    const { className, style, filters = [], baseUrl } = this.props
-    const { filterRowIndex, filterColIndex } = this.state
+    const { className, style, filters = [], baseUrl, handleEachClick } = this.props
     const classNames = `${wrapper} ${className}`.trim()
     const filterItems = filters.map((subFilter, rowIndex) =>
       <li key={`filter-${rowIndex}`} className="filter-item">
         <h3 className={`${subFilter.icon || 'ion-ios-pricetags-outline'} filter-item-title`}>{subFilter.title || '未知:'}</h3>
         <ul className="filter-item-children">
         {
-          subFilter.children.map((child, colIndex) =>
+          subFilter.children.map((childTag, colIndex) =>
           <li
             key={`subFilter-${colIndex}`}
-            className={`filter-tag ${filterRowIndex === rowIndex && filterColIndex === colIndex ? 'active' : ''}`.trim()}
-          ><Link onClick={this.switchTag.bind(this, rowIndex, colIndex)} to={`${baseUrl}/${child}`}>{child}</Link></li>)
+            className="filter-tag"
+          >
+            <NavLink
+              exact
+              className="filter-link"
+              onClick={handleEachClick.bind(null, childTag)}
+              to={`${baseUrl}${this.ifIndex(rowIndex, colIndex) ? '' : '/' + childTag}`}>
+              {childTag}
+            </NavLink>
+          </li>)
         }
         </ul>
       </li>)

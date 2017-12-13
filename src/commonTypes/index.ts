@@ -13,16 +13,25 @@ export interface IComments {
   playList?: any,
 }
 
+export interface IListening {
+  playing?: any,
+  isPlaying?: boolean,
+  currentTime?: number|string,
+  buffered?: number,
+  duration?: number|string,
+  mode?: string,
+}
+
 export interface IStateTree {
-  banners: any[],
-  search: any,
-  listening: any,
-  lists: any,
-  albums: any,
-  details: IDetails,
-  singers: any,
-  songs: any,
-  comments: IComments,
+  banners?: any,
+  search?: any,
+  listening?: IListening,
+  lists?: any,
+  albums?: any,
+  details?: IDetails,
+  singers?: any,
+  songs?: any,
+  comments?: IComments,
 }
 
 export interface IHistory {
@@ -44,7 +53,7 @@ export interface IMatch {
 
 export interface ILocation {
   hash: string,
-  pathName: string,
+  pathname: string,
   search: string,
 }
 
@@ -87,6 +96,7 @@ export interface IPlayList {
 export interface IMusicInfo {
   song?: string,
   singer?: string,
+  image?: string,
 }
 
 export interface ISinger {
@@ -96,10 +106,12 @@ export interface ISinger {
 }
 
 export interface ISong {
+  id: number,
   name?: string,
   singer?: string,
   time?: string,
   album?: string,
+  icon?: string,
   picUrl?: string,
   popularity?: number,
   index?: number,
@@ -128,6 +140,13 @@ export interface IComment {
   user: any,
   time: number,
   likeCount?: number,
+}
+
+// event handler
+
+export interface IEventHandler {
+  onClick?: (...args) => {},
+  onDoubleClick?: (...args) => {},
 }
 
 // some useful api with react common element props like `className`, `style`

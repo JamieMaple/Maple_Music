@@ -12,7 +12,7 @@ function render(Component) {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <Router>
+        <Router keyLength={12}>
           <Component history={history} location={location} />
         </Router>
       </Provider>
