@@ -5,7 +5,7 @@ export const fetchData = ({
   method = 'GET',
   url,
   params = {},
-  data = {},
+  // data = {},
 }: IFetchDataConfig) => {
   if (!url) {
     throw Error('No url for fetch data!')
@@ -14,6 +14,6 @@ export const fetchData = ({
       method,
       url,
       params,
-      data,
+      // data,
     }).then(res => res.data)
 }

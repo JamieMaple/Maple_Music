@@ -1,40 +1,34 @@
+import fetchUrls from './urls'
 import { fetchData } from './fetchData'
 
-export { fetchData }
+// const commonConfig = {
+//   method: 'GET',
+// }
 
-const baseUrl = 'http://music.jamiemaple.com'
+// @@ global get method
 
-export const bannerUrl = baseUrl + '/banner'
-
-// 无登录 -- 推荐歌单、新歌、歌手、电台和节目
-export const recommendListsUrl = baseUrl + '/personalized'
-export const recommendSongsUrl = baseUrl + '/personalized/newsong'
-export const recommendSingersUrl = baseUrl + '/top/artists'
-export const recommendDJProgramUrl = baseUrl + '/personalized/djprogram'
-export const recommendProgramUrl = baseUrl + '/program/recommend'
-
-// 需登录 -- 推荐每日歌单、每日歌曲
-export const protectedRecommendListsUrl = baseUrl + '/recommend/resource'
-export const protectedRecommendSongsUrl = baseUrl + '/recommend/songs'
-
-// 歌单
-export const playListUrl = baseUrl + '/top/playlist'
-
-/* 详情 */
-// 歌单、专辑
-export const playListDetailUrl = baseUrl + '/playlist/detail'
-export const albumDetailUrl = baseUrl + '/album'
-
-// 歌曲详情
-export const musicDetailUrl = baseUrl + '/song/detail'
-export const musicFileUrl = baseUrl + '/music/url'
-/* 详情 */
-
-// 最新歌单或单曲
-export const newestSongsUrl = baseUrl + '/personalized/newsong'
-export const newestAlbumsUrl = baseUrl + '/top/album'
-
-// 评论
-export const songCommentsUrl = baseUrl + '/comment/music'
-export const listCommentsUrl = baseUrl + '/comment/playlist'
-export const albumCommentsUrl = baseUrl + '/comment/album'
+export default {
+  // recommend page
+  fetchRecommend: {
+    banners: () => fetchData({ url: fetchUrls.bannerUrl }),
+    songs: () => fetchData({ url: fetchUrls.recommendSongsUrl }),
+    singers: (params) => fetchData({ url: fetchUrls.recommendSingersUrl, params }),
+    lists: (params) => fetchData({ url: fetchUrls.recommendListsUrl, params }),
+  },
+  // lists view
+  fetchLists: (params) => fetchData({ url: fetchUrls.playListUrl, params }),
+  // newest view
+  fetchNewest: {
+    albums: (params) => fetchData({ url: fetchUrls.newestAlbumsUrl, params }),
+    songs: (params) => fetchData({ url: fetchUrls.newestSongsUrl, params }),
+  },
+  // details
+  fetchAlbumDetails: (params) => fetchData({ url: fetchUrls.albumDetailUrl, params }),
+  fetchListsDetails: (params) => fetchData({ url: fetchUrls.playListDetailUrl, params }),
+  // one song
+  fetchSongDetails: (params) => fetchData({url: fetchUrls.songDetailUrl, params}),
+  fetchSongFile: (params) => fetchData({url: fetchUrls.songFileUrl, params}),
+  // comments
+  fetchAlbumComments: (params) => fetchData({ url: fetchUrls.albumCommentsUrl, params }),
+  fetchListsComments: (params) => fetchData({ url: fetchUrls.listCommentsUrl, params }),
+}

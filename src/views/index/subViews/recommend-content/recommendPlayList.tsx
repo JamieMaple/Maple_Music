@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TitleBar from 'components/TitleBar'
-import List from 'components/AlbumContainer'
+import List from 'components/AlbumWrapper'
 
 import { ICommonElementProps } from 'commonTypes'
 

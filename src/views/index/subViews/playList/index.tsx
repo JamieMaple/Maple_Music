@@ -1,110 +1,72 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { IRouteProps, IStateTree } from 'commonTypes'
+import { IRouteProps, IStateTree, ISong } from 'commonTypes'
 import { fetch } from 'actions'
-import { playListDetailUrl, albumDetailUrl, albumCommentsUrl, listCommentsUrl } from 'API'
 import { stateIdPrifex } from 'utils/stateFormat'
-import TopComponent from './subComponents/TopComponent'
-import MiddleComponent from './subComponents/MiddleComponent'
-import DownComponent from './subComponents/DownComponent'
+import SongsList from './entry'
 
-interface IProps extends IRouteProps {
+interface IHOCProps extends IRouteProps {
+  dispatch?: any,
   details?: any,
   comments?: any,
-  dispatch?: any,
-  fetchList?: any,
-  fetchComments?: any,
+  songs?: any[],
 }
-
-const wrapper = require('./style.css')['list-wrapper']
 
 const routeRegs = {
   playlist: /^\/playList\/[0-9]{7,10}$/,
   albumlist: /^\/album\/[0-9]{4,10}$/,
 }
 
-class SongsList extends React.Component<IProps, any> {
-  public dataType = {
-    album: 'album',
-    playList: 'playList',
-  }
-
-  public isPlayList() {
-    const { match: { url } } = this.props
-    if (routeRegs.playlist.test(url)) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  public componentDidMount() {
-    const { fetchList, fetchComments } = this.props
-    if (this.isPlayList()) {
-      const type = this.dataType.playList
-      fetchList(playListDetailUrl, type)
-      fetchComments(listCommentsUrl, type)
-    } else {
-      const type = this.dataType.album
-      fetchList(albumDetailUrl, type)
-      fetchComments(albumCommentsUrl, type)
-    }
-  }
-
-  public render() {
-    const { details = {}, comments = {all: [], top: [], hot: []} } = this.props
-    const { info = {}, songs = [] } = details
-
-    return (
-      <div className={wrapper}>
-        <TopComponent
-          className="top-info-wrapper"
-          picUrl={info.coverImgUrl || info.picUrl}
-          name={info.name}
-          publishDate={info.createTime || info.publishTime}
-          tags={info.tags}
-          intro={info.description}
-          creator={info.creator}
-          artist={info.artist}
-        />
-        <MiddleComponent className="middle-list-wrapper" songs={info.tracks || songs} isPlayList={this.isPlayList()} playCount={info.playCount} />
-        <DownComponent className="down-comment-list-warpper" comments={comments} />
-      </div>
-    )
-  }
-}
-
-const mapState = (state: IStateTree & any, ownProps: IProps): any => {
-  const { params: {id: formatId}, url } = ownProps.match
-  const { details: { playList: detailsPlayList, album: detailsAlbum },
-    comments: { playList: commentsPlayList, album: comemntsAlbum } } = state
+const mapState = (state: IStateTree & any, ownProps: IRouteProps): any => {
+  const { params: { id: formatId }, url } = ownProps.match
+  const { details: { list: detailsPlayList, album: detailsAlbum },
+    comments: { list: commentsPlayList, album: comemntsAlbum } } = state
   const id = stateIdPrifex(formatId)
 
   if (routeRegs.playlist.test(url)) {
     return {
       details: detailsPlayList[id],
+      songs: detailsPlayList[id] ? detailsPlayList[id]['tracks'] : [],
       comments: commentsPlayList[id],
     }
   } else if (routeRegs.albumlist.test(url)) {
     return {
       details: detailsAlbum[id],
+      songs: detailsAlbum[id] ? detailsAlbum[id]['songs'] : [],
       comments: comemntsAlbum[id],
     }
   }
 }
 
-const mapDispatch = (dispatch, ownProps: IProps) => {
-  const { id } = ownProps.match.params
-  const commonConfig = { method: 'GET', params: { id } }
+const HOCContainer = Component => class WrappedComponent extends React.Component<IHOCProps, any> {
+  public showAlbumName = this.isPlayList()
+  public isPlayList() {
+    const {match: { url }} = this.props
+    return routeRegs.playlist.test(url)
+  }
 
-  return{
-    fetchList(url, type) {
-      dispatch(fetch.details.pending({ ...commonConfig, url }, type))
-    },
-    fetchComments(url, type) {
-      dispatch(fetch.comments.pending({...commonConfig, url}, type))
-    },
+  public componentDidMount() {
+    const { match: { params, url }, dispatch } = this.props
+    if (routeRegs.playlist.test(url)) {
+      dispatch(fetch.details.list.pending(params))
+      dispatch(fetch.comments.list.pending(params))
+    } else {
+      dispatch(fetch.details.album.pending(params))
+      dispatch(fetch.comments.album.pending(params))
+    }
+  }
+
+  public render() {
+    const songItems = this.props.songs && this.props.songs.map((song, index): ISong => ({
+      id: song.id,
+      index: index + 1,
+      name: song.name,
+      time: song.dt,
+      album: this.showAlbumName && song.al && song.al.name,
+      singer: song.artists || song.ar,
+    }))
+    return <Component details={this.props.details} songs={songItems} showAlbumName={this.showAlbumName} comments={this.props.comments} />
   }
 }
 
-export default connect(mapState, mapDispatch)(SongsList)
+export default connect(mapState)(HOCContainer(SongsList))

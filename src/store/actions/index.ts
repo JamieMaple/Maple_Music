@@ -4,50 +4,74 @@ interface IFetchStatus {
   pending: any,
   success: any,
 }
-interface IFetch {
-  banners: IFetchStatus,
+interface IFetchDetails {
+  album: IFetchStatus,
+  list: IFetchStatus,
+}
+interface IFetchComments {
+  album: IFetchStatus,
+  list: IFetchStatus,
+}
+interface IFetchNewest {
   songs: IFetchStatus,
+  albums: IFetchStatus,
+}
+interface IFetch {
+  recommend: IFetchStatus,
+  song: IFetchStatus,
   singers: IFetchStatus,
   albums: IFetchStatus,
   lists: IFetchStatus,
-  details: IFetchStatus,
-  comments: IFetchStatus,
-  listening: IFetchStatus,
+  // differ
+  newest: IFetchNewest,
+  details: IFetchDetails,
+  comments: IFetchComments,
   error: any,
 }
 
-const commonFetch  = (config, dataType, ...args) => ({config, dataType, others: args})
-const commonCommit = (data) => ({data})
+const commonFetch  = (params, ...args) => ({params, others: args})
+const commonCommit = data => data
+const asyncActions = { PENDING: commonFetch, SUCCESS: commonCommit}
 const fetchName = [
-  'BANNERS',
-  'LISTENING',
-  'SONGS',
-  'ALBUMS',
+  'RECOMMEND',
   'SINGERS',
+  'SONG',
+  'ALBUMS',
   'LISTS',
-  'DETAILS',
-  'COMMENTS',
 ]
 const fetchObject = {}
 
 fetchName.forEach(item => {
-  fetchObject[item] = {
-    PENDING: commonFetch,
-    SUCCESS: commonCommit,
-  }
+  fetchObject[item] = asyncActions
 })
 
 let fetch: IFetch
-let listen: { toggle, play, buffered, current }
+let listen: { toggle, play, pause, duration, change, buffered, current }
 
 ({ fetch, listen } = createActions({
   FETCH: {
     ...fetchObject,
+    NEWEST: {
+      ALBUMS: asyncActions,
+      SONGS: asyncActions,
+    },
+    DETAILS: {
+      ALBUM: asyncActions,
+      LIST: asyncActions,
+    },
+    COMMENTS: {
+      ALBUM: asyncActions,
+      LIST: asyncActions,
+    },
     ERROR: () => {},
   },
   LISTEN: {
     TOGGLE: () => {},
-    PLAY: () => {},
+    PLAY: ()  => {},
+    PAUSE: () => {},
+    CHANGE: commonCommit,
+    DURATION: commonCommit,
+    LIST: commonCommit,
     BUFFERED: commonCommit,
     CURRENT: commonCommit,
   },

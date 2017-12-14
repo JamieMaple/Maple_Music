@@ -1,9 +1,9 @@
 import { handleActions } from 'redux-actions'
 import initState from './initState'
 import fetchReducer from './fetch'
-import playReducer from './play'
+import listenReducer from './listen'
 
 export default handleActions({
   ...fetchReducer,
-  ...playReducer,
+  ...listenReducer,
 }, initState)

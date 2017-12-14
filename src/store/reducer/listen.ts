@@ -17,18 +17,39 @@ export default {
       isPlaying: true,
     },
   }),
+  [listen.pause]: (state: IStateTree, action: IAction): IStateTree => ({
+    ...state,
+    listening: {
+      ...state.listening,
+      isPlaying: false,
+    },
+  }),
+  [listen.duration]: (state: IStateTree, action: IAction): IStateTree => ({
+    ...state,
+    listening: {
+      ...state.listening,
+      ...action.payload,
+    },
+  }),
+  [listen.change]: (state: IStateTree, action: IAction): IStateTree => ({
+    ...state,
+    listening: {
+      ...state.listening,
+      ...action.payload,
+    },
+  }),
   [listen.buffered]: (state: IStateTree, action: IAction): IStateTree => ({
     ...state,
     listening: {
       ...state.listening,
-      ...action.payload.data,
+      ...action.payload,
     },
   }),
   [listen.current]: (state: IStateTree, action: IAction): IStateTree => ({
     ...state,
     listening: {
       ...state.listening,
-      ...action.payload.data,
+      ...action.payload,
     },
   }),
 }

@@ -17,7 +17,7 @@ export function MusicPhoto({ image, onClick }: IMusicInfo & IEventHandler) {
   return <img className="music-photo" onClick={onClick}  src={image || defaultSong} alt=""/>
 }
 
-export function PlayBar({
+export function PlayControlBar({
   className = "",
   style = {},
   play = false,

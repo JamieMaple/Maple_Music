@@ -28,8 +28,8 @@ class Audio extends React.Component<any, any> {
   }
 
   public timeUpdate() {
-    const { duration, currentTime } = this.audio
-    this.props.dispatch(listen.current({currentTime, duration}))
+    const { currentTime } = this.audio
+    this.props.dispatch(listen.current({currentTime}))
   }
 
   public render() {

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TitleBar from 'components/TitleBar'
-import Song from 'components/Song'
+import ListContainer from 'components/containers/ListContainer'
 import Singer from 'components/Singer'
 import { ICommonElementProps } from 'commonTypes'
 
@@ -24,15 +24,12 @@ class PopularSongs extends React.Component<InterfaceData, any> {
   public render() {
     const { songs = [] } = this.props
     const { limit, steps } = this.state
-    const songsItems = sliceArr(songs, limit).map((song, index ) =>
-    <Song className="song" index={index + 1} id={song.id} name={song.name} time={song.song.duration} key={`song-${index}`} />)
+    const songsItems = sliceArr(songs, limit)
 
     return (
       <div className="popular-songs">
         <TitleBar className="title" text="热门歌曲" />
-        <ul className="songs-wrapper">
-          {songsItems}
-        </ul>
+        <ListContainer className="songs-wrapper" songs={songsItems} />
         {
           songs.length > limit
           ? <div onClick={this.handleMore.bind(this)} className="more">

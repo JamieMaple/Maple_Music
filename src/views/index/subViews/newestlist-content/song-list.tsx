@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { ICommonElementProps, ISong } from 'commonTypes'
-import Song from 'components/Song'
+import { ICommonElementProps } from 'commonTypes'
+import ListContainer from 'components/containers/ListContainer'
 
 interface InterfaceSongsProps extends ICommonElementProps {
   songs?: any[]
@@ -12,14 +12,10 @@ export default function NewestSongList({
   songs = [],
 }: InterfaceSongsProps) {
   const classNames = `song-list-hook ${className}`.trim()
-  const songItems = songs.map((song, index) =>
-    <Song key={`song-${index}`} index={index + 1} id={song.id} name={song.name} picUrl={song.picUrl} />)
 
   return (
     <div className={classNames}>
-      <ul>
-        {songItems}
-      </ul>
+      <ListContainer songs={songs} />
     </div>
   )
 }

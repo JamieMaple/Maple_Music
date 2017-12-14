@@ -1,12 +1,10 @@
 import * as React from 'react'
 import { ISongProps, IEventHandler } from 'commonTypes'
-import { fetch, listen } from 'actions'
-import { connect } from 'react-redux'
 import { formatMusicTime } from 'utils/format'
 const defaultClassName = require('./style.css')
 const defaultSong = require('./default-song.svg')
 
-export function Song({
+export default function Song({
     className = '',
     style = {},
     name = '未知歌曲',
@@ -18,17 +16,18 @@ export function Song({
     popularity = 0,
     index,
     onDoubleClick = () => {},
+    onClick = () => {},
   }: ISongProps & IEventHandler,
 ) {
   const classNames = `${defaultClassName['song-wrapper']} ${className}`.trim()
 
   return (
-    <div onDoubleClick={onDoubleClick} className={classNames} style={style}>
+    <div onClick={onClick} onDoubleClick={onDoubleClick} className={classNames} style={style}>
       {/* <img className="song-image" src={picUrl || defaultSong} alt=""/> */}
       <span className="song-index">{index}</span>
       <span className={`song-add-icon ${icon}`.trim()}></span>
       <span className="song-name">{name}</span>
-      {singer ? <span className="song-singer">{singer}</span> : null}
+      {singer ? <span className="song-singer">{Array.isArray(singer) ? singer.map(item => item.name).join('、') : singer }</span> : null}
       {album ? <span className="song-album">{album}</span> : null}
       {
         time ?
@@ -47,16 +46,3 @@ export function Song({
     </div>
   )
 }
-const mapState = () => ({})
-const mapDispatch = (dispatch): any => ({
-  onDoubleClick: (id) => {
-    dispatch(fetch.listening.pending({id}))
-    dispatch(listen.play())
-  },
-})
-
-function SongContainer({onDoubleClick = () => {}, ...args}: ISongProps & IEventHandler) {
-  return <Song {...args} onDoubleClick={onDoubleClick.bind(null, args.id)} />
-}
-
-export default connect(mapState, mapDispatch)(SongContainer)

@@ -23,7 +23,7 @@
       & > :nth-child(2) {
         flex: 1;
         margin: 0 1.2rem;
-        padding: 0 0.6rem 1.5rem 0.6rem;
+        padding: 0 0.6rem;
         overflow-y: auto;
         overflow-x: hidden;
       }

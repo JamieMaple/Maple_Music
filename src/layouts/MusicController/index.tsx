@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { ICommonElementProps, IStateTree, IListening } from 'commonTypes'
 import { listen } from 'actions'
 import Portal from 'components/Portal'
-import { MusicInfo, MusicPhoto, PlayBar, AudioPlayerBar } from './components'
+import { MusicInfo, MusicPhoto, PlayControlBar, AudioPlayerBar } from './components'
 import Audio from '../Audio'
 import SongInfoView from '../../views/SongInfo'
 
@@ -28,9 +28,7 @@ class MusicController extends React.Component<ICommonElementProps & IListening &
   public togglePlay() {
     const { isPlaying, playing } = this.props
 
-    if (playing.file) {
-      this.props.dispatch(listen.toggle())
-    }
+    this.props.dispatch(listen.toggle())
   }
 
   public render() {
@@ -38,16 +36,20 @@ class MusicController extends React.Component<ICommonElementProps & IListening &
     const classNames = `${style['music-controller-wrapper']} ${className}`.trim()
     const { isShowInfo } = this.state
     const singer = playing.ar && playing.ar.map(item => item.name).join('、')
-    const song =  playing.name
+    const song = playing.name
     const image = playing.al && playing.al.picUrl
 
     return (
       <div className={classNames}>
         <Audio />
         <MusicPhoto image={image} onClick={this.toggleShowInfo.bind(this)} />
-        <AudioPlayerBar duration={duration} currentTime={currentTime} />
+        {
+          duration
+          ? <AudioPlayerBar duration={duration} currentTime={currentTime} />
+          : null
+        }
         <MusicInfo song={song} singer={singer} />
-        <PlayBar className="music-bar-wrapper" play={isPlaying} togglePlay={this.togglePlay.bind(this)} />
+        <PlayControlBar className="music-bar-wrapper" play={isPlaying} togglePlay={this.togglePlay.bind(this)} />
         {
           isShowInfo
           ? <Portal id="main-container">

@@ -1,136 +1,173 @@
-import { put, all, call, select } from 'redux-saga/effects'
-import { fetchData, musicDetailUrl, musicFileUrl } from 'API'
+import { put, all, call, select, throttle } from 'redux-saga/effects'
 import { IDetails, IAction, IComments } from 'commonTypes'
-import { fetch, getTypeName } from 'actions'
+import { fetch, listen, getTypeName } from 'actions'
+import fetchData from 'API'
 import { stateIdPrifex } from 'utils/stateFormat'
 import { selectors } from '../selectors'
 
-interface InterfaceDataProps {
-  banners?: any,
-  result?: any,
-  artists?: any,
-  playlists?: any,
-  albums?: any,
-  album?: any,
-  songs?: any,
-  playlist?: any,
-  privileges: any,
-  comments?: any,
-  hotComments?: any,
-  topComments?: any,
-}
-
-export function* fetchIndexViewWorkers(action: IAction) {
+export default function* mainFetch(action: IAction) {
   try {
-    const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
-    const data: any = dataTmpl.banners
-      || dataTmpl.result || dataTmpl.playlists || dataTmpl.albums
-      || dataTmpl.artists
-      || []
-    const dataObj: object = {[action.payload.dataType]: data}
-
     switch (action.type) {
-      case getTypeName(fetch.banners.pending):
-        yield put(fetch.banners.success(data))
-        return
-      case getTypeName(fetch.albums.pending):
-        yield put(fetch.albums.success(dataObj))
+      case getTypeName(fetch.recommend.pending):
+        yield call(fetchRecommendWorker, action)
         return
       case getTypeName(fetch.lists.pending):
-        yield put(fetch.lists.success(dataObj))
+        yield call(fetchLists, action)
         return
-      case getTypeName(fetch.songs.pending):
-        yield put(fetch.songs.success(dataObj))
+      case getTypeName(fetch.newest.songs.pending):
+        yield call(fetchNewestSongs, action)
         return
-      case getTypeName(fetch.singers.pending):
-        yield put(fetch.singers.success(dataObj))
+      case getTypeName(fetch.newest.albums.pending):
+        yield call(fetchNewestAlbums, action)
+        return
+      case getTypeName(fetch.details.list.pending):
+        yield call(fetchDetailList, action)
+        return
+      case getTypeName(fetch.details.album.pending):
+        yield call(fetchDetailAlbum, action)
+        return
+      case getTypeName(fetch.comments.list.pending):
+        yield call(fetchCommentList, action)
+        return
+      case getTypeName(fetch.comments.album.pending):
+        yield call(fetchCommentAlbum, action)
+        return
+      case getTypeName(fetch.song.pending):
+        yield call(fetchSong, action)
         return
       default:
-        throw Error('Fetch error: No match type!')
+        throw Error('no match: ' + action.type + ' !')
     }
   } catch (error) {
     yield put(fetch.error(error))
   }
 }
 
-export function* fetchDetailWorker(action: IAction) {
-  try {
-    const selectId = stateIdPrifex(action.payload.config.params.id)
-    const details: IDetails = yield select(selectors.getDetails)
-    const { dataType } = action.payload
-
-    if (details[dataType]) {
-      if (!details[dataType][selectId]) {
-        const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
-        const data = {
-          [dataType]: {
-            ...details[dataType],
-            [selectId]: {
-              info: dataTmpl.album  || dataTmpl.playlist,
-              songs: dataTmpl.songs || dataTmpl.privileges,
-            },
-          },
-        }
-        yield put(fetch.details.success({...details, ...data}))
-      }
-    } else {
-      throw Error('Error: no such dataType ' + dataType + '.')
-    }
-  } catch (error) {
-    yield put(fetch.error(error))
-  }
+function* fetchNewestAlbums(action: IAction) {
+  const { params } = action.payload
+  const albumsTmpl = yield call(fetchData.fetchNewest.albums, params)
+  const albums = {newest: albumsTmpl.albums}
+  yield put(fetch.newest.albums.success(albums))
 }
 
-export function* fetchCommentWorker(action: IAction) {
-  try {
-    const selectId = stateIdPrifex(action.payload.config.params.id)
-    const comments: IComments = yield select(selectors.getComments)
-    const { dataType } = action.payload
-
-    if (comments[dataType]) {
-      if (!comments[dataType][selectId]) {
-        const dataTmpl: InterfaceDataProps = yield call(fetchData, action.payload.config)
-        const data = {
-          ...comments,
-          [dataType]: {
-            ...comments[dataType],
-            [selectId]: {
-              all: dataTmpl.comments,
-              top: dataTmpl.topComments,
-              hot: dataTmpl.hotComments,
-            },
-          },
-        }
-        yield put(fetch.comments.success(data))
-      }
-    } else {
-      throw Error('Error: no such dataType ' + dataType + '.')
-    }
-  } catch (error) {
-    yield put(fetch.error(error))
-  }
+function* fetchNewestSongs(action: IAction) {
+  const { params } = action.payload
+  const songsTmpl = yield call(fetchData.fetchNewest.songs, params)
+  const songs = {newest: songsTmpl.result}
+  yield put(fetch.newest.songs.success(songs))
 }
 
-export function* fetchListeningWorker({payload: { config: { id } }}: IAction) {
-  const config = { method: 'GET' }
+function* fetchSong(action: IAction) {
+  const { id } = action.payload.params
   const selectId = stateIdPrifex(id)
-  const listening = yield select(selectors.getListening)
+  const songs = yield select(selectors.getSong)
+  let songData = { dt: 0 }
 
-  if (!listening[selectId]) {
-    const [dataTmpl, urlTmpl] = yield all([
-      call(fetchData, {...config, params: {ids: id}, url: musicDetailUrl}),
-      call(fetchData, {...config, params: {id}, url: musicFileUrl}),
-    ])
-    const playing = {
-      ...dataTmpl.songs[0], privileges: dataTmpl.privileges[0],
-      file: urlTmpl.data[0],
+  if (!songs[selectId]) {
+    const [
+      songDetailsTmpl,
+      songFileTmpl,
+    ] = yield all([
+      call(fetchData.fetchSongDetails, { ids: id }),
+      call(fetchData.fetchSongFile, { id })])
+    songData = {
+      ...songDetailsTmpl.songs[0],
+      privileges: songDetailsTmpl.privileges[0],
+      file: songFileTmpl.data[0],
     }
-
-    yield put(fetch.listening.success({
-      [selectId]: playing,
-      playing,
-    }))
+    yield put(fetch.song.success({[selectId]: songData}))
   } else {
-    yield put(fetch.listening.success({playing: listening[selectId]}))
+    songData = songs[selectId]
+  }
+
+  yield put(listen.change({ playing: songData, duration: songData.dt / 1000, currentTime: 0 }))
+}
+
+function* fetchLists(action: IAction) {
+  const { params } =  action.payload
+  const listsTmpl = yield call(fetchData.fetchLists, params)
+  const listsData = listsTmpl.playlists
+  const key = encodeURIComponent(params.cat)
+  yield put(fetch.lists.success({[key]: listsData}))
+}
+
+function* fetchRecommendWorker(action: IAction) {
+  const { fetchRecommend } = fetchData
+  const [
+    bannersTmpl, songsTmpl, singersTmpl, listsTmpl,
+  ] = yield all([
+    call(fetchRecommend.banners),
+    call(fetchRecommend.songs),
+    call(fetchRecommend.singers, { limit: 10 }),
+    call(fetchRecommend.lists, {limit: 15}),
+  ])
+  const banners = bannersTmpl.banners
+  const songs = songsTmpl.result
+  const singers = singersTmpl.artists
+  const lists = listsTmpl.result
+  yield put(fetch.recommend.success({banners, songs, singers, lists}))
+}
+
+function* fetchDetailList(action: IAction) {
+  const selectId = stateIdPrifex(action.payload.params.id)
+  const details: IDetails = yield select(selectors.getDetails)
+  if (!details.list[selectId]) {
+    const listDetailTmpl = yield call(fetchData.fetchListsDetails, action.payload.params)
+    const listDetail = {
+      [selectId]: {
+        ...listDetailTmpl.playlist,
+        songs:  listDetailTmpl.privileges,
+      },
+    }
+    yield put(fetch.details.list.success(listDetail))
+  }
+}
+
+function* fetchDetailAlbum(action: IAction) {
+  const selectId = stateIdPrifex(action.payload.params.id)
+  const details: IDetails = yield select(selectors.getDetails)
+  if (!details.album[selectId]) {
+    const albumDetailTmpl = yield call(fetchData.fetchAlbumDetails, action.payload.params)
+    const albumDetail = {
+      [selectId]: {
+        ...albumDetailTmpl.album,
+        songs:  albumDetailTmpl.songs,
+      },
+    }
+    yield put(fetch.details.album.success(albumDetail))
+  }
+}
+
+function* fetchCommentList(action: IAction) {
+  const selectId = stateIdPrifex(action.payload.params.id)
+  const comments: IComments = yield select(selectors.getComments)
+
+  if (!comments.list[selectId]) {
+    const dataTmpl = yield call(fetchData.fetchListsComments, action.payload.params)
+    const data = {
+      [selectId]: {
+        all: dataTmpl.comments,
+        top: dataTmpl.topComments,
+        hot: dataTmpl.hotComments,
+      },
+    }
+    yield put(fetch.comments.list.success(data))
+  }
+}
+
+function * fetchCommentAlbum(action: IAction) {
+  const selectId = stateIdPrifex(action.payload.params.id)
+  const comments: IComments = yield select(selectors.getComments)
+
+  if (!comments.album[selectId]) {
+    const dataTmpl = yield call(fetchData.fetchAlbumComments, action.payload.params)
+    const data = {
+      [selectId]: {
+        all: dataTmpl.comments,
+        top: dataTmpl.topComments,
+        hot: dataTmpl.hotComments,
+      },
+    }
+    yield put(fetch.comments.album.success(data))
   }
 }

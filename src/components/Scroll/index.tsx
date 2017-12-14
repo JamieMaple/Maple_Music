@@ -1,29 +1,33 @@
 import * as React from 'react'
-import { ICommonElementProps } from 'commonTypes'
 
-interface IProps extends ICommonElementProps {
-  handleScroll?: (e, ...args) => {},
-}
+export default class Scroll extends React.Component<{id: string, handleScroll?: any}, any> {
+  public el: HTMLElement | null
 
-export default class Scroll extends React.Component<IProps, any> {
-  public handleScroll(e) {
-    console.log(1)
-    // if (typeof this.props.handleScroll === 'function') {
-    //   this.props.handleScroll(e)
-    // }
+  public handleScroll = this.handleScrollTmpl.bind(this)
+
+  public handleScrollTmpl(e) {
+    const range = 200
+    if (e.target.scrollHeight < e.target.scrollTop + e.target.clientHeight + range) {
+      if (typeof this.props.handleScroll === 'function') {
+        this.props.handleScroll()
+      }
+    }
   }
 
-  public componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll)
+  public componentWillReceiveProps() {
+    this.el = document.getElementById(this.props.id) || null
+    if (this.el) {
+      this.el.addEventListener('scroll', this.handleScroll)
+    }
   }
 
   public componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
+    if (this.el) {
+      this.el.removeEventListener('scroll', this.handleScroll)
+    }
   }
+
   public render() {
-    const { className, style, children } = this.props
-    return (
-      <div className={`${className}`.trim()} style={style}>{children}</div>
-    )
+    return null
   }
 }

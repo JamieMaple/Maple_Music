@@ -1,38 +1,53 @@
+import { IStateTree } from "commonTypes"
+
 // TODO
 // loading localStorage
 
 const albumsAndPlayList = {
-  album: {},
-  playList: {},
+  album: {
+    // cache ['id_2041421']: [...any]
+  },
+  list: {
+    // cache ['id_2041421']: [...any]
+  },
 }
 
-export default {
-  search: {},
+const initState: IStateTree = {
+  search: {
+    // [keywords]: [...any]
+  },
   listening: {
-      // cache ['id_2041421']: { musicUrl, ...info }
       mode: '',
       isPlaying: false,
       playing: {},
-      // percentage
+      playingList: [],
       currentTime: 0,
       duration: 0,
-      buffered: 0,
+      buffered: 0, // percentage
+      volume: 0,
   },
-  banners: [],
   albums: {
-    // newest: [],
+    // newest: []
+    // cache ['id_2041421']: [...any]
   },
   lists: {
-    // recommend: [],
-    // playList: [],
+    // cache [tag]: [...any]
   },
   details: albumsAndPlayList,
   comments: albumsAndPlayList,
-  singers: {
-    // recommend: [],
-  },
+  singers: [
+    // cache ['id_2041421']: { ...info }
+  ],
   songs: {
-    // recommend: [],
-    // newest: [],
+    // newest
+    // cache ['id_2041421']: { musicUrl, ...info }
+  },
+  recommend: {
+    banners: [],
+    songs: [],
+    singers: [],
+    lists: [],
   },
 }
+
+export default initState

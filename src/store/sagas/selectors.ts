@@ -5,4 +5,5 @@ export const selectors = {
   getComments: (state: IStateTree) => state.comments || {},
   getListening: (state: IStateTree) => state.listening || {},
   getIfPlaying: (state: IStateTree) => state.listening ? state.listening.isPlaying : false,
+  getSong: (state: IStateTree) => state.songs || {},
 }

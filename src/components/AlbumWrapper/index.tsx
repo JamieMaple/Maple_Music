@@ -4,7 +4,7 @@ import Album from 'components/Album'
 
 const containerClass = require('./style.css')['album-container']
 
-export default function AlbumContainer({
+export default function AlbumWrapper({
   className = '',
   style = {},
   ...args,

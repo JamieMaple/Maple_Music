@@ -3,51 +3,79 @@ import initState from './initState'
 import { fetch } from 'actions'
 
 export default {
-  [fetch.banners.success]: (state: IStateTree, action: IAction): IStateTree => ({
+  [fetch.recommend.success]: (state: IStateTree, action: IAction): IStateTree => ({
     ...state,
-    banners: action.payload.data,
-  }),
-  [fetch.songs.success]: (state: IStateTree, action: IAction): IStateTree => ({
-    ...state,
-    songs: {
-      ...state.songs,
-      ...action.payload.data,
-    },
-  }),
-  [fetch.singers.success]: (state: IStateTree, action: IAction): IStateTree => ({
-    ...state,
-    singers: {
-      ...state.singers,
-      ...action.payload.data,
-    },
-  }),
-  [fetch.albums.success]: (state: IStateTree, action: IAction): IStateTree => ({
-    ...state,
-    albums: {
-      ...state.albums,
-      ...action.payload.data,
+    recommend: {
+      ...state.recommend,
+      ...action.payload,
     },
   }),
   [fetch.lists.success]: (state: IStateTree, action: IAction): IStateTree => ({
     ...state,
     lists: {
       ...state.lists,
-      ...action.payload.data,
+      ...action.payload,
     },
   }),
-  [fetch.details.success]: (state: IStateTree, action: IAction): IStateTree => ({
+  [fetch.newest.songs.success]: (state: IStateTree, action: IAction): IStateTree => ({
     ...state,
-    details: action.payload.data,
+    songs: {
+      ...state.songs,
+      ...action.payload,
+    },
   }),
-  [fetch.comments.success]: (state: IStateTree, action: IAction): IStateTree => ({
+  [fetch.song.success]: (state: IStateTree, action: IAction): IStateTree => ({
     ...state,
-    comments: action.payload.data,
+    songs: {
+      ...state.songs,
+      ...action.payload,
+    },
   }),
-  [fetch.listening.success]: (state: IStateTree, action: IAction): IStateTree => ({
+  [fetch.newest.albums.success]: (state: IStateTree, action: IAction): IStateTree => ({
     ...state,
-    listening: {
-      ...state.listening,
-      ...action.payload.data,
+    albums: {
+      ...state.albums,
+      ...action.payload,
+    },
+  }),
+  [fetch.details.list.success]: (state: IStateTree, action: IAction): IStateTree => ({
+    ...state,
+    details: {
+      ...state.details,
+      list: {
+        ...state.details.list,
+        ...action.payload,
+      },
+    },
+  }),
+  [fetch.details.album.success]: (state: IStateTree, action: IAction): IStateTree => ({
+    ...state,
+    details: {
+      ...state.details,
+      album: {
+        ...state.details.album,
+        ...action.payload,
+      },
+    },
+  }),
+  [fetch.comments.list.success]: (state: IStateTree, action: IAction): IStateTree => ({
+    ...state,
+    comments: {
+      ...state.comments,
+      list: {
+        ...state.comments.list,
+        ...action.payload,
+      },
+    },
+  }),
+  [fetch.comments.album.success]: (state: IStateTree, action: IAction): IStateTree => ({
+    ...state,
+    comments: {
+      ...state.comments,
+      album: {
+        ...state.comments.album,
+        ...action.payload,
+      },
     },
   }),
 }

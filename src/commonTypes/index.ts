@@ -3,35 +3,46 @@
 ** @@ ... some sub singers etc
 ** @@ with key for view page
 */
+export interface IRecommend {
+  banners?: any[],
+  songs?: any[],
+  singers?: any[],
+  lists?: any[],
+  [prop: string]: any,
+}
+
 export interface IDetails {
   album?: any,
-  playList?: any,
+  list?: any,
 }
 
 export interface IComments {
   album?: any,
-  playList?: any,
+  list?: any,
 }
 
 export interface IListening {
+  mode?: string,
   playing?: any,
   isPlaying?: boolean,
+  playingList?: any[],
   currentTime?: number|string,
   buffered?: number,
   duration?: number|string,
-  mode?: string,
+  volume?: number,
+  [prop: string]: any,
 }
 
 export interface IStateTree {
-  banners?: any,
-  search?: any,
-  listening?: IListening,
-  lists?: any,
-  albums?: any,
-  details?: IDetails,
-  singers?: any,
-  songs?: any,
-  comments?: IComments,
+  search: any,
+  listening: IListening,
+  lists: any,
+  albums: any,
+  details: IDetails,
+  comments: IComments,
+  singers: any[],
+  songs: any,
+  recommend: IRecommend,
 }
 
 export interface IHistory {
@@ -145,8 +156,8 @@ export interface IComment {
 // event handler
 
 export interface IEventHandler {
-  onClick?: (...args) => {},
-  onDoubleClick?: (...args) => {},
+  onClick?: (e) => {},
+  onDoubleClick?: (e) => {},
 }
 
 // some useful api with react common element props like `className`, `style`
@@ -176,13 +187,8 @@ export interface IFetchDataConfig {
 // actions
 
 export interface IPayload {
-  config?: any,
-  dataType: string,
-  banners?: any[],
-  songs?: object,
-  singers?: object,
-  albums?: object,
-  data?: object,
+  params?: any,
+  data?: any,
 }
 
 export interface IAction {

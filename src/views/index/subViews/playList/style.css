@@ -4,7 +4,7 @@
 }
 
 .list-wrapper {
-  padding-top: 4rem;
+  padding: 4rem 0 2rem;
   & > :nth-child(n) {
     margin-bottom: 1.5rem;
   }

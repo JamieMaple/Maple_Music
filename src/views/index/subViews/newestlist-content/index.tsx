@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { IStateTree, IRouteProps } from 'commonTypes'
-import { newestAlbumsUrl, newestSongsUrl } from 'API'
+import { IStateTree, IRouteProps, ISong } from 'commonTypes'
 import { fetch } from 'actions'
 import Filter from 'components/Filter'
 import NewestSongList from './song-list'
@@ -35,6 +34,12 @@ class NewestListView extends React.Component<IProps, any> {
 
   public render() {
     const { songs = [], albums = [], match: { url } } = this.props
+    const songItems = songs.map((song, index: number): ISong => ({
+      id: song.id,
+      name: song.name,
+      index: index + 1,
+      time: song.song.duration,
+    }))
 
     return (
       <div className={wrapper}>
@@ -46,7 +51,7 @@ class NewestListView extends React.Component<IProps, any> {
         />
         {
           this.isIndexList()
-          ? <NewestSongList className="newest-song-list" songs={songs} />
+          ? <NewestSongList className="newest-song-list" songs={songItems} />
           : <NewestAlbumList className="newest-album-list" albums={albums} />
         }
       </div>
@@ -54,12 +59,10 @@ class NewestListView extends React.Component<IProps, any> {
   }
 }
 
-const dataType = 'newest'
-
 const mapState = (state: IStateTree) => {
   return {
-    songs: state.songs[dataType],
-    albums: state.albums[dataType],
+    songs: state.songs ? state.songs.newest : [],
+    albums: state.albums ? state.albums.newest : [],
   }
 }
 
@@ -69,17 +72,13 @@ const mapDispatch = (dispatch) => {
       const fetchConfig = { method: 'GET' }
       switch (typeIndex) {
         case '单曲':
-          dispatch(fetch.songs.pending({...fetchConfig, url: newestSongsUrl}, dataType))
+          dispatch(fetch.newest.songs.pending())
           break
         case '专辑':
-          dispatch(fetch.albums.pending({...fetchConfig, url: newestAlbumsUrl,
-            params: {
-              limit: 30,
-              offset: 0,
-            },
-          }, dataType))
-          break
-        default:
+          dispatch(fetch.newest.albums.pending({
+            limit: 30,
+            offset: 0,
+          }))
           break
       }
     },
