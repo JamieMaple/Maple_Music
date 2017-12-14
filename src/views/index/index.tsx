@@ -31,7 +31,7 @@ export default class IndexPage extends React.Component<ICommonElementProps, any>
               <Header key="header" className="header-wrapper" dataItems={dataItems} />,
               <Switch key="route">
                 <Route key="recommend" exact path='/' component={RecommendView} />
-                <Route key={location.pathname} path={`${baseUrl}/list`} component={SongListView} />
+                <Route key="list" path={`${baseUrl}/list`} component={SongListView} />
                 <Route key="newest" path={`${baseUrl}/newest`} component={NewestListView} />
               </Switch>,
             ]

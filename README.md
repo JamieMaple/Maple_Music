@@ -30,4 +30,16 @@ use scaffold for maple's scaffold
 
 1. new updates in 12/5 on windows book
 
+### to do
+
+1. 歌手页面
+
+1. 搜索页面
+
+1. 下拉加载和分页
+
+1. mv 和 私人fm等也没做
+
+1. 登录
+
 ### MIT

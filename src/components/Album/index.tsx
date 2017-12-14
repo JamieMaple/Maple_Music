@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+import { formatPlayCount } from 'utils/format'
 import { IAlbumProps, IPlayListProps } from 'commonTypes'
 import { albumWrapper } from './style.css'
 
@@ -29,7 +30,7 @@ export default function Album(
         {
           playNum
           ? <p className="ion-headphone album-play-num">
-            {playNum.toString().length > 8 ? '99999999+' : playNum}
+            {formatPlayCount(playNum)}
           </p>
           : null
         }

@@ -1,9 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import {
-  IRouteProps,
-  IStateTree,
-} from 'commonTypes'
+import { IRouteProps, IStateTree } from 'commonTypes'
 import Scroll from 'components/Scroll'
 import { fetch } from 'actions'
 import List from 'components/AlbumWrapper'
@@ -11,11 +8,11 @@ import Filter from 'components/Filter'
 
 const wrapper = require('./style.css')['song-list-wrapper']
 
-interface InterfacePlayListProps extends IRouteProps {
+interface IPlayListProps extends IRouteProps {
   lists: any[],
   dispatch: any,
-  handleFilterSelect: (limit: number, tag: string) => {},
-  loadMore: (config: {limit, tag, offset}) => {}
+  handleFilterSelect: (limit: number, cat: string) => {},
+  loadMore: (config: {limit, cat, offset}) => {}
 }
 
 const tags = [
@@ -30,11 +27,15 @@ function getCat(pathname: string, url: string): string {
 }
 
 const limitInit = 30
+// 3 次后分页
+const scrollLimit = 3
 
-class SongListView extends React.Component<InterfacePlayListProps, any> {
+class SongListView extends React.Component<IPlayListProps, any> {
   public state = {
     limit: limitInit,
-    offset: 0,
+    flag: 0,
+    isLoading: false,
+    loadingFail: false,
   }
 
   public componentDidMount() {
@@ -43,6 +44,19 @@ class SongListView extends React.Component<InterfacePlayListProps, any> {
     const selectTag = getCat(pathname, url)
 
     this.props.handleFilterSelect(limit, selectTag)
+    this.setState(prev => ({...prev, flag: prev.flag + 1, isLoading: true}))
+  }
+
+  public componentWillReceiveProps(nextProps: IPlayListProps) {
+    if (nextProps.lists && nextProps.lists.length > 0) {
+      this.setState(prev => ({...prev, isLoading: false}))
+    } else {
+      this.setState(prev => ({...prev, isLoading: true}))
+    }
+    // reset flag if path changes
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.setState(prev => ({...prev, flag: 0}))
+    }
   }
 
   public switchFilter(cat) {
@@ -52,14 +66,15 @@ class SongListView extends React.Component<InterfacePlayListProps, any> {
   }
 
   public handleScrollLoad() {
-    // this.setState((prev) => {
-    //   this.props.loadMore({limit: prev.limit * 2, tag: this.getCat(), offset: prev.limit + prev.offset})
-    // })
-    console.log('scroll')
+    const { location: { pathname }, match: { url } } = this.props
+    if (!this.state.isLoading && this.state.flag < scrollLimit ) {
+      this.props.loadMore({limit: this.state.limit, cat: getCat(pathname, url), offset: this.state.limit * this.state.flag})
+      this.setState((prev) => ({...prev, isLoading: true, flag: prev.flag + 1}))
+    }
   }
 
   public render() {
-    const { lists = [], match: { url } } = this.props
+    const { lists, match: { url, params: { cat } } } = this.props
     const { limit } = this.state
     const listItems = lists.map((list, index) =>
       <List
@@ -71,12 +86,13 @@ class SongListView extends React.Component<InterfacePlayListProps, any> {
         singer={list.creator && list.creator.nickname}
         playNum={list.playCount}
       />)
+    const baseUrl = url.replace(RegExp(`/${cat}$`, 'g'), '')
 
     return (
       <div className={wrapper}>
         <Scroll id="view-hook" handleScroll={this.handleScrollLoad.bind(this)} />
-        <Filter className="filters-cotainer" handleEachClick={this.switchFilter.bind(this)} baseUrl={url} filters={tags} />
-        <ul className="albums-wrapper">
+        <Filter className="filters-cotainer" handleEachClick={this.switchFilter.bind(this)} baseUrl={baseUrl} filters={tags} />
+        <ul key={`${url}`} className="albums-wrapper">
           {listItems}
         </ul>
       </div>
@@ -84,13 +100,11 @@ class SongListView extends React.Component<InterfacePlayListProps, any> {
   }
 }
 
-const dataType = 'playList'
-
 const mapState = (state, ownProps: IRouteProps) => {
   const { location: { pathname }, match: { url } } = ownProps
   const cat = encodeURIComponent(getCat(pathname, url))
   return {
-    lists: state.lists[cat],
+    lists: state.lists[cat] || [],
   }
 }
 const mapDispatch = (dispatch): any => {
@@ -98,15 +112,8 @@ const mapDispatch = (dispatch): any => {
     handleFilterSelect(limit = 30, cat) {
       dispatch(fetch.lists.pending({limit, cat}))
     },
-    loadMore({limit = 30, cat, offset}) {
-      // dispatch(fetch.lists.pending({
-      //   ...fetchConfig,
-      //   params: {
-      //     limit,
-      //     cat: tag,
-      //     offset,
-      //   },
-      // }, dataType))
+    loadMore(params: {limit, cat, offset}) {
+      dispatch(fetch.lists.pending(params))
     },
   }
 }

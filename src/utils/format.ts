@@ -18,6 +18,9 @@ function addZeroPrefix(num: number|string): string {
 */
 
 export function formatDateNum(date: number = 0, split: string = '-', ifHideYear: boolean = false): string {
+  if (typeof date !== 'number') {
+    return date
+  }
   const formatedDate = new Date(date)
   const year = formatedDate.getFullYear()
   const month = addZeroPrefix(formatedDate.getMonth() + 1)
@@ -38,6 +41,9 @@ export function formatDateNum(date: number = 0, split: string = '-', ifHideYear:
 */
 
 export function formatComplexDate(date: number = 0, split: string = '-'): string {
+  if (typeof date !== 'number') {
+    return date
+  }
   const formatedDate = new Date(date)
   const now = new Date()
   const distanceYears = now.getFullYear() - formatedDate.getFullYear()
@@ -62,13 +68,40 @@ export function formatComplexDate(date: number = 0, split: string = '-'): string
 }
 
 /*
-** use to format music time
-** @param   {number}  time    which num need to transform
-** @param   {string}  split   use to join in the last
+** use to format play count
+** @parma   {number}  time  which num need to format
 ** @return  {string}
 */
 
-export function formatMusicTime(time: number, split: string = ':'): string {
+export function formatPlayCount(time: number): string {
+  if (typeof time !== 'number') {
+    return time
+  }
+  const timeTmpl = time.toString()
+  const hundredThousand = 4
+  const hundredMillion = 8
+  if (timeTmpl.length <= hundredThousand + 1) {
+    // 10 w below
+    return timeTmpl
+  } else if (timeTmpl.length <= hundredMillion) {
+    // 1 y below
+    return timeTmpl.slice(0, timeTmpl.length - hundredThousand) + '万'
+  } else {
+    return timeTmpl.slice(0, timeTmpl.length - hundredMillion) + '亿'
+  }
+}
+
+/*
+** use to format music time
+** @param   {number|string}  time    which num need to transform
+** @param   {string}         split   use to join in the last
+** @return  {string}
+*/
+
+export function formatMusicTime(time: number|string, split: string = ':'): string {
+  if (typeof time !== 'number') {
+    return time
+  }
   const base = 60 * 1000
   const min = Math.floor(time / base)
   const sec = Math.round((time / base - min) * 60)

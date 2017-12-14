@@ -29,7 +29,9 @@ class Audio extends React.Component<any, any> {
 
   public timeUpdate() {
     const { currentTime } = this.audio
-    this.props.dispatch(listen.current({currentTime}))
+    if (currentTime - this.props.currentTime >= 0.7) {
+      this.props.dispatch(listen.current({currentTime}))
+    }
   }
 
   public render() {
@@ -50,6 +52,7 @@ class Audio extends React.Component<any, any> {
 const mapState = (state: IStateTree): any => ({
   isPlaying: state.listening && state.listening.isPlaying,
   playing: state.listening && state.listening.playing,
+  currentTime: state.listening && state.listening.currentTime,
 })
 
 export default connect(mapState)(Audio)

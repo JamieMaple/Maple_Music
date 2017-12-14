@@ -40,7 +40,7 @@ export function AudioPlayerBar({
 }: ICommonElementProps & { duration, currentTime }) {
   const classNames = `audio-hook ${className}`.trim()
   const percentage = duration ? formatPercentage(currentTime / duration) : 0
-  const progressStyle = {transition: 'transform 0.3s linear', transform: `translate3d(${percentage - 100}%, 0, 0)` }
+  const progressStyle = {transition: 'transform 0.5s linear', transform: `translate3d(${percentage - 100}%, 0, 0)` }
 
   return (
     <div className={classNames} style={style}>

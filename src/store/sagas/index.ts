@@ -5,10 +5,11 @@ import mainFetch from './fetch'
 import { handlePlayingWorker } from './playing'
 
 export default function* rootSaga() {
-  yield takeEvery(fetch.recommend.pending, mainFetch)
-  yield takeEvery(fetch.lists.pending, mainFetch)
-  yield takeEvery(fetch.newest.songs.pending, mainFetch)
-  yield takeEvery(fetch.newest.albums.pending, mainFetch)
+  yield takeLatest(fetch.recommend.pending, mainFetch)
+  yield takeLatest(fetch.lists.pending, mainFetch)
+  yield takeLatest(fetch.newest.songs.pending, mainFetch)
+  yield takeLatest(fetch.newest.albums.pending, mainFetch)
+  // parallel
   yield takeEvery(fetch.details.album.pending, mainFetch)
   yield takeEvery(fetch.details.list.pending, mainFetch)
   yield takeEvery(fetch.comments.album.pending, mainFetch)

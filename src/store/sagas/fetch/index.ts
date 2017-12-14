@@ -85,10 +85,14 @@ function* fetchSong(action: IAction) {
 
 function* fetchLists(action: IAction) {
   const { params } =  action.payload
-  const listsTmpl = yield call(fetchData.fetchLists, params)
-  const listsData = listsTmpl.playlists
+  const { offset = 0, limit = 30 } = params
   const key = encodeURIComponent(params.cat)
-  yield put(fetch.lists.success({[key]: listsData}))
+  const { [key]: list = [] } = yield select(selectors.getLists)
+  if (list.length < offset + limit) {
+    const listsTmpl = yield call(fetchData.fetchLists, params)
+    const listsData = [...list, ...listsTmpl.playlists]
+    yield put(fetch.lists.success({[key]: listsData}))
+  }
 }
 
 function* fetchRecommendWorker(action: IAction) {

@@ -120,7 +120,7 @@ export interface ISong {
   id: number,
   name?: string,
   singer?: string,
-  time?: string,
+  time?: number|string,
   album?: string,
   icon?: string,
   picUrl?: string,

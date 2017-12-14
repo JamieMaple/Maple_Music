@@ -29,12 +29,7 @@ export default function Song({
       <span className="song-name">{name}</span>
       {singer ? <span className="song-singer">{Array.isArray(singer) ? singer.map(item => item.name).join('、') : singer }</span> : null}
       {album ? <span className="song-album">{album}</span> : null}
-      {
-        time ?
-        <span className="song-time">
-          {typeof time === 'number' ? formatMusicTime(time) : time }
-        </span> : null
-      }
+      {time ? <span className="song-time">{formatMusicTime(time)}</span> : null}
       {
         popularity
         ? <div className="hot-num">
