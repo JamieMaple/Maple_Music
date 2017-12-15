@@ -2,7 +2,7 @@ import * as React from 'react'
 import { ICommonElementProps } from 'commonTypes'
 
 export default function Loader({style = {}, className = '', text = '努力加载中'}: ICommonElementProps & {text?: string}) {
-  const defaultStyle = {height: '25rem', fill: '#fff', fontSize: 15}
+  const defaultStyle = {height: '25rem', fill: '#fff', fontSize: '1rem'}
 
   return (
     <div style={{...defaultStyle, ...style}} className={`${className}`.trim()}>
@@ -15,7 +15,7 @@ export default function Loader({style = {}, className = '', text = '努力加载
             <feDisplacementMap in="SourceGraphic" in2="turb" scale="5"></feDisplacementMap>
           </filter>
         </defs>
-        <text x="50" y="50" dy="0.3em" text-anchor="middle" ng-attr-fill="{{config.color}}" ng-attr-font-family="{{config.fontFamily}}" ng-attr-font-size="{{config.fontSize}}" filter="url(#lds-squiggle-filterid-8c1d536078eff)" font-family="Arial">{text}</text>
+        <text x="50" y="50" dy="0.3em" textAnchor="middle" ng-attr-fill="{{config.color}}" ng-attr-font-family="{{config.fontFamily}}" ng-attr-font-size="{{config.fontSize}}" filter="url(#lds-squiggle-filterid-8c1d536078eff)" fontFamily="Arial">{text}</text>
       </svg>
     </div>
   )

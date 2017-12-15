@@ -32,6 +32,14 @@ class MusicController extends React.Component<ICommonElementProps & IListening &
     this.props.dispatch(listen.toggle())
   }
 
+  public next() {
+    this.props.dispatch(listen.next())
+  }
+
+  public prev() {
+    this.props.dispatch(listen.prev())
+  }
+
   public render() {
     const { className = '', playing = {}, isPlaying, duration, currentTime } = this.props
     const classNames = `${style['music-controller-wrapper']} ${className}`.trim()
@@ -50,7 +58,12 @@ class MusicController extends React.Component<ICommonElementProps & IListening &
           ? <AudioPlayerBar duration={duration} currentTime={currentTime} />
           : null
         }
-        <PlayControlBar className="music-bar-wrapper" play={isPlaying} togglePlay={this.togglePlay.bind(this)} />
+        <PlayControlBar className="music-bar-wrapper"
+          prev={this.prev.bind(this)}
+          next={this.next.bind(this)}
+          play={isPlaying}
+          togglePlay={this.togglePlay.bind(this)}
+        />
         <RightController className="music-right-controller" />
         {
           isShowInfo

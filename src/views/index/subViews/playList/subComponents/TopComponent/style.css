@@ -52,6 +52,7 @@
             & .intro-passage {
               max-width: 60rem;
               & .intro-row {
+                padding-left: 1rem;
                 text-indent: 1rem;
                 line-height: 2rem;
               }

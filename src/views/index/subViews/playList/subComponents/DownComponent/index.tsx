@@ -50,16 +50,17 @@ export default function DownCommentList({
   comments,
 }: IProps) {
   const classNames = `${className} ${wrapepr}`.trim()
+  const { all = [], hot = [], top = [] } = comments
 
   return (
     <div className={classNames}>
       <TitleBar className="title" text="评论">
-        <span className="count-num">共{comments.all.length}条评论</span>
+        <span className="count-num">共{all.length}条评论</span>
       </TitleBar>
       <div className="comments-wrapper">
-        {comments.hot.length ? <HotComments className="hot-comments" comments={comments.hot} /> : null}
-        {comments.top.length ? <TopComments className="top-comments" comments={comments.top} /> : null}
-        {comments.all.length ? <NewComments className="new-comments" comments={comments.all} /> : <p>暂无</p>}
+        {hot.length ? <HotComments className="hot-comments" comments={hot} /> : null}
+        {top.length ? <TopComments className="top-comments" comments={top} /> : null}
+        {all.length ? <NewComments className="new-comments" comments={all} /> : <p>暂无</p>}
       </div>
     </div>
   )

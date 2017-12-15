@@ -7,12 +7,14 @@ export function PlayControlBar({
   style = {},
   play = false,
   togglePlay,
-}: ICommonElementProps & {play?: boolean, togglePlay?: any}) {
+  next = () => {},
+  prev = () => {},
+}: ICommonElementProps & {play?: boolean, togglePlay?: any, next?: any, prev?: any}) {
   return (
     <div className={className.trim()} style={style}>
-      <span className="ion-ios-skipbackward icon-hook"></span>
+      <span onClick={prev} className="ion-ios-skipbackward icon-hook"></span>
       <div onClick={togglePlay ? togglePlay : () => {}} className={`${play ? 'ion-pause' : 'ion-play play'} play-button`}></div>
-      <span className="ion-ios-skipforward icon-hook"></span>
+      <span onClick={next} className="ion-ios-skipforward icon-hook"></span>
     </div>
   )
 }
@@ -38,7 +40,7 @@ export function AudioPlayerBar({
 }: ICommonElementProps & { duration, currentTime }) {
   const classNames = `audio-hook ${className}`.trim()
   const percentage = duration ? formatPercentage(currentTime / duration) : 0
-  const progressStyle = {transition: 'transform 0.5s linear', transform: `translate3d(${percentage - 100}%, 0, 0)` }
+  const progressStyle = {transition: 'transform 0.8s linear', transform: `translate3d(${percentage - 100}%, 0, 0)` }
 
   return (
     <div className={classNames} style={style}>

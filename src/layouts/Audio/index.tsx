@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { listen } from 'actions'
+import { listen, fetch } from 'actions'
 import { formatPercentage } from 'utils/stateFormat'
 import { IStateTree } from 'commonTypes'
 
-class Audio extends React.Component<any, any> {
+class Audio extends React.Component<{dispatch?, isPlaying?, playing?, currentTime?}, any> {
   public audio: any
 
   public componentWillReceiveProps(nextProps) {
@@ -39,7 +39,7 @@ class Audio extends React.Component<any, any> {
   }
 
   public next() {
-
+    this.props.dispatch(listen.next())
   }
 
   public render() {
@@ -48,6 +48,7 @@ class Audio extends React.Component<any, any> {
     return <audio
       id="audio"
       className="audio-hook"
+      onEnded={this.next.bind(this)}
       ref={audio => {this.audio = audio}}
       onProgress={this.buffering.bind(this)}
       onTimeUpdate={this.timeUpdate.bind(this)}

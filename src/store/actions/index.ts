@@ -22,12 +22,24 @@ interface IFetch {
   singers: IFetchStatus,
   albums: IFetchStatus,
   lists: IFetchStatus,
-  loading: IFetchStatus,
   // differ
   newest: IFetchNewest,
   details: IFetchDetails,
   comments: IFetchComments,
   error: any,
+}
+interface IListen {
+  toggle: any,
+  play: any,
+  pause: any,
+  prev: any,
+  next: any,
+  change: {
+    song: IFetchStatus,
+    playinglist: any,
+  },
+  buffered: any,
+  current: any,
 }
 
 const commonFetch  = (params, ...args) => ({params, others: args})
@@ -35,7 +47,6 @@ const commonCommit = data => data
 const asyncActions = { PENDING: commonFetch, SUCCESS: commonCommit}
 const fetchName = [
   'RECOMMEND',
-  'LOADING',
   'SINGERS',
   'SONG',
   'ALBUMS',
@@ -48,7 +59,7 @@ fetchName.forEach(item => {
 })
 
 let fetch: IFetch
-let listen: { toggle, play, pause, duration, change: IFetchStatus, buffered, current }
+let listen: IListen
 
 ({ fetch, listen } = createActions({
   FETCH: {
@@ -71,9 +82,12 @@ let listen: { toggle, play, pause, duration, change: IFetchStatus, buffered, cur
     TOGGLE: () => {},
     PLAY: ()  => {},
     PAUSE: () => {},
-    CHANGE: asyncActions,
-    DURATION: commonCommit,
-    LIST: commonCommit,
+    PREV: () => {},
+    NEXT: () => {},
+    CHANGE: {
+      SONG: asyncActions,
+      PLAYINGLIST: commonCommit,
+    },
     BUFFERED: commonCommit,
     CURRENT: commonCommit,
   },
