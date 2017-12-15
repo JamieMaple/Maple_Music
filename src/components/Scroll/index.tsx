@@ -6,7 +6,7 @@ export default class Scroll extends React.Component<{id: string, handleScroll?: 
   public handleScroll = this.handleScrollTmpl.bind(this)
 
   public handleScrollTmpl(e) {
-    const range = 200
+    const range = 500
     if (e.target.scrollHeight < e.target.scrollTop + e.target.clientHeight + range) {
       if (typeof this.props.handleScroll === 'function') {
         this.props.handleScroll()

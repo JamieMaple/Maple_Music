@@ -6,5 +6,5 @@ export const selectors = {
   getLists: (state: IStateTree) => state.lists || {},
   getListening: (state: IStateTree) => state.listening || {},
   getIfPlaying: (state: IStateTree) => state.listening ? state.listening.isPlaying : false,
-  getSong: (state: IStateTree) => state.songs || {},
+  getSongs: (state: IStateTree) => state.songs || {},
 }

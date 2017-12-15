@@ -1,21 +1,6 @@
 import * as React from 'react'
 import { formatPercentage } from 'utils/stateFormat'
-import { IMusicInfo, ICommonElementProps, IEventHandler } from 'commonTypes'
-
-const defaultSong = require('./default-song.svg')
-
-export function MusicInfo({ song, singer}: IMusicInfo) {
-  return (
-    <div className="music-info">
-      <h1 className="song">{song || '未知音乐'}</h1>
-      <h2 className="singer">{singer || '未知歌手'}</h2>
-    </div>
-  )
-}
-
-export function MusicPhoto({ image, onClick }: IMusicInfo & IEventHandler) {
-  return <img className="music-photo" onClick={onClick}  src={image || defaultSong} alt=""/>
-}
+import { ICommonElementProps } from 'commonTypes'
 
 export function PlayControlBar({
   className = "",
@@ -30,6 +15,19 @@ export function PlayControlBar({
       <span className="ion-ios-skipforward icon-hook"></span>
     </div>
   )
+}
+
+export class RightController extends React.Component<ICommonElementProps, any> {
+  public render() {
+    const { className } = this.props
+    return (
+      <div className={`${className}`.trim()}>
+        <span className="volume ion-volume-medium"></span>
+        <span className="play-mode ion-shuffle"></span>
+        <span className="playing-list ion-android-list"></span>
+      </div>
+    )
+  }
 }
 
 export function AudioPlayerBar({

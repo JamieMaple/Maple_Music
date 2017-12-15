@@ -1,30 +1,31 @@
 import { put, all, call, select } from 'redux-saga/effects'
 import { IAction } from 'commonTypes'
-import { fetch } from 'actions'
 import { stateIdPrifex } from 'utils/stateFormat'
+import fetchSong from './song'
 import { selectors } from '../selectors'
+import { listen, fetch } from 'actions'
 
 export function* handlePlayingWorker(action: IAction) {
-  // const selectId = stateIdPrifex(id)
-  // const listening = yield select(selectors.getListening)
-
-  console.log(action)
-
-  // if (!listening[selectId]) {
-    // const [dataTmpl, urlTmpl] = yield all([
-    //   call(fetchData, {...config, params: {ids: id}, url: musicDetailUrl}),
-    //   call(fetchData, {...config, params: {id}, url: musicFileUrl}),
-    // ])
-    // const playing = {
-    //   ...dataTmpl.songs[0], privileges: dataTmpl.privileges[0],
-    //   file: urlTmpl.data[0],
-    // }
-
-    // yield put(fetch.listening.success({
-    //   [selectId]: playing,
-    //   playing,
-    // }))
-  // } else {
-  //   yield put(fetch.listening.success({playing: listening[selectId]}))
-  // }
+  try {
+    const { id, index, playingList = [] } = action.payload.params
+    const selectId = stateIdPrifex(id)
+    let { [selectId]: selectSong } = yield select(selectors.getSongs)
+    if (!selectSong) {
+      yield call(fetchSong, action)
+      const songs = yield select(selectors.getSongs)
+      selectSong = songs[selectId]
+    }
+    const duration = selectSong.dt / 1000
+    yield put(listen.change.success({
+      id,
+      index,
+      isPlaying: true,
+      playing: selectSong,
+      playingList,
+      duration,
+      currentTime: 0 ,
+    }))
+  } catch (e) {
+    yield call(fetch.error())
+  }
 }

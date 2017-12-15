@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import Song from 'components/Song'
-import { fetch, listen } from 'actions'
+import { listen } from 'actions'
 import { ICommonElementProps, ISong } from 'commonTypes'
 
 const hoverStyle = {
@@ -29,24 +29,28 @@ class ListContainer extends React.Component<IProps, any> {
     const classNames = `${className} list-container`.trim()
     return (
       <div className={classNames} style={style}>
-        {songs.map((song, index) => <Song style={this.state.active === index ? hoverStyle : {}} key={`song-${index}`} {...song} onClick={this.handleSongClick.bind(this, index)} onDoubleClick={getSong.bind(this, song.id, song.index)} />)}
+        {
+          songs.map((song, index) =>
+            <Song
+              style={this.state.active === index ? hoverStyle : {}}
+              key={`song-${index}`} {...song}
+              onClick={this.handleSongClick.bind(this, index)}
+              onDoubleClick={() => {
+                getSong(song.id, index)
+              }}
+            />)
+        }
       </div>
     )
   }
 }
 
-const mapState = () => ({})
+const mapState = (state) => ({})
 
-const mapDispatch = (dispatch, ownProps): any => ({
+const mapDispatch = (dispatch, { songs }: IProps): any => ({
   getSong(id, index) {
-    console.log(ownProps)
-    // change play
-    dispatch(listen.play({id, index}))
-    // !!attention song no s!!
-    dispatch(fetch.song.pending({id}))
-  },
-  getSongList() {
-    // dispatch()
+    // dispatch(fetch.song.pending({id, index}))
+    dispatch(listen.change.pending({id, index, playingList: songs}))
   },
 })
 

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import TitleBar from 'components/TitleBar'
 import Song from 'components/Song'
-import ListContainer from 'components/containers/ListContainer'
+import ListContainer from 'components/Containers/ListContainer'
 import { ICommonElementProps } from 'commonTypes'
 
 const wrapper = require('./style.css')['middle-wrapper']

@@ -34,6 +34,14 @@ class Audio extends React.Component<any, any> {
     }
   }
 
+  public prievious() {
+
+  }
+
+  public next() {
+
+  }
+
   public render() {
     const { playing } = this.props
 

@@ -1,6 +1,7 @@
-import { IAction, IStateTree } from 'commonTypes'
-import initState from './initState'
 import { fetch } from 'actions'
+import { IStateTree, IAction } from 'commonTypes'
+
+const loading = { isLoading: false }
 
 export default {
   [fetch.recommend.success]: (state: IStateTree, action: IAction): IStateTree => ({
@@ -8,6 +9,7 @@ export default {
     recommend: {
       ...state.recommend,
       ...action.payload,
+      ...loading,
     },
   }),
   [fetch.lists.success]: (state: IStateTree, action: IAction): IStateTree => ({
@@ -15,6 +17,7 @@ export default {
     lists: {
       ...state.lists,
       ...action.payload,
+      ...loading,
     },
   }),
   [fetch.newest.songs.success]: (state: IStateTree, action: IAction): IStateTree => ({
@@ -22,6 +25,7 @@ export default {
     songs: {
       ...state.songs,
       ...action.payload,
+      ...loading,
     },
   }),
   [fetch.song.success]: (state: IStateTree, action: IAction): IStateTree => ({
@@ -29,6 +33,7 @@ export default {
     songs: {
       ...state.songs,
       ...action.payload,
+      ...loading,
     },
   }),
   [fetch.newest.albums.success]: (state: IStateTree, action: IAction): IStateTree => ({
@@ -36,12 +41,14 @@ export default {
     albums: {
       ...state.albums,
       ...action.payload,
+      ...loading,
     },
   }),
   [fetch.details.list.success]: (state: IStateTree, action: IAction): IStateTree => ({
     ...state,
     details: {
       ...state.details,
+      ...loading,
       list: {
         ...state.details.list,
         ...action.payload,
@@ -52,6 +59,7 @@ export default {
     ...state,
     details: {
       ...state.details,
+      ...loading,
       album: {
         ...state.details.album,
         ...action.payload,
@@ -62,6 +70,7 @@ export default {
     ...state,
     comments: {
       ...state.comments,
+      ...loading,
       list: {
         ...state.comments.list,
         ...action.payload,
@@ -72,6 +81,7 @@ export default {
     ...state,
     comments: {
       ...state.comments,
+      ...loading,
       album: {
         ...state.comments.album,
         ...action.payload,

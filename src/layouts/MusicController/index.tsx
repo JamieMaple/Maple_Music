@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { ICommonElementProps, IStateTree, IListening } from 'commonTypes'
 import { listen } from 'actions'
 import Portal from 'components/Portal'
-import { MusicInfo, MusicPhoto, PlayControlBar, AudioPlayerBar } from './components'
+import { MusicInfo, MusicPhoto } from './leftComponent'
+import { PlayControlBar, AudioPlayerBar, RightController } from './middleComponent'
 import Audio from '../Audio'
 import SongInfoView from '../../views/SongInfo'
 
@@ -43,13 +44,14 @@ class MusicController extends React.Component<ICommonElementProps & IListening &
       <div className={classNames}>
         <Audio />
         <MusicPhoto image={image} onClick={this.toggleShowInfo.bind(this)} />
+        <MusicInfo song={song} singer={singer} />
         {
           duration
           ? <AudioPlayerBar duration={duration} currentTime={currentTime} />
           : null
         }
-        <MusicInfo song={song} singer={singer} />
         <PlayControlBar className="music-bar-wrapper" play={isPlaying} togglePlay={this.togglePlay.bind(this)} />
+        <RightController className="music-right-controller" />
         {
           isShowInfo
           ? <Portal id="main-container">

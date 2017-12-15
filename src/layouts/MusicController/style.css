@@ -15,7 +15,6 @@
   z-index: 100;
   background: var(--background-color);
   color: var(--main-font-color);
-  // overflow: hidden;
   :global {
     .music-photo {
       height: var(--img-width);
@@ -25,7 +24,7 @@
     }
     .music-info {
       width: calc(var(--both-side-width) - var(--img-width));
-      margin-left: 1rem;
+      padding-left: 1rem;
       white-space: nowrap;
       overflow: hidden;
       & > :first-child {
@@ -44,12 +43,24 @@
         color: #a2a1a0;
       }
     }
+    .music-right-controller {
+      display: flex;
+      justify-content: center;
+      width: var(--both-side-width);
+      font-size: 1.5rem;
+      & > :nth-child(n) {
+        margin-right: 2.5rem;
+      }
+      & > :last-child {
+        margin-right: 0;
+      }
+    }
     .music-bar-wrapper {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center; 
-      padding-right: var(--both-side-width);
+      // padding-right: var(--both-side-width);
       & :nth-child(n) {
         font-size: 1.3rem;
       }

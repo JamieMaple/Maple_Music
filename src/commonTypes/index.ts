@@ -13,16 +13,20 @@ export interface IRecommend {
 
 export interface IDetails {
   album?: any,
+  isLoading?: boolean,
   list?: any,
 }
 
 export interface IComments {
   album?: any,
+  isLoading?: boolean,
   list?: any,
 }
 
 export interface IListening {
   mode?: string,
+  id: number,
+  index: number,
   playing?: any,
   isPlaying?: boolean,
   playingList?: any[],
@@ -34,6 +38,7 @@ export interface IListening {
 }
 
 export interface IStateTree {
+  isLoading: boolean,
   search: any,
   listening: IListening,
   lists: any,
@@ -156,8 +161,8 @@ export interface IComment {
 // event handler
 
 export interface IEventHandler {
-  onClick?: (e) => {},
-  onDoubleClick?: (e) => {},
+  onClick?: any,
+  onDoubleClick?: any,
 }
 
 // some useful api with react common element props like `className`, `style`

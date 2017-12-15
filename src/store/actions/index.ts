@@ -22,6 +22,7 @@ interface IFetch {
   singers: IFetchStatus,
   albums: IFetchStatus,
   lists: IFetchStatus,
+  loading: IFetchStatus,
   // differ
   newest: IFetchNewest,
   details: IFetchDetails,
@@ -34,6 +35,7 @@ const commonCommit = data => data
 const asyncActions = { PENDING: commonFetch, SUCCESS: commonCommit}
 const fetchName = [
   'RECOMMEND',
+  'LOADING',
   'SINGERS',
   'SONG',
   'ALBUMS',
@@ -46,7 +48,7 @@ fetchName.forEach(item => {
 })
 
 let fetch: IFetch
-let listen: { toggle, play, pause, duration, change, buffered, current }
+let listen: { toggle, play, pause, duration, change: IFetchStatus, buffered, current }
 
 ({ fetch, listen } = createActions({
   FETCH: {
@@ -69,7 +71,7 @@ let listen: { toggle, play, pause, duration, change, buffered, current }
     TOGGLE: () => {},
     PLAY: ()  => {},
     PAUSE: () => {},
-    CHANGE: commonCommit,
+    CHANGE: asyncActions,
     DURATION: commonCommit,
     LIST: commonCommit,
     BUFFERED: commonCommit,

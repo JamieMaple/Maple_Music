@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TitleBar from 'components/TitleBar'
-import ListContainer from 'components/containers/ListContainer'
+import ListContainer from 'components/Containers/ListContainer'
 import Singer from 'components/Singer'
 import { ICommonElementProps } from 'commonTypes'
 

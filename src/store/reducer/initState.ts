@@ -13,12 +13,15 @@ const albumsAndPlayList = {
 }
 
 const initState: IStateTree = {
+  isLoading: false,
   search: {
     // [keywords]: [...any]
   },
   listening: {
       mode: '',
       isPlaying: false,
+      id: 0,
+      index: 0,
       playing: {},
       playingList: [],
       currentTime: 0,
