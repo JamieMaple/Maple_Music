@@ -21,23 +21,29 @@ class MusicController extends React.PureComponent<ICommonElementProps & IListeni
     play: false,
   }
 
-  public toggleShowInfo() {
+  public toggleShowInfo = () => {
     const { isShowInfo } = this.state
     this.setState((prevState: any) => ({isShowInfo: !isShowInfo}))
   }
 
-  public togglePlay() {
+  public togglePlay = () => {
     const { isPlaying, playing } = this.props
 
     this.props.dispatch(listen.toggle())
   }
 
-  public next() {
+  public next = () => {
     this.props.dispatch(listen.next())
   }
 
-  public prev() {
+  public prev = () => {
     this.props.dispatch(listen.prev())
+  }
+
+  public changeVolume = (num) => {
+    if (typeof num === 'number') {
+      this.props.dispatch(listen.volume({volume: num}))
+    }
   }
 
   public render() {
@@ -51,7 +57,7 @@ class MusicController extends React.PureComponent<ICommonElementProps & IListeni
     return (
       <div className={classNames}>
         <Audio />
-        <MusicPhoto className="music-photo" image={image} onClick={this.toggleShowInfo.bind(this)} />
+        <MusicPhoto className="music-photo" image={image} onClick={this.toggleShowInfo} />
         <MusicInfo className="music-info" song={song} singer={singer} />
         {
           duration
@@ -59,16 +65,16 @@ class MusicController extends React.PureComponent<ICommonElementProps & IListeni
           : null
         }
         <PlayControlBar className="music-bar-wrapper"
-          prev={this.prev.bind(this)}
-          next={this.next.bind(this)}
+          prev={this.prev}
+          next={this.next}
           play={isPlaying}
-          togglePlay={this.togglePlay.bind(this)}
+          togglePlay={this.togglePlay}
         />
-        <RightController className="music-right-controller" volume={volume} />
+        <RightController className="music-right-controller" changeVolume={this.changeVolume} volume={volume} />
         {
           isShowInfo
           ? <Portal id="main-container">
-              <SongInfoView handleClick={this.toggleShowInfo.bind(this)} />
+              <SongInfoView handleClick={this.toggleShowInfo} />
             </Portal>
           : null
         }

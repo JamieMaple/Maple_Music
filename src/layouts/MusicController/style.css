@@ -73,6 +73,7 @@
             overflow: hidden;
             background: var(--light);
             box-shadow: 2px 3px 10px rgba(0, 0, 0, .2);
+            cursor: pointer;
             & .volume-fill {
               height: 100%;
               width: 100%;
@@ -138,7 +139,7 @@
           transition: opacity 0.2s ease;
         }
       }
-      &:hover & .progress {
+      &:hover .progress {
         transform: scaleY(1.1);
         box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.21);
           & .progress-button {
