@@ -7,13 +7,18 @@
   font-size: 1.2rem;
   background: #212626;
   :global {
-    .singer-image {
+    .singer-image-wrapper {
       display: block;
       height: 2.3rem;
       width: 2.3rem;
       margin-right:0.8rem;
       border-radius: 50%;
+      overflow: hidden;
       background-color: rgba(255, 255, 255, 0.1);
+      & .singer-image {
+        height: 100%;
+        width: 100%;
+      }
     }
     .singer-name {
       flex: 1;

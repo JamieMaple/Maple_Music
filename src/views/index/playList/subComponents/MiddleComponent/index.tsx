@@ -1,5 +1,6 @@
 import * as React from 'react'
 import TitleBar from 'components/TitleBar'
+import Loader from 'components/Loader'
 import Song from 'components/Song'
 import ListContainer from 'components/Containers/ListContainer'
 import { ICommonElementProps } from 'commonTypes'
@@ -9,6 +10,7 @@ const wrapper = require('./style.css')['middle-wrapper']
 interface IProps extends ICommonElementProps {
   songs: any[],
   playCount?: number,
+  isLoadingDetails?: boolean,
   showAlbumName?: boolean,
 }
 
@@ -18,6 +20,7 @@ export default function MiddleList({
   songs = [],
   playCount = 0,
   showAlbumName,
+  isLoadingDetails,
 }: IProps) {
   const classNames = `${className} ${wrapper}`.trim()
 
@@ -29,7 +32,7 @@ export default function MiddleList({
       </TitleBar>
       <ul className="songs-wrapper">
         <Song icon="ion-music-note" id={0} name="歌名" singer="歌手" album={showAlbumName ? '专辑' : ''} time="时间" />
-        <ListContainer songs={songs} />
+        { isLoadingDetails ? <Loader /> : <ListContainer songs={songs} /> }
       </ul>
     </div>
   )

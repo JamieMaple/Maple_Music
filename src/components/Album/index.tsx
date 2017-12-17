@@ -10,7 +10,7 @@ export default function Album(
   {
     className = '',
     style = {},
-    picUrl = defaultAlbum,
+    picUrl,
     name = '未知歌单',
     singer = '',
     url = '/',
@@ -22,7 +22,9 @@ export default function Album(
   return (
     <div className={classNames} style={style}>
       <Link to={url}>
-        <img className="album-image" src={picUrl} alt=""/>
+        <div style={{background: `url(${defaultAlbum})`}} className="album-wrapper">
+          <img className="album-image" src={picUrl} alt=""/>
+        </div>
         <div className="album-info">
           <h1 className="album-name">{name}</h1>
           {singer !== '' ? <h2 className="ion-android-person album-singer">{singer}</h2> : null}

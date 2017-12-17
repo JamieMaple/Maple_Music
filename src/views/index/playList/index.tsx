@@ -6,6 +6,7 @@ import { stateIdPrifex } from 'utils/stateFormat'
 import SongsList from './entry'
 
 interface IHOCProps extends IRouteProps {
+  isLoadingDetails?: boolean,
   dispatch?: any,
   details?: any,
   comments?: any,
@@ -19,18 +20,20 @@ const routeRegs = {
 
 const mapState = (state: IStateTree & any, ownProps: IRouteProps): any => {
   const { params: { id: formatId }, url } = ownProps.match
-  const { details: { list: detailsPlayList, album: detailsAlbum },
+  const { details: { list: detailsPlayList, album: detailsAlbum, isLoading: isLoadingDetails },
     comments: { list: commentsPlayList, album: comemntsAlbum } } = state
   const id = stateIdPrifex(formatId)
 
   if (routeRegs.playlist.test(url)) {
     return {
+      isLoadingDetails,
       details: detailsPlayList[id],
       songs: detailsPlayList[id] ? detailsPlayList[id]['tracks'] : [],
       comments: commentsPlayList[id],
     }
   } else if (routeRegs.albumlist.test(url)) {
     return {
+      isLoadingDetails,
       details: detailsAlbum[id],
       songs: detailsAlbum[id] ? detailsAlbum[id]['songs'] : [],
       comments: comemntsAlbum[id],
@@ -65,7 +68,7 @@ const HOCContainer = Component => class WrappedComponent extends React.Component
       album: this.showAlbumName && song.al && song.al.name,
       singer: song.artists || song.ar,
     }))
-    return <Component details={this.props.details} songs={songItems} showAlbumName={this.showAlbumName} comments={this.props.comments} />
+    return <Component isLoadingDetails={this.props.isLoadingDetails} details={this.props.details} songs={songItems} showAlbumName={this.showAlbumName} comments={this.props.comments} />
   }
 }
 

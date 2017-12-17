@@ -13,11 +13,11 @@ function Front({goForward}: any) {
   )
 }
 
-export default function Container({history}: any) {
+export default function Container({back, forward}: any) {
   return (
     <div className={style['history-wrapper']}>
-      <Back goBack={history.back} />
-      <Front goForward={history.forward} />
+      <Back goBack={back} />
+      <Front goForward={forward} />
     </div>
   )
 }

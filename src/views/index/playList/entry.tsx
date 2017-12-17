@@ -10,6 +10,7 @@ export default function SongsList({
   songs = [],
   showAlbumName,
   comments = {},
+  isLoadingDetails,
 }: any) {
   return (
     <div className={wrapper}>
@@ -23,8 +24,8 @@ export default function SongsList({
         creator={details.creator}
         artist={details.artist}
       />
-      <MiddleComponent className="middle-list-wrapper" showAlbumName={showAlbumName} songs={songs} playCount={details.playCount} />
-      <DownComponent className="down-comment-list-warpper" comments={comments} />
+      <MiddleComponent className="middle-list-wrapper" isLoadingDetails={isLoadingDetails} showAlbumName={showAlbumName} songs={songs} playCount={details.playCount} />
+      <DownComponent className="down-comment-list-warpper" isLoadingDetails={isLoadingDetails} comments={comments} />
     </div>
   )
 }

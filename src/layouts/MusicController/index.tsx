@@ -15,7 +15,7 @@ interface IProps {
   dispatch?: any,
 }
 
-class MusicController extends React.Component<ICommonElementProps & IListening & IProps , any> {
+class MusicController extends React.PureComponent<ICommonElementProps & IListening & IProps , any> {
   public state = {
     isShowInfo: false,
     play: false,
@@ -41,7 +41,7 @@ class MusicController extends React.Component<ICommonElementProps & IListening &
   }
 
   public render() {
-    const { className = '', playing = {}, isPlaying, duration, currentTime } = this.props
+    const { className = '', playing = {}, isPlaying, duration, currentTime, volume } = this.props
     const classNames = `${style['music-controller-wrapper']} ${className}`.trim()
     const { isShowInfo } = this.state
     const singer = playing.ar && playing.ar.map(item => item.name).join('、')
@@ -51,11 +51,11 @@ class MusicController extends React.Component<ICommonElementProps & IListening &
     return (
       <div className={classNames}>
         <Audio />
-        <MusicPhoto image={image} onClick={this.toggleShowInfo.bind(this)} />
-        <MusicInfo song={song} singer={singer} />
+        <MusicPhoto className="music-photo" image={image} onClick={this.toggleShowInfo.bind(this)} />
+        <MusicInfo className="music-info" song={song} singer={singer} />
         {
           duration
-          ? <AudioPlayerBar duration={duration} currentTime={currentTime} />
+          ? <AudioPlayerBar className="audio-bar-wrapper" duration={duration} currentTime={currentTime} />
           : null
         }
         <PlayControlBar className="music-bar-wrapper"
@@ -64,7 +64,7 @@ class MusicController extends React.Component<ICommonElementProps & IListening &
           play={isPlaying}
           togglePlay={this.togglePlay.bind(this)}
         />
-        <RightController className="music-right-controller" />
+        <RightController className="music-right-controller" volume={volume} />
         {
           isShowInfo
           ? <Portal id="main-container">
@@ -82,6 +82,7 @@ const mapState = (state: IStateTree): any => {
     return {
       currentTime: state.listening.currentTime,
       duration: state.listening.duration,
+      volume: state.listening.volume,
       playing: state.listening.playing,
       isPlaying: state.listening.isPlaying,
     }

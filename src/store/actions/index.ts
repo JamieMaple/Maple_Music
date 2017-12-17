@@ -34,6 +34,7 @@ interface IListen {
   pause: any,
   prev: any,
   next: any,
+  volume: any,
   change: {
     song: IFetchStatus,
     playinglist: any,
@@ -84,6 +85,7 @@ let listen: IListen
     PAUSE: () => {},
     PREV: () => {},
     NEXT: () => {},
+    VOLUME: commonCommit,
     CHANGE: {
       SONG: asyncActions,
       PLAYINGLIST: commonCommit,

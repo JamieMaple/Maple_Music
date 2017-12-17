@@ -26,21 +26,17 @@ export default function* mainPlaying(action: IAction) {
 
 function* songPrevAndNext(action: IAction) {
   let { index = 0, playingList } = yield select(selectors.getListening)
-  if (!Array.isArray(playingList)) {
-    playingList = []
+  if (!playingList) {
+    return
   }
 
-  if (playingList.length > 0) {
-    if (action.type === getTypeName(listen.next)) {
-      index = (index + 1) % playingList.length
-    } else {
-      index = index > 0 ? index - 1 : playingList.length - 1
-    }
-    const id = playingList[index].id
-    yield put(listen.change.song.pending({id, index, playingList}))
+  if (action.type === getTypeName(listen.next)) {
+    index = (index + 1) % playingList.length
   } else {
-    yield put(listen.change.song.success({currentTime: 0}))
+    index = index > 0 ? index - 1 : playingList.length - 1
   }
+  const id = playingList[index].id
+  yield put(listen.change.song.pending({id, index, playingList}))
 }
 
 function* songChange(action: IAction) {

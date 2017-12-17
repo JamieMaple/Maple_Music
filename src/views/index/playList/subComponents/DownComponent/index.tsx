@@ -2,12 +2,14 @@ import * as React from 'react'
 import TitleBar from 'components/TitleBar'
 import Comment from 'components/Comment'
 import Filter from 'components/Filter'
+import Loader from 'components/Loader'
 import { ICommonElementProps, ICommentsList } from 'commonTypes'
 
 const wrapepr = require('./style.css')['down-wrapper']
 
 interface IProps extends ICommonElementProps {
   comments: ICommentsList,
+  isLoadingDetails?: boolean,
 }
 
 function CommentsList({comments = []}: any) {
@@ -48,6 +50,7 @@ export default function DownCommentList({
   className = '',
   style = {},
   comments,
+  isLoadingDetails,
 }: IProps) {
   const classNames = `${className} ${wrapepr}`.trim()
   const { all = [], hot = [], top = [] } = comments
@@ -57,11 +60,15 @@ export default function DownCommentList({
       <TitleBar className="title" text="评论">
         <span className="count-num">共{all.length}条评论</span>
       </TitleBar>
-      <div className="comments-wrapper">
-        {hot.length ? <HotComments className="hot-comments" comments={hot} /> : null}
-        {top.length ? <TopComments className="top-comments" comments={top} /> : null}
-        {all.length ? <NewComments className="new-comments" comments={all} /> : <p>暂无</p>}
-      </div>
+      {
+        isLoadingDetails
+        ? <Loader />
+        : <div className="comments-wrapper">
+            {hot.length ? <HotComments className="hot-comments" comments={hot} /> : null}
+            {top.length ? <TopComments className="top-comments" comments={top} /> : null}
+            {all.length ? <NewComments className="new-comments" comments={all} /> : <p>暂无</p>}
+          </div>
+      }
     </div>
   )
 }

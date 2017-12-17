@@ -46,6 +46,8 @@
     .music-right-controller {
       display: flex;
       justify-content: center;
+      align-items: center;
+      height: 100%;
       width: var(--both-side-width);
       font-size: 1.5rem;
       & > :nth-child(n) {
@@ -54,13 +56,37 @@
       & > :last-child {
         margin-right: 0;
       }
+      & .sound-control {
+        min-height: 3px;
+        width: 6rem;
+        padding: 2px 0;
+        text-align: right;
+        & .sound-icon {
+          cursor: pointer;
+        }
+        & .volume-bar-wrapper {
+          padding: 1rem 0.3rem;
+          & .volume-bar {
+            width: 5rem;
+            height: 4px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--light);
+            box-shadow: 2px 3px 10px rgba(0, 0, 0, .2);
+            & .volume-fill {
+              height: 100%;
+              width: 100%;
+              background: var(--red);
+            }
+          }
+        }
+      }
     }
     .music-bar-wrapper {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center; 
-      // padding-right: var(--both-side-width);
       & :nth-child(n) {
         font-size: 1.3rem;
       }
@@ -71,6 +97,7 @@
         border-radius: 50%;
         text-align: center;
         background: var(--red);
+        cursor: pointer;
         &::before {
           line-height: var(--bar-parent-height);
           font-size: 1.6rem;
@@ -81,8 +108,12 @@
           padding-left: 2px;
         }
       }
+      & .icon-hook {
+        padding: 0.3rem;
+        cursor: pointer;
+      }
     }
-    .audio-hook {
+    .audio-bar-wrapper {
       position: absolute;
       box-sizing: border-box;
       top: 0;
@@ -90,6 +121,7 @@
       right: 0;
       cursor: pointer;
       transition: all 0.1s linear;
+      height: calc(var(--audio-bar-height) * 2);
       & .progress {
         position: relative;
         border-top: var(--audio-bar-height) solid var(--red);
@@ -105,14 +137,14 @@
           opacity: 0;
           transition: opacity 0.2s ease;
         }
-        &:hover {
-          transform: scaleY(1.1);
-          box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.21);
+      }
+      &:hover & .progress {
+        transform: scaleY(1.1);
+        box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.21);
           & .progress-button {
             opacity: 1
           }
         }
-      }
     }
   }
 }

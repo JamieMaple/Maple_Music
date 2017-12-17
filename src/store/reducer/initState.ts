@@ -4,6 +4,7 @@ import { IStateTree } from "commonTypes"
 // loading localStorage
 
 const albumsAndPlayList = {
+  isLoading: false,
   album: {
     // cache ['id_2041421']: [...any]
   },
@@ -13,7 +14,6 @@ const albumsAndPlayList = {
 }
 
 const initState: IStateTree = {
-  isLoading: false,
   search: {
     // [keywords]: [...any]
   },
@@ -27,7 +27,7 @@ const initState: IStateTree = {
       currentTime: 0,
       duration: 0,
       buffered: 0, // percentage
-      volume: 0,
+      volume: 1, // [0, 1]
   },
   albums: {
     // newest: []

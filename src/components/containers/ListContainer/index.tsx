@@ -21,7 +21,7 @@ interface IProps extends ICommonElementProps {
   getSongList?: any,
 }
 
-class ListContainer extends React.Component<IProps, any> {
+class ListContainer extends React.PureComponent<IProps, any> {
   public state = {
     active: -1,
   }

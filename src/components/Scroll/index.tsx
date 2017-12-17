@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export default class Scroll extends React.Component<{id: string, handleScroll?: any}, any> {
+export default class Scroll extends React.PureComponent<{id: string, handleScroll?: any}, any> {
   public el: HTMLElement | null
 
   public handleScroll = this.handleScrollTmpl.bind(this)
@@ -14,7 +14,7 @@ export default class Scroll extends React.Component<{id: string, handleScroll?: 
     }
   }
 
-  public componentWillReceiveProps() {
+  public componentWillReceiveProps(nextProps) {
     this.el = document.getElementById(this.props.id) || null
     if (this.el) {
       this.el.addEventListener('scroll', this.handleScroll)

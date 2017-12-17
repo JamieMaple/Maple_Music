@@ -1,10 +1,13 @@
 import axios from 'axios'
 import { IFetchDataConfig } from 'commonTypes'
 
+const timeoutDefault = 1000
+
 export const fetchData = ({
   method = 'GET',
   url,
   params = {},
+  timeout = timeoutDefault,
   // data = {},
 }: IFetchDataConfig) => {
   if (!url) {
@@ -14,6 +17,7 @@ export const fetchData = ({
       method,
       url,
       params,
+      timeout,
       // data,
     }).then(res => res.data)
 }

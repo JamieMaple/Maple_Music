@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { ICommonElementProps } from 'commonTypes'
 
-export default function Loader({style = {}, className = '', text = '努力加载中'}: ICommonElementProps & {text?: string}) {
-  const defaultStyle = {height: '25rem', fill: '#fff', fontSize: '1rem'}
+export default function Loader({style = {}, className = '', text = '努力加载中...'}: ICommonElementProps & {text?: string}) {
+  const defaultStyle = {height: '25rem', fill: '#fff', fontSize: '0.5rem'}
 
   return (
     <div style={{...defaultStyle, ...style}} className={`${className}`.trim()}>
@@ -10,7 +10,7 @@ export default function Loader({style = {}, className = '', text = '努力加载
         <defs>
           <filter ng-attr-id="{{config.filterid1}}" id="lds-squiggle-filterid-8c1d536078eff">
             <feTurbulence baseFrequency="0.03" numOctaves="3" seed="1" result="turb">
-              <animate attributeName="seed" calcMode="discrete" values="0;1;2;3;4;5;6;7;8;9;0" keyTimes="0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1" dur="1.5s" repeatCount="indefinite"></animate>
+              <animate attributeName="seed" calcMode="discrete" values="0;1;2;3;4;5;6;7;8;9;0" keyTimes="0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1" dur="1s" repeatCount="indefinite"></animate>
             </feTurbulence>
             <feDisplacementMap in="SourceGraphic" in2="turb" scale="5"></feDisplacementMap>
           </filter>

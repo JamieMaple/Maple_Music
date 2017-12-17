@@ -19,17 +19,46 @@ export function PlayControlBar({
   )
 }
 
-export class RightController extends React.Component<ICommonElementProps, any> {
+class SoundController extends React.Component<{ volume }, any> {
+  public state = {
+    isShowSoundIcon: true,
+  }
+
+  public toggleShowSoundIcon = () => {
+    this.setState(prev => ({isShowSoundIcon: !prev.isShowSoundIcon}))
+  }
+
   public render() {
-    const { className } = this.props
+    const { isShowSoundIcon } = this.state
+    const { volume } = this.props
+
     return (
-      <div className={`${className}`.trim()}>
-        <span className="volume ion-volume-medium"></span>
-        <span className="play-mode ion-shuffle"></span>
-        <span className="playing-list ion-android-list"></span>
+      <div className="sound-control">
+        {
+          false
+          ? <span onClick={this.toggleShowSoundIcon} className="sound-icon ion-volume-medium"></span>
+          : <div onMouseLeave={this.toggleShowSoundIcon} className="volume-bar-wrapper">
+              <div onClick={(e: any) => {Object.keys(e).forEach(item => {console.log(item , ' : ', e[item])})}} className="volume-bar">
+                <div style={{transition: 'transform 0.3s linear', transform: `translate3d(${(1 - volume) * 100}%, 0, 0)`}} className="volume-fill"></div>
+              </div>
+            </div>
+        }
       </div>
     )
   }
+}
+
+export function RightController({
+  className,
+  volume = 0,
+}: ICommonElementProps & { volume } ) {
+  return (
+    <div className={`${className}`.trim()}>
+      <SoundController volume={volume} />
+      <span className="play-mode ion-shuffle"></span>
+      <span className="playing-list ion-android-list"></span>
+    </div>
+  )
 }
 
 export function AudioPlayerBar({

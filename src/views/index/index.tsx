@@ -3,10 +3,10 @@ import { Switch, Route, Link } from 'react-router-dom'
 import { INavigatorProps, ICommonElementProps } from 'commonTypes'
 
 import Header from 'components/Navigator'
-import RecommendView from './subViews/recommend-content'
-import SongListView from './subViews/songlist-content'
-import NewestListView from './subViews/newestlist-content'
-import PlayList from './subViews/playList'
+import RecommendView from './recommend-content'
+import SongListView from './songlist-content'
+import NewestListView from './newestlist-content'
+import PlayList from './playList'
 
 const baseUrl = '/index'
 const dataItems: INavigatorProps[] = [

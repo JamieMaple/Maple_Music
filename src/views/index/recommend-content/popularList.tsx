@@ -17,7 +17,7 @@ class PopularSongs extends React.Component<InterfaceData, any> {
     steps: 5,
   }
 
-  public handleMore(upToLimit) {
+  public handleMore = (upToLimit) => {
     this.setState(prev => ({limit: prev.limit + prev.steps}))
   }
 
@@ -32,7 +32,7 @@ class PopularSongs extends React.Component<InterfaceData, any> {
         <ListContainer className="songs-wrapper" songs={songsItems} />
         {
           songs.length > limit
-          ? <div onClick={this.handleMore.bind(this)} className="more">
+          ? <div onClick={this.handleMore} className="more">
               <span>{songs.length > limit ? steps : 0 } more</span>
               <span className="icon-hook ion-chevron-down"></span>
             </div>

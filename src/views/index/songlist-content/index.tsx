@@ -48,13 +48,13 @@ class SongListView extends React.Component<IPlayListProps, any> {
     this.props.loadMore({limit, cat})
   }
 
-  public switchFilter(cat) {
+  public switchFilter = (cat) => {
     const { limit } = this.state
     const { loadMore } = this.props
     loadMore({limit, cat})
   }
 
-  public handleScroll() {
+  public handleScroll = () => {
     if (!this.props.isLoading && this.state.flag < this.state.scrollLimit) {
       this.setState((prev) => ({flag: prev.flag + 1}))
       this.props.loadMore({limit: 30, cat: getCat(this.props.location.pathname, this.props.match.url), offset: 30 * this.state.flag })
@@ -67,8 +67,8 @@ class SongListView extends React.Component<IPlayListProps, any> {
 
     return (
       <div className={wrapper}>
-        <Filter className="filters-cotainer" handleEachClick={this.switchFilter.bind(this)} baseUrl={baseUrl} filters={tags} />
-        <Scroll key="scroll" id="view-hook" handleScroll={this.handleScroll.bind(this)} />
+        <Filter className="filters-cotainer" handleEachClick={this.switchFilter} baseUrl={baseUrl} filters={tags} />
+        <Scroll key="scroll" id="view-hook" handleScroll={this.handleScroll} />
         <ListsContainer className="albums-wrapper" lists={this.props.lists} />
         { isLoading ? <Loader /> : null }
       </div>

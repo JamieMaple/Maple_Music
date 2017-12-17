@@ -17,18 +17,19 @@ interface IProps extends IRouteProps {
 }
 
 class NewestListView extends React.Component<IProps, any> {
-  public isIndexList() {
-    const { match: { url }, location: { pathname } } = this.props
-
-    return url === pathname
+  public state = {
+    tag: tags[0].children[0],
   }
 
-  public switchFilter(type) {
+  public switchFilter = (type) => {
     this.props.handleFilterSelect(type)
+    if (type !== this.state.tag) {
+      this.setState(() => ({tag: type}))
+    }
   }
 
   public componentDidMount() {
-    const defaultTag = this.isIndexList() ? tags[0].children[0] : tags[0].children[1]
+    const defaultTag = tags[0].children[0]
     this.props.handleFilterSelect(defaultTag)
   }
 
@@ -46,11 +47,11 @@ class NewestListView extends React.Component<IProps, any> {
         <Filter
           className="filter-type"
           baseUrl={url}
-          handleEachClick={this.switchFilter.bind(this)}
+          handleEachClick={this.switchFilter}
           filters={tags}
         />
         {
-          this.isIndexList()
+          this.state.tag === tags[0].children[0]
           ? <NewestSongList className="newest-song-list" songs={songItems} />
           : <NewestAlbumList className="newest-album-list" albums={albums} />
         }
@@ -71,10 +72,10 @@ const mapDispatch = (dispatch) => {
     handleFilterSelect(typeIndex) {
       const fetchConfig = { method: 'GET' }
       switch (typeIndex) {
-        case '单曲':
+        case tags[0].children[0]:
           dispatch(fetch.newest.songs.pending())
           break
-        case '专辑':
+        case tags[0].children[1]:
           dispatch(fetch.newest.albums.pending({
             limit: 30,
             offset: 0,

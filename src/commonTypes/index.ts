@@ -38,7 +38,7 @@ export interface IListening {
 }
 
 export interface IStateTree {
-  isLoading: boolean,
+  isLoading?: boolean,
   search: any,
   listening: IListening,
   lists: any,
@@ -54,8 +54,8 @@ export interface IHistory {
   action: string,
   length: number,
   go: (n: number) => {},
-  goForward: () => {},
-  goBack: () => {},
+  forward: () => {},
+  back: () => {},
   push: any,
   pop: () => {},
 }
@@ -187,6 +187,7 @@ export interface IFetchDataConfig {
   url?: string,
   params?: any,
   data?: any,
+  timeout?: number,
 }
 
 // actions

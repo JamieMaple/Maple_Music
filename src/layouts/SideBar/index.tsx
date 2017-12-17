@@ -3,7 +3,7 @@ import { SideBarArea } from './sidebarArea'
 import { ICommonElementProps } from 'commonTypes'
 const wrapper = require('./style.css')['sidebar-wrapper']
 
-export default class SideBar extends React.Component<ICommonElementProps, any> {
+export default class SideBar extends React.PureComponent<ICommonElementProps, any> {
   private static defaultProps = {
     className: '',
     style: {},

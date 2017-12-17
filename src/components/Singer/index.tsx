@@ -9,7 +9,7 @@ export default function Singer(
   {
     className = '',
     style = {},
-    picUrl = defaultSinger,
+    picUrl,
     name = '未知歌手',
     url = '',
   }: ISingerProps,
@@ -18,7 +18,9 @@ export default function Singer(
 
   return (
     <div className={classNames} style={style}>
-      <img className="singer-image" src={picUrl} alt=""/>
+      <div className="singer-image-wrapper" style={{backgroundImage: `url(${defaultSinger})`}}>
+        <img className="singer-image" src={picUrl} alt=""/>
+      </div>
       <h3 className="singer-name">{name}</h3>
       <span className="icon-hook ion-ios-arrow-forward"></span>
     </div>

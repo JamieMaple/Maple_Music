@@ -18,6 +18,6 @@ export default function ListsContainer({
     />)
 
   return (
-    <ul key="album" className={`${className}`.trim()}>{listItems}</ul>
+    <ul className={`${className}`.trim()}>{listItems}</ul>
   )
 }

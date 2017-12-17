@@ -4,14 +4,14 @@ import GoHistory from './GoHistory'
 const style = require('./style.css')
 
 interface InterfaceHeader {
-  history?: any,
-  location?: any,
+  back?: any,
+  forward?: any,
 }
 
-function LeftHeaderBar({history}: InterfaceHeader) {
+function LeftHeaderBar({back, forward}: InterfaceHeader) {
   return (
     <div className="left-header">
-      <GoHistory history={history} />
+      <GoHistory back={back} forward={forward} />
       <Search />
     </div>
   )
@@ -24,11 +24,13 @@ function RightHeaderBar() {
   )
 }
 
-export default function HeaderBar({history, location}: InterfaceHeader) {
-  return (
-    <div className={style['header-bar-wrapper']}>
-      <LeftHeaderBar history={history} />
-      <RightHeaderBar />
-    </div>
-  )
+export default class HeaderBar extends React.PureComponent<{back, forward}, any> {
+  public render() {
+    return (
+      <div className={style['header-bar-wrapper']}>
+        <LeftHeaderBar back={this.props.back} forward={this.props.forward} />
+        <RightHeaderBar />
+      </div>
+    )
+  }
 }
