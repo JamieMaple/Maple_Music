@@ -11,11 +11,6 @@ function resolve(...dirs) {
 }
 
 module.exports = {
-  node: {
-    net: "empty",
-    tls: "empty",
-    fs: "empty"
-  },
   output: {
     path: resolve('app', 'build'),
   },
