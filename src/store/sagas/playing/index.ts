@@ -1,10 +1,20 @@
 import { delay } from 'redux-saga'
-import { put, all, call, select } from 'redux-saga/effects'
+import { put, all, call, select, fork } from 'redux-saga/effects'
 import { IAction, IListening } from 'commonTypes'
 import { stateIdPrifex } from 'utils/stateFormat'
 import fetchSong from './song'
 import { selectors } from '../selectors'
 import { listen, fetch, getTypeName } from 'actions'
+
+const getIndex = (index: number, length: number): number => {
+  if (index >= length) {
+    return index % length
+  } else if (index < 0) {
+    return length - 1
+  } else {
+    return index
+  }
+}
 
 export default function* mainPlaying(action: IAction) {
   try {
@@ -26,21 +36,29 @@ export default function* mainPlaying(action: IAction) {
 
 function* songPrevAndNext(action: IAction) {
   let { index = 0, playingList } = yield select(selectors.getListening)
+  const { mode, random, length } = yield select(selectors.getMode)
   if (!playingList) {
     return
   }
 
-  if (action.type === getTypeName(listen.next)) {
-    index = (index + 1) % playingList.length
+  if (mode !== random) {
+    if (action.type === getTypeName(listen.next)) {
+      index = getIndex(index + 1, playingList.length)
+    } else {
+      index = getIndex(index - 1, playingList.length)
+    }
   } else {
-    index = index > 0 ? index - 1 : playingList.length - 1
+    const indexRandom = getIndex(Math.floor(Math.random() * playingList.length), playingList.length)
+    index = index === indexRandom ? getIndex(index + 1, playingList.length) : indexRandom
   }
   const id = playingList[index].id
-  yield put(listen.change.song.pending({id, index, playingList}))
+
+  yield put(listen.change.song.success({index, id}))
+  yield put(listen.change.song.pending({index, id}))
 }
 
 function* songChange(action: IAction) {
-  const { id, index, playingList } = action.payload.params
+  const { id, index } = action.payload.params
   const selectId = stateIdPrifex(id)
   let { [selectId]: selectSong } = yield select(selectors.getSongs)
   if (!selectSong) {

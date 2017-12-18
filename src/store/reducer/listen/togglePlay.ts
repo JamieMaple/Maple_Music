@@ -6,7 +6,7 @@ export default {
     ...state,
     listening: {
       ...state.listening,
-      isPlaying: state.listening ? !state.listening.isPlaying : false,
+      isPlaying: !state.listening.isPlaying,
     },
   }),
   [listen.play]: (state: IStateTree, action: IAction): IStateTree => ({
@@ -21,6 +21,16 @@ export default {
     listening: {
       ...state.listening,
       isPlaying: false,
+    },
+  }),
+  [listen.mode]: (state: IStateTree, action: IAction): IStateTree => ({
+    ...state,
+    listening: {
+      ...state.listening,
+      modes: {
+        ...state.listening.modes,
+        mode: (state.listening.modes.mode + 1) % state.listening.modes.length,
+      },
     },
   }),
 }

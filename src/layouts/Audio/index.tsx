@@ -4,11 +4,21 @@ import { listen, fetch } from 'actions'
 import { formatPercentage } from 'utils/stateFormat'
 import { IStateTree } from 'commonTypes'
 
-class Audio extends React.Component<{dispatch?, isPlaying?, playing?, volume?}, any> {
+interface IProps {
+  dispatch?: any,
+  isPlaying?: boolean,
+  playing?: any,
+  volume?: number,
+  changeTime?: number,
+  isLoop?: boolean
+}
+
+class Audio extends React.Component<IProps, any> {
   public audio: any
   public prevTime: number = 0
 
-  public componentWillReceiveProps(nextProps) {
+  public componentWillReceiveProps(nextProps: IProps) {
+    this.prevTime = 0
     const { isPlaying } = nextProps
 
     this.audio.volume = nextProps.volume
@@ -19,6 +29,10 @@ class Audio extends React.Component<{dispatch?, isPlaying?, playing?, volume?}, 
       } else {
         this.audio.pause()
       }
+    }
+    if (nextProps.changeTime) {
+      this.audio.currentTime = nextProps.changeTime
+      this.props.dispatch(listen.current.change({changeTime: 0}))
     }
   }
 
@@ -31,19 +45,25 @@ class Audio extends React.Component<{dispatch?, isPlaying?, playing?, volume?}, 
   }
 
   public timeUpdate = () => {
-    const { currentTime } = this.audio
+    const { currentTime, duration } = this.audio
+
     if (currentTime - this.prevTime >= 0.7) {
       this.prevTime = currentTime
-      this.props.dispatch(listen.current({currentTime}))
+      this.props.dispatch(listen.current.get({currentTime}))
     }
   }
 
   public next = () => {
-    this.props.dispatch(listen.next())
+    if (this.props.isLoop) {
+      this.prevTime = 0
+      this.audio.currentTime = 0
+      this.audio.play()
+    } else {
+      this.props.dispatch(listen.next())
+    }
   }
 
   public shouldComponentUpdate(nextProps) {
-    this.prevTime = 0
     if (nextProps.playing.file !== this.props.playing.file) {
       return true
     } else {
@@ -52,7 +72,7 @@ class Audio extends React.Component<{dispatch?, isPlaying?, playing?, volume?}, 
   }
 
   public render() {
-    const { playing } = this.props
+    const { playing, isLoop } = this.props
     console.log('audio rendered!')
 
     return <audio
@@ -68,10 +88,18 @@ class Audio extends React.Component<{dispatch?, isPlaying?, playing?, volume?}, 
   }
 }
 
-const mapState = (state: IStateTree): any => ({
-  isPlaying: state.listening && state.listening.isPlaying,
-  playing: state.listening && state.listening.playing,
-  volume: state.listening && state.listening.volume,
-})
+const mapState = (state: IStateTree): any => {
+  if (state.listening) {
+    return {
+      isPlaying: state.listening.isPlaying,
+      playing: state.listening.playing,
+      volume: state.listening.volume,
+      changeTime: state.listening.changeTime,
+      isLoop: state.listening.modes.mode === state.listening.modes.loop,
+    }
+  } else {
+    return {}
+  }
+}
 
 export default connect(mapState)(Audio)

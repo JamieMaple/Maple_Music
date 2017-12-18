@@ -19,7 +19,10 @@ class MusicController extends React.PureComponent<ICommonElementProps & IListeni
   public state = {
     isShowInfo: false,
     play: false,
+    enableChange: true,
   }
+
+  public timeoutDefault = 100
 
   public toggleShowInfo = () => {
     const { isShowInfo } = this.state
@@ -32,12 +35,28 @@ class MusicController extends React.PureComponent<ICommonElementProps & IListeni
     this.props.dispatch(listen.toggle())
   }
 
+  public changeTime = (time) => {
+    this.props.dispatch(listen.current.change({changeTime: time}))
+  }
+
   public next = () => {
-    this.props.dispatch(listen.next())
+    if (this.state.enableChange) {
+      this.setState(prev => ({...prev, enableChange: false}))
+      this.props.dispatch(listen.next())
+      setTimeout(() => {
+        this.setState(prev => ({...prev, enableChange: true}))
+      }, this.timeoutDefault)
+    }
   }
 
   public prev = () => {
-    this.props.dispatch(listen.prev())
+    if (this.state.enableChange) {
+      this.setState(prev => ({...prev, enableChange: false}))
+      this.props.dispatch(listen.prev())
+      setTimeout(() => {
+        this.setState(prev => ({...prev, enableChange: true}))
+      }, this.timeoutDefault)
+    }
   }
 
   public changeVolume = (num) => {
@@ -46,8 +65,12 @@ class MusicController extends React.PureComponent<ICommonElementProps & IListeni
     }
   }
 
+  public switchMode = () => {
+    this.props.dispatch(listen.mode())
+  }
+
   public render() {
-    const { className = '', playing = {}, isPlaying, duration, currentTime, volume } = this.props
+    const { className = '', playing = {}, isPlaying, duration, currentTime, volume, mode } = this.props
     const classNames = `${style['music-controller-wrapper']} ${className}`.trim()
     const { isShowInfo } = this.state
     const singer = playing.ar && playing.ar.map(item => item.name).join('、')
@@ -61,7 +84,7 @@ class MusicController extends React.PureComponent<ICommonElementProps & IListeni
         <MusicInfo className="music-info" song={song} singer={singer} />
         {
           duration
-          ? <AudioPlayerBar className="audio-bar-wrapper" duration={duration} currentTime={currentTime} />
+          ? <AudioPlayerBar className="audio-bar-wrapper" duration={duration} changeTime={this.changeTime} currentTime={currentTime} />
           : null
         }
         <PlayControlBar className="music-bar-wrapper"
@@ -70,7 +93,7 @@ class MusicController extends React.PureComponent<ICommonElementProps & IListeni
           play={isPlaying}
           togglePlay={this.togglePlay}
         />
-        <RightController className="music-right-controller" changeVolume={this.changeVolume} volume={volume} />
+        <RightController className="music-right-controller" changeVolume={this.changeVolume}  volume={volume} changeMode={this.switchMode} mode={mode} />
         {
           isShowInfo
           ? <Portal id="main-container">
@@ -89,6 +112,7 @@ const mapState = (state: IStateTree): any => {
       currentTime: state.listening.currentTime,
       duration: state.listening.duration,
       volume: state.listening.volume,
+      mode: state.listening.modes.mode,
       playing: state.listening.playing,
       isPlaying: state.listening.isPlaying,
     }

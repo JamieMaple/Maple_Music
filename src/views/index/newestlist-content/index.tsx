@@ -17,20 +17,16 @@ interface IProps extends IRouteProps {
 }
 
 class NewestListView extends React.Component<IProps, any> {
-  public state = {
-    tag: tags[0].children[0],
+  public getTag() {
+    const { match: { url }, location: { pathname } } = this.props
+    return pathname.replace(RegExp(`${url}/?`, 'g'), '') || tags[0].children[0]
   }
-
   public switchFilter = (type) => {
     this.props.handleFilterSelect(type)
-    if (type !== this.state.tag) {
-      this.setState(() => ({tag: type}))
-    }
   }
 
   public componentDidMount() {
-    const defaultTag = tags[0].children[0]
-    this.props.handleFilterSelect(defaultTag)
+    this.props.handleFilterSelect(tags[0].children[0])
   }
 
   public render() {
@@ -51,7 +47,7 @@ class NewestListView extends React.Component<IProps, any> {
           filters={tags}
         />
         {
-          this.state.tag === tags[0].children[0]
+          this.getTag() === tags[0].children[0]
           ? <NewestSongList className="newest-song-list" songs={songItems} />
           : <NewestAlbumList className="newest-album-list" albums={albums} />
         }

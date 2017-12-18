@@ -24,13 +24,20 @@ export interface IComments {
 }
 
 export interface IListening {
-  mode?: string,
+  modes: {
+    mode: number,
+    order?: number,
+    random?: number,
+    loop?: number,
+    length: number,
+  },
   id: number,
   index: number,
   playing?: any,
   isPlaying?: boolean,
   playingList?: any[],
-  currentTime?: number|string,
+  currentTime?: number,
+  changeTime?: number,
   buffered?: number,
   duration?: number|string,
   volume?: number,

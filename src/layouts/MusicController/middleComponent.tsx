@@ -19,14 +19,14 @@ export function PlayControlBar({
   )
 }
 
-class SoundController extends React.Component<{ volume, changeVolume }, any> {
+class SoundController extends React.PureComponent<{ volume, changeVolume }, any> {
   public state = {
     isShowSoundIcon: true,
   }
 
   public changeVolume = (e) => {
     if (e.nativeEvent) {
-      const volume = Math.min(1, e.nativeEvent.offsetX / e.nativeEvent.srcElement.clientWidth)
+      const volume = Math.min(1, e.nativeEvent.offsetX / e.currentTarget.offsetWidth)
       this.props.changeVolume(Math.max(0, volume))
     }
   }
@@ -46,7 +46,9 @@ class SoundController extends React.Component<{ volume, changeVolume }, any> {
           ? <span onClick={this.toggleShowSoundIcon} className="sound-icon ion-volume-medium"></span>
           : <div onMouseLeave={this.toggleShowSoundIcon} className="volume-bar-wrapper">
               <div onClick={this.changeVolume} className="volume-bar">
-                <div style={{transition: 'transform 0.3s linear', transform: `translate3d(${(volume - 1) * 100}%, 0, 0)`}} className="volume-fill"></div>
+                <svg className="volume-fill">
+                  <line x1="" x2={volume * 100 + '%'} y1="2" y2="2" stroke="red" strokeWidth="4"/>
+                </svg>
               </div>
             </div>
         }
@@ -59,11 +61,16 @@ export function RightController({
   className,
   volume = 0,
   changeVolume,
-}: ICommonElementProps & { volume, changeVolume } ) {
+  changeMode,
+  mode = 0,
+}: ICommonElementProps & { volume, changeVolume, changeMode, mode } ) {
   return (
     <div className={`${className}`.trim()}>
       <SoundController volume={volume} changeVolume={changeVolume} />
-      <span className="play-mode ion-shuffle"></span>
+      <span
+        onClick={changeMode}
+        className={`play-mode ${mode ? mode === 2 ? 'ion-ios-shuffle' : 'ion-ios-reload' : 'ion-ios-loop-strong'}`.trim()}
+      ></span>
       <span className="playing-list ion-android-list"></span>
     </div>
   )
@@ -74,13 +81,24 @@ export function AudioPlayerBar({
   style = {},
   duration,
   currentTime,
-}: ICommonElementProps & { duration, currentTime }) {
+  changeTime: changeTimeTmpl,
+}: ICommonElementProps & { duration, currentTime, changeTime }) {
   const classNames = `audio-hook ${className}`.trim()
   const percentage = duration ? formatPercentage(currentTime / duration) : 0
-  const progressStyle = {transition: 'transform 0.8s linear', transform: `translate3d(${percentage - 100}%, 0, 0)` }
+  const progressStyle = {
+    transition: 'transform 0.5s linear',
+    transform: `translate3d(${percentage - 100}%, 0, 0)`,
+  }
+
+  const changeTime = (e) => {
+    if (e.nativeEvent.layerX >= 0) {
+      const time = Math.round(e.nativeEvent.layerX / e.target.offsetWidth * duration)
+      changeTimeTmpl(time)
+    }
+  }
 
   return (
-    <div className={classNames} style={style}>
+    <div className={classNames} style={style} onClick={changeTime}>
       <div style={progressStyle} className="progress"><span className="progress-button"></span></div>
     </div>
   )

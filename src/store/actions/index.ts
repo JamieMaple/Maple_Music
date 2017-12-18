@@ -1,99 +1,7 @@
 import { createActions } from 'redux-actions'
-
-interface IFetchStatus {
-  pending: any,
-  success: any,
-}
-interface IFetchDetails {
-  album: IFetchStatus,
-  list: IFetchStatus,
-}
-interface IFetchComments {
-  album: IFetchStatus,
-  list: IFetchStatus,
-}
-interface IFetchNewest {
-  songs: IFetchStatus,
-  albums: IFetchStatus,
-}
-interface IFetch {
-  recommend: IFetchStatus,
-  song: IFetchStatus,
-  singers: IFetchStatus,
-  albums: IFetchStatus,
-  lists: IFetchStatus,
-  // differ
-  newest: IFetchNewest,
-  details: IFetchDetails,
-  comments: IFetchComments,
-  error: any,
-}
-interface IListen {
-  toggle: any,
-  play: any,
-  pause: any,
-  prev: any,
-  next: any,
-  volume: any,
-  change: {
-    song: IFetchStatus,
-    playinglist: any,
-  },
-  buffered: any,
-  current: any,
-}
-
-const commonFetch  = (params, ...args) => ({params, others: args})
-const commonCommit = data => data
-const asyncActions = { PENDING: commonFetch, SUCCESS: commonCommit}
-const fetchName = [
-  'RECOMMEND',
-  'SINGERS',
-  'SONG',
-  'ALBUMS',
-  'LISTS',
-]
-const fetchObject = {}
-
-fetchName.forEach(item => {
-  fetchObject[item] = asyncActions
-})
-
-let fetch: IFetch
-let listen: IListen
-
-({ fetch, listen } = createActions({
-  FETCH: {
-    ...fetchObject,
-    NEWEST: {
-      ALBUMS: asyncActions,
-      SONGS: asyncActions,
-    },
-    DETAILS: {
-      ALBUM: asyncActions,
-      LIST: asyncActions,
-    },
-    COMMENTS: {
-      ALBUM: asyncActions,
-      LIST: asyncActions,
-    },
-    ERROR: () => {},
-  },
-  LISTEN: {
-    TOGGLE: () => {},
-    PLAY: ()  => {},
-    PAUSE: () => {},
-    PREV: () => {},
-    NEXT: () => {},
-    VOLUME: commonCommit,
-    CHANGE: {
-      SONG: asyncActions,
-      PLAYINGLIST: commonCommit,
-    },
-    BUFFERED: commonCommit,
-    CURRENT: commonCommit,
-  },
-}, { namespace: '_' }))
+import { IFetch, IListen } from './common'
+import FETCH from './fetch'
+import LISTEN from './listen'
 
 function getTypeName(func) {
   if (typeof func !== 'function') {
@@ -101,5 +9,13 @@ function getTypeName(func) {
   }
   return func.toString()
 }
+
+let fetch: IFetch
+let listen: IListen
+
+({ fetch, listen } = createActions({
+  FETCH,
+  LISTEN,
+}, { namespace: '_' }))
 
 export { fetch, listen, getTypeName }

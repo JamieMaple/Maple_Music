@@ -7,4 +7,5 @@ export const selectors = {
   getListening: (state: IStateTree) => state.listening || {},
   getIfPlaying: (state: IStateTree) => state.listening ? state.listening.isPlaying : false,
   getSongs: (state: IStateTree) => state.songs || {},
+  getMode: (state: IStateTree) => state.listening.modes || 0,
 }

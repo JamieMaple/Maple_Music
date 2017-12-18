@@ -77,10 +77,14 @@
             & .volume-fill {
               height: 100%;
               width: 100%;
-              background: var(--red);
+              fill: var(--red);
             }
           }
         }
+      }
+      & .play-mode {
+        width: 1.5rem;
+        text-align: center;
       }
     }
     .music-bar-wrapper {

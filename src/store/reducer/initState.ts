@@ -18,13 +18,21 @@ const initState: IStateTree = {
     // [keywords]: [...any]
   },
   listening: {
-      mode: '',
+      // modes: 0 -> order, 1 -> loop, 2 -> random
+      modes: {
+        mode: 0,
+        order: 0,
+        loop: 1,
+        random: 2,
+        length: 3,
+      },
       isPlaying: false,
       id: 0,
       index: 0,
       playing: {},
       playingList: [],
       currentTime: 0,
+      changeTime: 0,
       duration: 0,
       buffered: 0, // percentage
       volume: 1, // [0, 1]
