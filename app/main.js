@@ -19,9 +19,6 @@ function createWindow() {
     titleBarStyle: 'hiddenInset',
     fullscreen: false,
     frame: false,
-    webPreferences: {
-      webSecurity: false,
-    }
   })
   win.loadURL(url.format({
     pathname: pathname,

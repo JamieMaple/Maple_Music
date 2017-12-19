@@ -38,7 +38,7 @@ use scaffold for maple's scaffold
 
 1. 下拉加载和分页
 
-1. mv 和 私人fm等也没做
+1. mv 和 私人fm
 
 1. 登录
 

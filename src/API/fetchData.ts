@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { IFetchDataConfig } from 'commonTypes'
 
-const timeoutDefault = 1000
+const timeoutDefault = 10000
 
 export const fetchData = ({
   method = 'GET',
